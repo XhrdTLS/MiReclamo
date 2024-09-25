@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../screens/home_screen.dart';
-import '../screens/notas_screen.dart';
+import '../features/Notes/screens/notas_screen.dart';
 
 class FooterApp extends StatelessWidget {
   static final Logger _logger = Logger();

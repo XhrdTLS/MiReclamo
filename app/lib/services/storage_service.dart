@@ -13,4 +13,22 @@ class StorageService {
     });
     return value;
   }
+
+  /* Storage de Notes */
+  static Future<void> saveNotes(List<String> notes) async {
+    await SharedPreferences.getInstance().then((instance) {
+      instance.setStringList('notes', notes);
+    });
+  }
+
+  static Future<List<String>> getNotes() async{
+    List<String> notes = [];
+    await SharedPreferences.getInstance().then((instance) {
+      if (instance.containsKey('notes')) {
+        notes = instance.getStringList('notes') ?? [];
+      }
+    });
+    return notes;
+  }
+
 }
