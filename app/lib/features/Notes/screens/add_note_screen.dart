@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
+
+import '../models/note.dart';
 
 class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({super.key});
@@ -8,7 +11,10 @@ class AddNoteScreen extends StatefulWidget {
 }
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
+  final Uuid _uuid = const Uuid();
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +25,23 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         child: Column(
           children: [
             TextField(
-              controller: _controller,
-              decoration: const InputDecoration(labelText: 'Nota'),
+              controller: _titleController,
+              decoration: const InputDecoration(labelText: 'Titulo'),
+            ),
+            TextField(
+              controller: _contentController,
+              decoration: const InputDecoration(labelText: 'Contenido'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                if (_controller.text.isNotEmpty) {
-                  Navigator.pop(context, _controller.text);
+                if (_titleController.text.isNotEmpty && _contentController.text.isNotEmpty) {
+                  final newNote = Note(
+                    id: _uuid.v4(),
+                    title: _titleController.text,
+                    content: _contentController.text,
+                  );
+                  Navigator.pop(context, newNote);
                 }
               },
               child: const Text('Guardar Nota'),
