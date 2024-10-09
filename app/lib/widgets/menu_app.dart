@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cm/screens/home_screen.dart';
+import 'package:cm/screens/login_screen.dart';
+import 'package:cm/services/google_service.dart';
 import 'package:cm/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -84,7 +86,18 @@ class MenuApp extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomeScreen()));
             },
-          )
+          ),
+          ListTile(
+            leading: const Icon(Icons.exit_to_app),
+            title: const Text('LogOut'),
+            onTap: () {
+              _logger.d('Voy a cerrar sesión');
+              GoogleService.disconnect();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
+            },
+          ),
         ],
       ),
     );

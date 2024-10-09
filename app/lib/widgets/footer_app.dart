@@ -1,3 +1,4 @@
+import 'package:cm/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -40,11 +41,11 @@ class FooterApp extends StatelessWidget {
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                MaterialPageRoute(builder: (context) => const TestScreen()),
               );
-              _logger.i('3');
+              _logger.i('Test');
             },
-            child: const Text('3'),
+            child: const Text('Test'),
 
           ),
         ],

@@ -35,4 +35,30 @@ class GoogleService {
     }
     return ok;
   }
+
+  static Future<String> getData(final String key) async {
+    String data = '';
+    await SharedPreferences.getInstance().then((sp){
+      data = sp.getString(key) ?? '';
+    });
+    return data;
+  }
+
+
+  static Future<void> disconnect() async {
+    try {
+      await _googleSignIn.disconnect();
+      SharedPreferences.getInstance().then((current) {
+        _logger.i('Disconnect');
+        current.remove('idToken');
+        current.remove('accessToken');
+        current.remove('email');
+        current.remove('name');
+        current.remove('image');
+      });
+    } catch (error, stackTrace) {
+      _logger.e('Error al desconectar: $error');
+      _logger.e(stackTrace.toString());
+    }
+  }
 }
