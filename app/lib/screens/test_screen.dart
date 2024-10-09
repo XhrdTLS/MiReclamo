@@ -3,19 +3,18 @@ import 'package:cm/widgets/footer_app.dart';
 import 'package:cm/widgets/menu_app.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:cm/services/storage_service.dart';
 import 'package:cm/services/testService.dart';
 
 class TestScreen extends StatelessWidget {
   static final Logger _logger = Logger();
+  final TestService _testService = TestService();
 
-  const TestScreen({super.key});
+  TestScreen({super.key});
 
   Future<void> _fetchTest() async {
-    String jwt = await StorageService.getValue('idToken');
-    Map<String, dynamic> requestBody = {}; // Define your request body here
+    Map<String, dynamic> requestBody = {};
     try {
-      List<dynamic> response = await testService.getTest(jwt, requestBody);
+      List<dynamic> response = await _testService.getTest(requestBody);
       _logger.i('Response: $response');
     } catch (error) {
       _logger.e('Error fetching test: $error');

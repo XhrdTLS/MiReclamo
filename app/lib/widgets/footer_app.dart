@@ -41,7 +41,7 @@ class FooterApp extends StatelessWidget {
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const TestScreen()),
+                MaterialPageRoute(builder: (context) => TestScreen()),
               );
               _logger.i('Test');
             },
