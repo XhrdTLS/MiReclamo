@@ -1,13 +1,11 @@
-import 'dart:convert';
 import 'package:cm/features/data/data_sources/local/storage_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
-/*import 'package:cm/exception/exception_handler.dart';*/
+
 
 class BaseService {
   static const String _baseUrl = 'https://api.sebastian.cl/oirs-utem';
   static const String _contentType = "application/json";
-  static final Logger _logger = Logger();
 
   Future<Map<String, String>> _getHeaders() async {
     String jwt = await StorageService.getValue('idToken');

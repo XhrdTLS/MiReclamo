@@ -13,15 +13,6 @@ class TestScreen extends StatelessWidget {
 
   TestScreen({super.key});
 
-  Future<void> _fetchTest() async {
-    Map<String, dynamic> requestBody = {};
-    try {
-      List<dynamic> response = await _testService.getTest(requestBody);
-      _logger.i('Response: $response');
-    } catch (error) {
-      _logger.e('Error fetching test: $error');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
