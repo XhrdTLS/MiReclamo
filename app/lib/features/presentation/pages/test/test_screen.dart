@@ -1,11 +1,13 @@
 import 'package:cm/core/widgets/barra_app.dart';
 import 'package:cm/core/widgets/footer_app.dart';
 import 'package:cm/core/widgets/menu_app.dart';
+import 'package:cm/features/presentation/controllers/test/test_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:cm/features/data/data_sources/api_seba/testService.dart';
 
 class TestScreen extends StatelessWidget {
+  final TestViewModel _testViewModel = TestViewModel();
   static final Logger _logger = Logger();
   final TestService _testService = TestService();
 
@@ -31,8 +33,20 @@ class TestScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: _fetchTest,
-              child: const Text('Fetch Test Data'),
+              onPressed: _testViewModel.fetchTypes,
+              child: const Text('Fetch Types Data'),
+            ),
+            ElevatedButton(
+              onPressed: _testViewModel.fetchStatus,
+              child: const Text('Fetch Status Data'),
+            ),
+            ElevatedButton(
+              onPressed: _testViewModel.fetchCategories,
+              child: const Text('Fetch Categories Data'),
+            ),
+            ElevatedButton(
+              onPressed: _testViewModel.fetchAccess,
+              child: const Text('Fetch Access Data'),
             ),
           ],
         ),

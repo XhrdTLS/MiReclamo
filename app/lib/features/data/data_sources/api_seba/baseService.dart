@@ -23,10 +23,10 @@ class BaseService {
     Map<String, String> headers = await _getHeaders();
     try {
       final response = await http.get(url, headers: headers);
-      _logger.d(jsonDecode(response.body));
+      // _logger.d(jsonDecode(response.body));
       return response;
     } catch (error) {
-      _logger.e('Error al obtener los datos: $error');
+      // _logger.e('Error al obtener los datos: $error');
       /*ExceptionHandler.handleException(error);*/
       rethrow;
     }
