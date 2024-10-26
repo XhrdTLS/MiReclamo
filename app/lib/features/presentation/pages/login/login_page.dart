@@ -1,14 +1,17 @@
-import 'package:cm/screens/error_screen.dart';
-import 'package:cm/screens/home_screen.dart';
-import 'package:cm/services/google_service.dart';
-import 'package:cm/widgets/barra_app.dart';
+
+
+
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../../../../core/core.dart';
+import '../../../data/data_sources/google/google_service.dart';
+import '../views.dart';
+
+class LoginPage extends StatelessWidget {
   static final Logger _logger = Logger();
 
-  const LoginScreen({super.key});
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +28,13 @@ class LoginScreen extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
+                            builder: (context) => const HomePage()));
                   } else {
                     _logger.e('Fui terrible de bueno');
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const ErrorScreen();
-                    }));
+                          return const ErrorScreen();
+                        }));
                   }
                 });
               },

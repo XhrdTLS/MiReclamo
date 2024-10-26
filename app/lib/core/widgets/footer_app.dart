@@ -1,9 +1,8 @@
-import 'package:cm/screens/test_screen.dart';
+import 'package:cm/features/presentation/pages/test/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-import '../screens/home_screen.dart';
-import '../features/Notes/screens/notas_screen.dart';
+import 'package:cm/features/presentation/pages/views.dart';
 
 class FooterApp extends StatelessWidget {
   static final Logger _logger = Logger();
@@ -21,7 +20,7 @@ class FooterApp extends StatelessWidget {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const HomePage()),
                 );
                 _logger.i('Home');
               },
@@ -31,7 +30,7 @@ class FooterApp extends StatelessWidget {
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const NotasScreen()),
+                MaterialPageRoute(builder: (context) => const NotasPage()),
               );
               _logger.i('Notas');
             },

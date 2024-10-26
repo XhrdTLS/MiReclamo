@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cm/screens/home_screen.dart';
-import 'package:cm/screens/login_screen.dart';
-import 'package:cm/services/google_service.dart';
-import 'package:cm/services/storage_service.dart';
+import 'package:cm/features/presentation/pages/views.dart';
+import 'package:cm/features/data/data_sources/google/google_service.dart';
+import 'package:cm/features/data/data_sources/local/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -84,7 +83,7 @@ class MenuApp extends StatelessWidget {
             onTap: () {
               _logger.d('Voy a iniciar');
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+                  MaterialPageRoute(builder: (context) => const HomePage()));
             },
           ),
           ListTile(
@@ -95,7 +94,7 @@ class MenuApp extends StatelessWidget {
               GoogleService.disconnect();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()));
+                MaterialPageRoute(builder: (context) => const LoginPage()));
             },
           ),
         ],

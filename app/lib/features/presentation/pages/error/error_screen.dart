@@ -1,4 +1,4 @@
-import 'package:cm/widgets/barra_app.dart';
+import 'package:cm/core/widgets/barra_app.dart';
 import 'package:flutter/material.dart';
 
 class ErrorScreen extends StatelessWidget {

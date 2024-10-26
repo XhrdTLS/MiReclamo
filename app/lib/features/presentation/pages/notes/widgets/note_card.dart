@@ -1,6 +1,6 @@
-import 'package:cm/screens/home_screen.dart';
+import  'package:cm/features/presentation/pages/views.dart';
 import 'package:flutter/material.dart';
-import '../models/note.dart';
+import '../../../../data/models/note.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -27,7 +27,7 @@ class NoteCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context)=> const HomeScreen())
+                builder: (context)=> const HomePage())
           );
         },
       ),
