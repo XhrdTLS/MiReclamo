@@ -3,8 +3,6 @@ import 'package:cm/core/widgets/footer_app.dart';
 import 'package:cm/core/widgets/menu_app.dart';
 import 'package:cm/features/presentation/controllers/test/test_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
-import 'package:cm/features/data/data_sources/api_seba/testService.dart';
 
 class TestScreen extends StatelessWidget {
   final TestViewModel _testViewModel = TestViewModel();
