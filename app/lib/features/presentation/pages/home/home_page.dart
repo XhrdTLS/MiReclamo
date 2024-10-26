@@ -7,7 +7,6 @@ import 'package:logger/logger.dart';
 import 'package:cm/core/core.dart';
 
 class HomePage extends StatelessWidget {
-  static final Logger _logger = Logger();
   const HomePage({super.key});
 
   @override

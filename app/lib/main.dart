@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
 import 'package:cm/features/presentation/pages/views.dart';
 
