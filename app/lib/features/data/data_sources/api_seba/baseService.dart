@@ -1,6 +1,5 @@
 import 'package:cm/features/data/data_sources/local/storage_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
 
 
 class BaseService {

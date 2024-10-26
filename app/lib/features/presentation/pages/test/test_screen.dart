@@ -8,8 +8,7 @@ import 'package:cm/features/data/data_sources/api_seba/testService.dart';
 
 class TestScreen extends StatelessWidget {
   final TestViewModel _testViewModel = TestViewModel();
-  static final Logger _logger = Logger();
-  final TestService _testService = TestService();
+
 
   TestScreen({super.key});
 
