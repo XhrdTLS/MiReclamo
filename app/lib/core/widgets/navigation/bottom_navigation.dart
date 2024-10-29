@@ -5,7 +5,7 @@ import 'package:mi_reclamo/core/widgets/navigation/navigation.dart';
 
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
 
-class FooterApp extends StatelessWidget {
+/* class FooterApp extends StatelessWidget {
   static final Logger _logger = Logger();
   const FooterApp({super.key});
 
@@ -52,7 +52,7 @@ class FooterApp extends StatelessWidget {
       ),
     );
   }
-}
+} */
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});

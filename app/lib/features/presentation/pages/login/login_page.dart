@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:mi_reclamo/core/widgets/icons.dart';
 
 import '../../../../core/core.dart';
 import '../../../data/data_sources/google/google_service.dart';
@@ -22,13 +23,13 @@ class LoginPage extends StatelessWidget {
               onPressed: () {
                 GoogleService.logIn().then((result) {
                   if (result) {
-                    _logger.i('Me autentiqué super bien');
+                    _logger.i('Sesión Iniciada');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomePage()));
+                            builder: (context) => const BottomNavBar()));
                   } else {
-                    _logger.e('Fui terrible de bueno');
+                    _logger.e('PROBLEMA con Login');
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                           return const ErrorScreen();
@@ -37,7 +38,7 @@ class LoginPage extends StatelessWidget {
                 });
               },
               child: const Row(
-                children: [Icon(Icons.g_mobiledata), Text('Login')],
+                children: [Icon(AppIcons.profile), Text('Login')],
               )),
         ),
       ),
