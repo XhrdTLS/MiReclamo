@@ -1,9 +1,6 @@
-
-
-
 import 'package:flutter/material.dart';
 
-import 'package:cm/core/core.dart';
+import 'package:mi_reclamo/core/core.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,7 +14,7 @@ class HomePage extends StatelessWidget {
       body: const Center(
         child: Text('Home Page'),
       ),
-      bottomNavigationBar: const FooterApp(),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

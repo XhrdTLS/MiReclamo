@@ -1,16 +1,13 @@
-# cm
+# Mi Reclamo
 
-A new Flutter project.
+Proyecto creado para la asignatura Computación Móvil de la Universidad Tecnológica Metropolitana
 
-## Getting Started
+## ¿De qué se trata?
 
-This project is a starting point for a Flutter application.
+Esta Aplicación móvil es desarrollada en Flutter que tiene la función de:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Gestionar Reclamos que realizan los estudiantes, lo que significa:
+   
+    - Ver los Reclamos
+    - Actualizar los Estados de los Reclamos
+    - Responder los Reclamos

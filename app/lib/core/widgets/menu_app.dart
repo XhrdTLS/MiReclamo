@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cm/features/presentation/pages/views.dart';
-import 'package:cm/features/data/data_sources/google/google_service.dart';
-import 'package:cm/features/data/data_sources/local/storage_service.dart';
+import 'package:mi_reclamo/features/presentation/pages/views.dart';
+import 'package:mi_reclamo/features/data/data_sources/google/google_service.dart';
+import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 

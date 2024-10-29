@@ -1,7 +1,7 @@
-import 'package:cm/core/widgets/barra_app.dart';
-import 'package:cm/core/widgets/footer_app.dart';
-import 'package:cm/core/widgets/menu_app.dart';
-import 'package:cm/features/presentation/controllers/test/test_controller.dart';
+import 'package:mi_reclamo/core/widgets/barra_app.dart';
+import 'package:mi_reclamo/core/widgets/footer_app.dart';
+import 'package:mi_reclamo/core/widgets/menu_app.dart';
+import 'package:mi_reclamo/features/presentation/controllers/test/test_controller.dart';
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatelessWidget {
