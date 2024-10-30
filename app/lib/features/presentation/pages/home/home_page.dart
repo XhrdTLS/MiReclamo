@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
+import 'package:mi_reclamo/core/widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-    padding: EdgeInsets.all(16),
+    return Padding(
+    padding: const EdgeInsets.all(20),
     child: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         clipBehavior: Clip.none,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TopNavigation(titulo: "Home Page"),
-             SizedBox(height: 20),
-             SizedBox(height: 20),
-             SizedBox(height: 20),
+            const TopNavigation(titulo: "Administrador"),
+            Text("Hola!", style: StyleText.headline),
+            const SizedBox(height: 20),
+            
+            const SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

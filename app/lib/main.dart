@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_reclamo/core/widgets/styles/theme.dart';
 import 'package:mi_reclamo/features/presentation/pages/login/login_page.dart';
 
 
@@ -14,10 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mi Reclamo UTEM',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1D8E5C)),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.getTheme(context),
       home: const LoginPage(),
     );
   }

@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:cm/features/data/data_sources/api_seba/baseService.dart';
+import 'package:mi_reclamo/features/data/data_sources/api_seba/baseService.dart';
 import 'package:logger/logger.dart';
 
 class IcsoService extends BaseService{

@@ -1,6 +1,3 @@
-import 'package:mi_reclamo/core/widgets/barra_app.dart';
-import 'package:mi_reclamo/core/widgets/navigation/bottom_navigation.dart';
-import 'package:mi_reclamo/core/widgets/menu_app.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/test_controller.dart';
 import 'package:flutter/material.dart';
 
