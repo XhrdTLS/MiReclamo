@@ -1,7 +1,7 @@
-import 'package:cm/core/widgets/barra_app.dart';
-import 'package:cm/core/widgets/footer_app.dart';
-import 'package:cm/core/widgets/menu_app.dart';
-import 'package:cm/features/presentation/controllers/test/test_controller.dart';
+import 'package:mi_reclamo/core/widgets/barra_app.dart';
+import 'package:mi_reclamo/core/widgets/navigation/bottom_navigation.dart';
+import 'package:mi_reclamo/core/widgets/menu_app.dart';
+import 'package:mi_reclamo/features/presentation/controllers/test/test_controller.dart';
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatelessWidget {
@@ -13,10 +13,7 @@ class TestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const BarraApp(titulo: 'Test'),
-      drawer: const MenuApp(),
-      body: Center(
+    return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -38,8 +35,6 @@ class TestScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: const FooterApp(),
-    );
+      );
   }
 }

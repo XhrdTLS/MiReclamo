@@ -1,11 +1,9 @@
-import 'package:cm/core/widgets/barra_app.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-import 'package:cm/features/data/models/note.dart';
-import 'package:cm/features/data/data_sources/local/storage_service.dart';
-import 'package:cm/core/widgets/widgets.dart';
-import 'package:cm/features/presentation/pages/notes/widgets/widgets.dart';
+import 'package:mi_reclamo/features/data/models/note.dart';
+import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart';
+import 'package:mi_reclamo/features/presentation/pages/notes/widgets/widgets.dart';
 
 
 
@@ -59,10 +57,7 @@ class _NotasPageState extends State<NotasPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: BarraApp(titulo: 'Notas'),
-      drawer: MenuApp(),
-      body: Column(
+    return Column(
         children: [
           Expanded(
             child: RefreshIndicator(
@@ -91,9 +86,8 @@ class _NotasPageState extends State<NotasPage> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: const FooterApp(),
-    );
+      );
+
   }
 
   @override

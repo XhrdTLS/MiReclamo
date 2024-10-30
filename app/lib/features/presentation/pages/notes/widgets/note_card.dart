@@ -1,4 +1,4 @@
-import  'package:cm/features/presentation/pages/views.dart';
+import  'package:mi_reclamo/features/presentation/pages/views.dart';
 import 'package:flutter/material.dart';
 import '../../../../data/models/note.dart';
 

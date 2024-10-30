@@ -1,5 +1,5 @@
 import 'package:logger/logger.dart';
-import 'package:cm/features/data/data_sources/api_seba/v0_infoService.dart';
+import 'package:mi_reclamo/features/data/data_sources/api_seba/v0_infoService.dart';
 
 /// Controller acces point to the V0 all infos services
 /// the screen to views its not created
