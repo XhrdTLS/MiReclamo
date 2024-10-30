@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:mi_reclamo/core/widgets/icons.dart';
 import 'package:mi_reclamo/core/widgets/navigation/navigation.dart';
-
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
 
 /* class FooterApp extends StatelessWidget {
