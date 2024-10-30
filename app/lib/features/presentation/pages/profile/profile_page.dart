@@ -7,7 +7,7 @@ import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart
 import 'package:mi_reclamo/features/presentation/pages/login/login_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();

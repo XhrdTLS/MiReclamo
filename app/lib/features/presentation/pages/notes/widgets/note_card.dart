@@ -1,4 +1,4 @@
-import  'package:mi_reclamo/features/presentation/pages/views.dart';
+import 'package:mi_reclamo/core/core.dart';
 import 'package:flutter/material.dart';
 import '../../../../data/models/note.dart';
 
@@ -9,8 +9,8 @@ class NoteCard extends StatelessWidget {
   const NoteCard({
     required this.note,
     required this.onDelete,
-    Key? key,
-  }): super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +20,14 @@ class NoteCard extends StatelessWidget {
         title: Text(note.title),
         subtitle: Text(note.content),
         trailing: IconButton(
-          icon: const Icon(Icons.delete_forever_outlined),
+          icon: const Icon(AppIcons.delete),
           onPressed: onDelete,
         ),
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context)=> const HomePage())
+                builder: (context)=> const BottomNavBar())
           );
         },
       ),

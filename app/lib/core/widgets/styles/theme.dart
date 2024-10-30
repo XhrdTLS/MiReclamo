@@ -4,22 +4,18 @@ import 'package:mi_reclamo/core/core.dart';
 
 class AppTheme {
   static Color get lightGrey => const Color(0xFFBBBBBB);
-  static Color get darkLightGrey => const Color(0xFF474747);
 
-  static Color get lightBlueCard => const Color(0xFFB8E8FC);
-  static Color get darkBlueCard => const Color(0xFF005C82);
-
-  static Color get lightPurpleCard => const Color(0xFFDFCCFB);
-  static Color get darkPurpleCard => const Color(0xFF692083);
-
-  static Color get lightYellowCard => const Color(0xFFFCF7BB);
-  static Color get darkYellowCard => const Color(0xFF6D660A);
-
-  static Color get lightSalmonCard => const Color(0xFFFFBDBD);
-  static Color get darkSalmonCard => const Color(0xFF8C3A3A);
+  static Color get lightOrange => const Color(0xFFFFD6A5);
+  static Color get darkOrange => const Color(0xFFA05B07);
 
   static Color get lightGreenCard => const Color(0xFFB3E6CC);
-  static Color get darkGreenCard => const Color(0xFF0A693C);
+  static Color get darkGreenCard => const Color(0xFFB3E6CC);
+
+  static Color get lightBlueCard => const Color(0xFFB8E8FC);
+  static Color get darkBlueCard => const Color(0xFFB8E8FC);
+
+  static Color get lightRed => const Color(0xFFFFBDBD);
+  static Color get darkRed => const Color(0xFFFFBDBD);
 
   static ColorScheme get colorScheme => ColorScheme.fromSeed(
         seedColor: const Color(0xFF1D8E5C),

@@ -12,8 +12,28 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<bool> checkCondition() async {
+    await GoogleService.logIn();
+    return true; // Change this condition as needed
+  }
     return Scaffold(
-      body: Center(
+      appBar: const TopNavigation(titulo: "Iniciar Sesión"),
+      body: FutureBuilder<bool>(
+        future: GoogleService.logIn(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData && snapshot.data == true) {
+            // Navigate to the SecondScreen
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const BottomNavBar()),
+              );
+            });
+          }
+          return Center(
         child: Padding(
           padding: const EdgeInsets.all(100.0),
           child: Column(
@@ -30,7 +50,7 @@ class LoginPage extends StatelessWidget {
                                 ///Retorna a BottomNavBar ya que es un Scaffold, y ayuda con el manejo de rutas
                                 builder: (context) => const BottomNavBar()));
                       } else {
-                        _logger.e('PROBLEMA con Login');
+                        _logger.e('Error al Iniciar Sesión');
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return const ErrorScreen();
@@ -39,11 +59,13 @@ class LoginPage extends StatelessWidget {
                     });
                   },
                   child: Row(
-                    children: [const Icon(AppIcons.profile), Text('Iniciar Sesión',style: StyleText.bodyBold)],
+                    children: [ const Icon(AppIcons.profile), Text('Iniciar Sesión',style: StyleText.bodyBold)],
                   )),
              ],
            ),
         ),
+      );
+        },
       ),
     );
   }
