@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/core/widgets/icons.dart';
+import 'package:mi_reclamo/core/widgets/styles/icons.dart';
 
 class TopNavigation extends StatelessWidget implements PreferredSizeWidget {
   final String titulo;

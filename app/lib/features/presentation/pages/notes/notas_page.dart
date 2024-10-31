@@ -5,9 +5,6 @@ import 'package:mi_reclamo/features/data/models/note.dart';
 import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart';
 import 'package:mi_reclamo/features/presentation/pages/notes/widgets/widgets.dart';
 
-
-
-
 class NotasPage extends StatefulWidget {
   const NotasPage({super.key});
 
