@@ -24,10 +24,8 @@ class NoteCard extends StatelessWidget {
           onPressed: onDelete,
         ),
         onTap: () {
-          Navigator.push(
+          Navigator.pop(
             context,
-            MaterialPageRoute(
-                builder: (context)=> const BottomNavBar())
           );
         },
       ),

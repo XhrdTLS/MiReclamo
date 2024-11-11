@@ -47,4 +47,14 @@ class TestViewModel {
       _logger.e('Error fetching access: $error');
     }
   }
+
+  Future<void> fetchReclamos() async {
+    Map<String, dynamic> requestBody = {};
+    try {
+      List<dynamic> response = await _testService.getCategory(requestBody);
+      _logger.i('Reclamos Response: $response');
+    } catch (error) {
+      _logger.e('Error fetching reclamos: $error');
+    }
+  }
 }

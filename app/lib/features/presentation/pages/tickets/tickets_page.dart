@@ -1,11 +1,12 @@
 import 'package:mi_reclamo/features/presentation/controllers/test/test_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:mi_reclamo/features/presentation/pages/views.dart';
 
-class TestScreen extends StatelessWidget {
+class TicketsPage extends StatelessWidget {
   final TestViewModel _testViewModel = TestViewModel();
 
 
-  TestScreen({super.key});
+  TicketsPage({super.key});
 
 
   @override
@@ -30,6 +31,7 @@ class TestScreen extends StatelessWidget {
               onPressed: _testViewModel.fetchAccess,
               child: const Text('Fetch Access Data'),
             ),
+            ElevatedButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ReclamosPage())), child: const Text('Ir a Reclamos Page'),)
           ],
         ),
       );

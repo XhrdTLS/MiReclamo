@@ -13,6 +13,10 @@ class AppIcons {
   static const IconData notes = Symbols.note_stack_rounded;
   /// Icono de Solicitud
   static const IconData ticket = Symbols.confirmation_number_rounded;
+  /// Icono de Resuelto
+  static const IconData done = Symbols.check_circle_rounded;
+  /// Icono de Pendiente
+  static const IconData pending = Symbols.schedule_rounded;
 
   //* Iconos de Tipo de Solicitud
   /// Tipo de Solicitud: Reclamo

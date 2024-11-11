@@ -8,11 +8,11 @@ class AppTheme {
   static Color get lightOrange => const Color(0xFFFFD6A5);
   static Color get darkOrange => const Color(0xFFA05B07);
 
-  static Color get lightGreenCard => const Color(0xFFB3E6CC);
-  static Color get darkGreenCard => const Color(0xFFB3E6CC);
+  static Color get lightGreen => const Color(0xFFC7E9B0);
+  static Color get darkGreen => const Color(0xFFB3E6CC);
 
-  static Color get lightBlueCard => const Color(0xFFB8E8FC);
-  static Color get darkBlueCard => const Color(0xFFB8E8FC);
+  static Color get lightBlue => const Color(0xFFB6E0F7);
+  static Color get darkBlue => const Color(0xFFB8E8FC);
 
   static Color get lightRed => const Color(0xFFFFBDBD);
   static Color get darkRed => const Color(0xFFFFBDBD);
@@ -20,7 +20,6 @@ class AppTheme {
   static ColorScheme get colorScheme => ColorScheme.fromSeed(
         seedColor: const Color(0xFF1D8E5C),
         primary: const Color(0xFF1D8E5C),
-        secondary: const Color(0xFF06607A),
       );
 
   static ThemeData getTheme(BuildContext context) => ThemeData.light().copyWith(
@@ -49,4 +48,4 @@ class AppTheme {
               displayColor: const Color(0xFF333333),
             ),
       );
-}
+} 

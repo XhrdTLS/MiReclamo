@@ -59,5 +59,4 @@ class V0Infoservice extends BaseService {
     }
   }
 
-
 }
