@@ -26,7 +26,6 @@ class V0Info {
   }
 
   Future<void> fetchCategories() async {
-    Map<String, dynamic> requestBody = {};
     try {
       List<dynamic> response = await _infoService.getCategory();
       _logger.i('Categories Response: $response');
