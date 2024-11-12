@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
 
 class TicketsPage extends StatelessWidget {
-  final TestViewModel _testViewModel = TestViewModel();
+  final infoController _testViewModel = infoController();
 
 
   TicketsPage({super.key});

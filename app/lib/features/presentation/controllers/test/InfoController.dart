@@ -2,7 +2,7 @@ import 'package:logger/logger.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/InfoService.dart';
 
 
-class TestViewModel {
+class infoController {
   final Logger _logger = Logger();
   final InfoService _infoController = InfoService();
 
