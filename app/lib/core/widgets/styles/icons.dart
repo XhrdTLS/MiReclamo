@@ -49,4 +49,6 @@ class AppIcons {
   static const edit = Symbols.edit_rounded;
   /// Icono para Recargar
   static const refresh = Symbols.refresh_rounded;
+
+  static const back = Symbols.arrow_back_rounded;
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/core/widgets/styles/icons.dart';
-import 'package:mi_reclamo/core/widgets/navigation/navigation.dart';
+import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/features/presentation/pages/profile/profile_page.dart';
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
 

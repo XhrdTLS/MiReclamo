@@ -57,6 +57,10 @@ class _NotasPageState extends State<NotasPage> {
   Widget build(BuildContext context) {
     return Column(
         children: [
+          const TopNavigation(
+          title: "Tus Notas",
+          isMainScreen: true,
+        ),
           Expanded(
             child: RefreshIndicator(
               onRefresh: _refresh,

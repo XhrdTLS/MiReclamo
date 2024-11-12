@@ -21,6 +21,10 @@ class ProfilePageState extends State<ProfilePage> {
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
+        const TopNavigation(
+          title: "Perfil",
+          isMainScreen: true,
+        ),
         Card(
           color: Theme.of(context).canvasColor,
           elevation: 0,

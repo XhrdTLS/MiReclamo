@@ -12,6 +12,10 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const TopNavigation(
+        title: "Iniciar Sesión",
+        isMainScreen: true,
+      ),
       body: FutureBuilder<bool>(
         future: GoogleService.logIn(),
         builder: (context, snapshot) {
