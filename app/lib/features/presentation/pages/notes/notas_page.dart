@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:mi_reclamo/core/core.dart';
 
 import 'package:mi_reclamo/features/data/models/note.dart';
 import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart';
@@ -77,9 +78,11 @@ class _NotasPageState extends State<NotasPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
+            child: FloatingActionButton.extended(
+              backgroundColor: Theme.of(context).canvasColor,
               onPressed: _addNote,
-              child: const Text('Agregar Nota'),
+              icon: const Icon(AppIcons.add),
+              label: const Text('Agregar Apunte'),
             ),
           ),
         ],

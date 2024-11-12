@@ -7,13 +7,13 @@ import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart
 import 'package:mi_reclamo/features/presentation/pages/login/login_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  ProfilePageState createState() => ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class ProfilePageState extends State<ProfilePage> {
   static final Logger _logger = Logger();
 
   @override
@@ -21,7 +21,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListView(
       padding: const EdgeInsets.all(20),
       children: [
-        const TopNavigation(titulo: "Perfil"),
         Card(
           color: Theme.of(context).canvasColor,
           elevation: 0,
@@ -57,7 +56,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         }
                       },
                     ),
-                    // Add other user information widgets here (optional)
                   ],
                 ),
                 const SizedBox(height: 10),
