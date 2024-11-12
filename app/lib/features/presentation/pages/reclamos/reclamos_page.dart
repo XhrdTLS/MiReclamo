@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/features/presentation/controllers/test/test_controller.dart';
+import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
 
 class ReclamosPage extends StatelessWidget {
   final TestViewModel _testViewModel = TestViewModel();
@@ -30,8 +30,8 @@ class ReclamosPage extends StatelessWidget {
                 final reclamo = reclamos[index];
                 return Card(
                   child: ListTile(
-                    title: Text(reclamo['nombre']),
-                    subtitle: Text(reclamo['descripcion']),
+                    title: Text(reclamo['name']),
+                    subtitle: Text(reclamo['description']),
                   ),
                 );
               },

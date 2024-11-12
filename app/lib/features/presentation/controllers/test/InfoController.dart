@@ -1,17 +1,14 @@
 import 'package:logger/logger.dart';
-import 'package:mi_reclamo/features/data/data_sources/api_seba/v0_infoService.dart';
+import 'package:mi_reclamo/features/data/data_sources/api_seba/InfoService.dart';
 
-/// Controller acces point to the V0 all infos services
-/// the screen to views its not created
 
 class TestViewModel {
   final Logger _logger = Logger();
-  final V0Infoservice _testService = V0Infoservice();
+  final InfoService _infoController = InfoService();
 
   Future<void> fetchTypes() async {
-    Map<String, dynamic> requestBody = {};
     try {
-      List<dynamic> response = await _testService.getTypes(requestBody);
+      List<dynamic> response = await _infoController.getTypes();
       _logger.i('Types Response: $response');
     } catch (error) {
       _logger.e('Error fetching types: $error');
@@ -19,9 +16,8 @@ class TestViewModel {
   }
 
   Future<void> fetchStatus() async {
-    Map<String, dynamic> requestBody = {};
     try {
-      List<dynamic> response = await _testService.getStatus(requestBody);
+      List<dynamic> response = await _infoController.getStatus();
       _logger.i('Status Response: $response');
     } catch (error) {
       _logger.e('Error fetching status: $error');
@@ -29,9 +25,8 @@ class TestViewModel {
   }
 
   Future<void> fetchCategories() async {
-    Map<String, dynamic> requestBody = {};
     try {
-      List<dynamic> response = await _testService.getCategory(requestBody);
+      List<dynamic> response = await _infoController.getCategory();
       _logger.i('Categories Response: $response');
     } catch (error) {
       _logger.e('Error fetching categories: $error');
@@ -39,20 +34,19 @@ class TestViewModel {
   }
 
   Future<void> fetchAccess() async {
-    Map<String, dynamic> requestBody = {};
     try {
-      List<dynamic> response = await _testService.getAccess(requestBody);
+      List<dynamic> response = await _infoController.getAccess();
       _logger.i('Access Response: $response');
     } catch (error) {
       _logger.e('Error fetching access: $error');
     }
   }
 
-  Future<void> fetchReclamos() async {
-    Map<String, dynamic> requestBody = {};
+  Future<dynamic> fetchReclamos() async {
     try {
-      List<dynamic> response = await _testService.getCategory(requestBody);
+      List<dynamic> response = await _infoController.getCategory();
       _logger.i('Reclamos Response: $response');
+      return response;
     } catch (error) {
       _logger.e('Error fetching reclamos: $error');
     }

@@ -35,7 +35,7 @@ class V0Infoservice extends BaseService {
   }
 
   /// Obtener todas las categorias
-  Future<List<dynamic>> getCategory(Map<String, dynamic> requestBody) async {
+  Future<List<dynamic>> getCategory() async {
     try {
       final response = await get('$v1/categories');
       _logger.d(jsonDecode(response.body));

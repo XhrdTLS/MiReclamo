@@ -1,4 +1,4 @@
-import 'package:mi_reclamo/features/presentation/controllers/test/test_controller.dart';
+import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
 
