@@ -51,4 +51,5 @@ class infoController {
       _logger.e('Error fetching reclamos: $error');
     }
   }
+
 }

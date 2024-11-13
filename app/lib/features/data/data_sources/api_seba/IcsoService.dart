@@ -1,11 +1,13 @@
 
 import 'dart:convert';
 
+import 'package:mi_reclamo/features/data/data_sources/api_seba/InfoService.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/baseService.dart';
 import 'package:logger/logger.dart';
 
 class IcsoService extends BaseService{
   final Logger _logger = Logger();
+  final InfoService _infoService = InfoService();
 
   /// url
   /// {{baseUrl}}/v1/icso
@@ -90,4 +92,30 @@ class IcsoService extends BaseService{
     }
   }
 
+  /// Obtiene todos los tickets
+  ///
+  Future<List<dynamic>> getAllTokens() async {
+    List<dynamic> categories = await _infoService.getCategory();
+    Set<String> tokens = {};
+    for (var category in categories) {
+      tokens.add(category['token']);
+    }
+    List<dynamic> responses = [];
+    for(var token in tokens){
+      try {
+        final response = await get('$url/$token/tickets?type=&status=');
+        _logger.d(jsonDecode(response.body));
+        final decodedResponse = jsonDecode(response.body);
+        if (decodedResponse is List) {
+          responses.addAll(decodedResponse);
+        } else if (decodedResponse is Map) {
+          responses.add(decodedResponse);
+        }
+      } catch (error) {
+        _logger.e('Error al obtener los datos: $error');
+        throw Exception('Failed to fetch Tokens by category: $error');
+      }
+    }
+    return responses;
+  }
 }

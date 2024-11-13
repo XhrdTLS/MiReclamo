@@ -55,5 +55,18 @@ class IcsoController {
     }
   }
 
+  Future<List<dynamic>> fetchAll() async {
+    try {
+      List<dynamic> response = await _icsoService.getAllTokens();
+      // _logger.i('Reclamos Response: $response');
+      return response;
+    } catch (error) {
+      _logger.e('Error fetching reclamos: $error');
+      return [];
+    }
+  }
+
+
+
 
 }
