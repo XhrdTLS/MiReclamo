@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/IcsoService.dart';
+import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
 class IcsoController {
   final Logger _logger = Logger();
@@ -55,10 +56,10 @@ class IcsoController {
     }
   }
 
-  Future<List<dynamic>> fetchAll() async {
+  Future<List<Ticket>> fetchAll() async {
     try {
-      List<dynamic> response = await _icsoService.getAllTokens();
-      // _logger.i('Reclamos Response: $response');
+      List<Ticket> response = await _icsoService.getAllTokens();
+      _logger.i('Reclamos Response: $response');
       return response;
     } catch (error) {
       _logger.e('Error fetching reclamos: $error');

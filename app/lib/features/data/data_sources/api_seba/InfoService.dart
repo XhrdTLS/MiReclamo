@@ -30,7 +30,7 @@ class InfoService extends BaseService {
     try {
       final response = await get('$v1/status');
       _logger.d(json.decode(utf8.decode(response.bodyBytes)));
-      final List<dynamic> types = jsonDecode(response.body);
+      final List<dynamic> types = json.decode(utf8.decode(response.bodyBytes));
       return types;
     } catch (error) {
       _logger.e('Error al obtener los datos: $error');
