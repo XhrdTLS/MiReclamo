@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/core.dart';
+import 'package:mi_reclamo/core/widgets/styles/style_text.dart';
 
 class StatCard extends StatelessWidget {
   final IconData icon;
