@@ -22,21 +22,19 @@ class _NotasPageState extends State<NotasPage> {
     super.initState();
     _refresh();
     _logger.i('Iniciando NotasScreen');
-
   }
 
   Future<void> _refresh() async {
     final notes = await StorageService.getNotes();
     setState(() {
-      if(mounted){
+      if (mounted) {
         _logger.d('Limpiando Notas');
         _notas.clear();
       }
       _logger.d('Notas cargadas: $notes');
-      _notas.addAll(notes.map((note)=> Note.fromMap(note)).toList());
+      _notas.addAll(notes.map((note) => Note.fromMap(note)).toList());
     });
   }
-
 
   Future<void> _addNote() async {
     final result = await Navigator.push(
@@ -49,13 +47,16 @@ class _NotasPageState extends State<NotasPage> {
       setState(() {
         _notas.add(result);
       });
-      await StorageService.saveNotes(_notas.map((note)=> note.toMap()).toList());
+      await StorageService.saveNotes(
+          _notas.map((note) => note.toMap()).toList());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Scaffold(
+      appBar: const TopNavigation(title: "Notas", isMainScreen: true),
+      body: Column(
         children: [
           Expanded(
             child: RefreshIndicator(
@@ -69,7 +70,8 @@ class _NotasPageState extends State<NotasPage> {
                       setState(() {
                         _notas.removeAt(index);
                       });
-                      StorageService.saveNotes(_notas.map((note)=> note.toMap()).toList());
+                      StorageService.saveNotes(
+                          _notas.map((note) => note.toMap()).toList());
                     },
                   );
                 },
@@ -86,8 +88,8 @@ class _NotasPageState extends State<NotasPage> {
             ),
           ),
         ],
-      );
-
+      ),
+    );
   }
 
   @override
@@ -96,5 +98,4 @@ class _NotasPageState extends State<NotasPage> {
     _notas.clear();
     super.dispose();
   }
-
 }

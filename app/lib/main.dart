@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/core/widgets/styles/theme.dart';
 import 'package:mi_reclamo/features/presentation/pages/login/login_page.dart';
+import 'core/core.dart';
 
 
 void main() {
@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mi Reclamo UTEM',
-      theme: AppTheme.getTheme(context),
+      theme: AppTheme.getLight(context),
+      darkTheme: AppTheme.getDark(context),
       home: const LoginPage(),
     );
   }

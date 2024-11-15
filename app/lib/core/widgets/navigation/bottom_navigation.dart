@@ -16,8 +16,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int idx = 0;
   final List<NavigationItem> screens = [
     NavigationItem(destination: const HomePage(), label: "Inicio", icon: AppIcons.home),
-    NavigationItem(destination: const NotasPage(), label: "Notas", icon: AppIcons.notes),
     NavigationItem(destination: TicketsPage(), label: "Solicitudes", icon: AppIcons.ticket),
+    NavigationItem(destination: const NotasPage(), label: "Notas", icon: AppIcons.notes),
     NavigationItem(destination: const ProfilePage(), label: "Perfil", icon: AppIcons.profile),
   ];
 

@@ -12,7 +12,7 @@ class AppTheme {
   static Color get darkGreen => const Color(0xFFB3E6CC);
 
   static Color get lightBlue => const Color(0xFFB6E0F7);
-  static Color get darkBlue => const Color(0xFFB8E8FC);
+  static Color get darkBlue => const Color.fromARGB(255, 12, 61, 82);
 
   static Color get lightRed => const Color(0xFFFFBDBD);
   static Color get darkRed => const Color(0xFFFFBDBD);
@@ -22,7 +22,7 @@ class AppTheme {
         primary: const Color(0xFF1D8E5C),
       );
 
-  static ThemeData getTheme(BuildContext context) => ThemeData.light().copyWith(
+  static ThemeData getLight(BuildContext context) => ThemeData.light().copyWith(
         /// Esquema de colores
         colorScheme: colorScheme,
         canvasColor: colorScheme.secondaryContainer, 
@@ -46,6 +46,32 @@ class AppTheme {
             .apply(
               bodyColor: const Color(0xFF333333),
               displayColor: const Color(0xFF333333),
+            ),
+      );
+        static ThemeData getDark(BuildContext context) => ThemeData.dark().copyWith(
+        /// Esquema de colores
+        colorScheme: colorScheme,
+        canvasColor: colorScheme.secondaryContainer, 
+        dividerColor: lightGrey,
+
+        /// Fondo de la aplicación
+        scaffoldBackgroundColor: const Color(0xFF171918),
+
+        /// Tema de la barra de navegación
+        navigationBarTheme: NavigationBarTheme.of(context).copyWith(
+          backgroundColor: const Color(0xFF000000),
+          elevation: 0,
+        ),
+
+        /// Tema de texto
+        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme)
+            .copyWith(
+              headlineLarge: GoogleFonts.inter(
+                  textStyle: StyleText.headline),
+            )
+            .apply(
+              bodyColor: const Color(0xFFFAFAFA),
+              displayColor: const Color(0xFFFAFAFA),
             ),
       );
 } 

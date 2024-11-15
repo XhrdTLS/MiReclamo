@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
 
 class ReclamosPage extends StatelessWidget {
@@ -10,9 +11,7 @@ class ReclamosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reclamos'),
-      ),
+      appBar: const TopNavigation(title: "Solicitudes", isMainScreen: false),
       body: FutureBuilder(
         future: _testViewModel.fetchReclamos(),
         builder: (context, snapshot) {
@@ -21,7 +20,7 @@ class ReclamosPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-            return const Center(child: Text('No reclamos found'));
+            return const Center(child: Text('Sin Registros'));
           } else {
             final reclamos = snapshot.data as List;
             return ListView.builder(
