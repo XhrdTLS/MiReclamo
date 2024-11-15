@@ -3,10 +3,11 @@ import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
-import 'package:mi_reclamo/features/presentation/pages/reclamos/widgets/widgets.dart'; // Asegúrate de importar la entidad Ticket
+import 'package:mi_reclamo/features/presentation/controllers/test/icsoController.dart';
+import 'package:mi_reclamo/features/presentation/pages/tickets/tickets_page.dart';
 
 class ReclamosPage extends StatelessWidget {
-  final infoController _testViewModel = infoController();
+  final IcsoController _testViewModel = IcsoController();
 
   ReclamosPage({super.key});
 
@@ -25,17 +26,18 @@ class ReclamosPage extends StatelessWidget {
             return Container(); // Return an empty container if no tickets
           } else {
             final tickets = snapshot.data as List<Ticket>;
-            return ListView.builder(
-              itemCount: tickets.length,
-              itemBuilder: (context, index) {
-                final ticket = tickets[index];
-                return TicketCard(
-                  ticket: ticket,
-                  onDelete: () {
-                    // Implement delete functionality
-                  },
-                );
-              },
+            return Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TicketsPage(tickets: tickets),
+                    ),
+                  );
+                },
+                child: const Text('View All Tickets'),
+              ),
             );
           }
         },
@@ -47,7 +49,7 @@ class ReclamosPage extends StatelessWidget {
     if (globalTicket.isNotEmpty) {
       return globalTicket;
     } else {
-      return await _testViewModel.fetchReclamos();
+      return await _testViewModel.fetchAll();
     }
   }
 }
