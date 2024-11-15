@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/widgets.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/assigned_claim.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/statics_card.dart';
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage>{
   void initState() {
     super.initState();
     _loadUserName();
+    initializeTickets().then((_) => _loadCounts());
   }
 
    Future<void> _loadUserName() async {
@@ -28,6 +30,25 @@ class _HomePageState extends State<HomePage>{
       _userName = firstName[0].toUpperCase() + firstName.substring(1).toLowerCase();
     });
   }
+  String solicitudesTotales = "0";
+  String sinResolver = "0";
+  String prendientes = "0";
+  String resueltos = "0";
+
+   Future<void> _loadCounts()async {
+     if(globalTicket.isNotEmpty){
+        int total = globalTicket.length;
+        int unresolved = globalTicket.where((ticket) => ticket.status == 'Sin Resolver').length;
+        int pending = globalTicket.where((ticket) => ticket.status == 'Pendiente').length;
+        int resolved = globalTicket.where((ticket) => ticket.status == 'Resuelto').length;
+        setState(() {
+          solicitudesTotales = total.toString();
+          sinResolver = unresolved.toString();
+          prendientes = pending.toString();
+          resueltos = resolved.toString();
+        });
+     }
+   }
   
   @override
   Widget build(BuildContext context) {
@@ -54,25 +75,25 @@ class _HomePageState extends State<HomePage>{
               children: [
               StatCard(
                 icon: AppIcons.ticket,
-                value: "25",
+                value: solicitudesTotales,
                 label: "Solicitudes Totales",
-                color: AppTheme.lightBlue, 
+                color: AppTheme.lightBlue,
               ),
               StatCard(
                 icon: AppIcons.claim,
-                value: "10",
+                value: sinResolver,
                 label: "Sin Resolver",
                 color: AppTheme.lightRed,
               ),
               StatCard(
                 icon: AppIcons.pending,
-                value: "12",
+                value: prendientes,
                 label: "Pendientes",
                 color: AppTheme.lightOrange,
               ),
               StatCard(
                 icon: AppIcons.done,
-                value: "3",
+                value: resueltos,
                 label: "Resueltos",
                 color: AppTheme.lightGreen,
               ),
