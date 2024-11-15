@@ -58,7 +58,7 @@ class IcsoController {
 
   Future<List<Ticket>> fetchAll() async {
     try {
-      List<Ticket> response = await _icsoService.getAllTokens();
+      List<Ticket> response = await _icsoService.getAllTickets();
       _logger.i('Reclamos Response: $response');
       return response;
     } catch (error) {

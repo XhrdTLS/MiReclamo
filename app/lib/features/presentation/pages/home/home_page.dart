@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/core/widgets/widgets.dart';
-import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/assigned_claim.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/statics_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';

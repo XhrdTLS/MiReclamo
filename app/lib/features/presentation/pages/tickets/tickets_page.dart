@@ -1,3 +1,4 @@
+import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/icsoController.dart';
@@ -9,6 +10,10 @@ class TicketsPage extends StatelessWidget {
 
 
   TicketsPage({super.key});
+
+  Future<void> _initializeTickets() async {
+    await initializeTickets();
+  }
 
 
   @override
@@ -36,6 +41,10 @@ class TicketsPage extends StatelessWidget {
             ElevatedButton(
               onPressed: _icsoController.fetchAll,
               child: const Text('Logger all tokens'),
+            ),
+            ElevatedButton(
+              onPressed: _initializeTickets,
+              child: const Text('Initialize Tickets'),
             ),
             ElevatedButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ReclamosPage())), child: const Text('Ir a Reclamos Page'),)
           ],

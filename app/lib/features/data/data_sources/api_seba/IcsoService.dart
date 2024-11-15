@@ -95,16 +95,16 @@ class IcsoService extends BaseService{
 
   /// Obtiene todos los tickets
   ///
-  Future<List<Ticket>> getAllTokens() async {
+  Future<List<Ticket>> getAllTickets() async {
     /// Definimos algunos datos a utilizar
     List<dynamic> categories = await _infoService.getCategory();
-    Set<String> tokens = {};
+    Set<String> ticket = {};
     List<Ticket> responses = [];
       for (var category in categories) {
-        tokens.add(category['token']);
+        ticket.add(category['token']);
       }
     /// Hacemos llamadas al endpoint por cada token
-    for(var token in tokens){
+    for(var token in ticket){
       try {
         final response = await get('$url/$token/tickets?type=&status=');
         if(response.statusCode == 200){
