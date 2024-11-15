@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/styles/theme.dart';
 import 'package:mi_reclamo/features/presentation/pages/login/login_page.dart';
 
