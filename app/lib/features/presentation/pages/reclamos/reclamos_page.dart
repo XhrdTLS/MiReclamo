@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
+import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
+import 'package:mi_reclamo/features/presentation/pages/reclamos/widgets/widgets.dart'; // Asegúrate de importar la entidad Ticket
 
 class ReclamosPage extends StatelessWidget {
   final infoController _testViewModel = infoController();
@@ -12,37 +15,25 @@ class ReclamosPage extends StatelessWidget {
     return Scaffold(
       appBar: const TopNavigation(title: "Solicitudes", isMainScreen: false),
       body: FutureBuilder(
-        future: _testViewModel.fetchReclamos(),
+        future: _loadTickets(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-            return Container(); // Return an empty container if no reclamos
+            return Container(); // Return an empty container if no tickets
           } else {
-            final reclamos = snapshot.data as List;
+            final tickets = snapshot.data as List<Ticket>;
             return ListView.builder(
-              itemCount: reclamos.length,
+              itemCount: tickets.length,
               itemBuilder: (context, index) {
-                final reclamo = reclamos[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(reclamo['subject'] ?? 'No Subject'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Type: ${reclamo['type'] ?? 'No Type'}'),
-                        Text('Message: ${reclamo['message'] ?? 'No Message'}'),
-                        Text('Category: ${reclamo['category']?['name'] ?? 'No Category'}'),
-                        Text('Category Description: ${reclamo['category']?['description'] ?? 'No Description'}'),
-                        Text('Token: ${reclamo['token'] ?? 'No Token'}'),
-                        Text('Status: ${reclamo['status'] ?? 'No Status'}'),
-                        Text('Created: ${reclamo['created'] ?? 'No Created Date'}'),
-                        Text('Updated: ${reclamo['updated'] ?? 'No Updated Date'}'),
-                      ],
-                    ),
-                  ),
+                final ticket = tickets[index];
+                return TicketCard(
+                  ticket: ticket,
+                  onDelete: () {
+                    // Implement delete functionality
+                  },
                 );
               },
             );
@@ -50,5 +41,13 @@ class ReclamosPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<List<Ticket>> _loadTickets() async {
+    if (globalTicket.isNotEmpty) {
+      return globalTicket;
+    } else {
+      return await _testViewModel.fetchReclamos();
+    }
   }
 }
