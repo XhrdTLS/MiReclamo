@@ -3,7 +3,9 @@ import 'package:mi_reclamo/features/presentation/pages/login/login_page.dart';
 import 'core/core.dart';
 
 
-void main() {
+
+
+Future<void> main() async {
   runApp(const MyApp());
 }
 

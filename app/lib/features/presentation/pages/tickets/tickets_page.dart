@@ -1,4 +1,4 @@
-import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
+import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/icsoController.dart';
@@ -8,13 +8,17 @@ class TicketsPage extends StatelessWidget {
   final infoController _testViewModel = infoController();
   final IcsoController _icsoController = IcsoController();
 
+
   TicketsPage({super.key});
+
+  Future<void> _initializeTickets() async {
+    await initializeTickets();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const TopNavigation(title: "Prueba de Solicitudes", isMainScreen: true),
-      body: Center(
+    return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -39,19 +43,12 @@ class TicketsPage extends StatelessWidget {
               child: const Text('Logger all tokens'),
             ),
             ElevatedButton(
-              onPressed: _icsoController.fetchAll,
-              child: const Text('Logger all'),
+              onPressed: _initializeTickets,
+              child: const Text('Initialize Tickets'),
             ),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ReclamosPage()),
-              ),
-              child: const Text('Ver Reclamos'),
-            ),
+            ElevatedButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ReclamosPage())), child: const Text('Ir a Reclamos Page'),)
           ],
         ),
-      ),
-    );
+      );
   }
 }
