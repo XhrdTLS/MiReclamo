@@ -49,6 +49,7 @@ class infoController {
       return response;
     } catch (error) {
       _logger.e('Error fetching reclamos: $error');
+      return [];
     }
   }
 

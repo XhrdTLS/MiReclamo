@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
@@ -20,7 +19,7 @@ class ReclamosPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-            return const Center(child: Text('Sin Registros'));
+            return Container(); // Return an empty container if no reclamos
           } else {
             final reclamos = snapshot.data as List;
             return ListView.builder(
@@ -29,8 +28,20 @@ class ReclamosPage extends StatelessWidget {
                 final reclamo = reclamos[index];
                 return Card(
                   child: ListTile(
-                    title: Text(reclamo['name']),
-                    subtitle: Text(reclamo['description']),
+                    title: Text(reclamo['subject'] ?? 'No Subject'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Type: ${reclamo['type'] ?? 'No Type'}'),
+                        Text('Message: ${reclamo['message'] ?? 'No Message'}'),
+                        Text('Category: ${reclamo['category']?['name'] ?? 'No Category'}'),
+                        Text('Category Description: ${reclamo['category']?['description'] ?? 'No Description'}'),
+                        Text('Token: ${reclamo['token'] ?? 'No Token'}'),
+                        Text('Status: ${reclamo['status'] ?? 'No Status'}'),
+                        Text('Created: ${reclamo['created'] ?? 'No Created Date'}'),
+                        Text('Updated: ${reclamo['updated'] ?? 'No Updated Date'}'),
+                      ],
+                    ),
                   ),
                 );
               },

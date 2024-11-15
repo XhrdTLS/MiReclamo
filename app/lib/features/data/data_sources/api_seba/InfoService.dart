@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:mi_reclamo/features/data/data_sources/api_seba/baseService.dart';
@@ -63,6 +62,16 @@ class InfoService extends BaseService {
     }
   }
 
-
-
+  /// Obtener todos los reclamos
+  Future<List<dynamic>> getReclamos() async {
+    try {
+      final response = await get('$v1/reclamos');
+      _logger.d(json.decode(utf8.decode(response.bodyBytes)));
+      final List<dynamic> reclamos = json.decode(utf8.decode(response.bodyBytes));
+      return reclamos;
+    } catch (error) {
+      _logger.e('Error al obtener los datos: $error');
+      throw Exception('Failed to fetch reclamos: $error');
+    }
+  }
 }
