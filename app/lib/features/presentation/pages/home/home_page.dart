@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage>{
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.status.name == Types.CLAIM.name).toList()),
+                      builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.CLAIM.name).toList()),
                     ),
                   );
                 },
@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage>{
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.status.name == Types.SUGGESTION.name).toList()),
+                      builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.SUGGESTION.name).toList()),
                     ),
                   );
                 },
@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage>{
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.status.name == Types.INFORMATION.name).toList()),
+                      builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.INFORMATION.name).toList()),
                     ),
                   );
                 },

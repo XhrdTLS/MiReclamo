@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
 class EditTicketScreen extends StatefulWidget {
@@ -43,15 +44,7 @@ class _EditTicketScreenState extends State<EditTicketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Ticket'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _saveForm,
-          ),
-        ],
-      ),
+      appBar: const TopNavigation(title: "Ticket", isMainScreen: false),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
