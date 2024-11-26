@@ -54,6 +54,28 @@ class Ticket {
     required this.updated,
   });
 
+  Ticket copyWith({
+    Types? type,
+    String? subject,
+    String? message,
+    Category? category,
+    String? token,
+    Status? status,
+    DateTime? created,
+    DateTime? updated,
+  }) {
+    return Ticket(
+      type: type ?? this.type,
+      subject: subject ?? this.subject,
+      message: message ?? this.message,
+      category: category ?? this.category,
+      token: token ?? this.token,
+      status: status ?? this.status,
+      created: created ?? this.created,
+      updated: updated ?? this.updated,
+    );
+  }
+
   factory Ticket.fromJson(Map<String, dynamic> json) {
     return Ticket(
       type: TypesExtension.fromString(json['type']),
