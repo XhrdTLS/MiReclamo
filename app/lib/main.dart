@@ -9,7 +9,7 @@ import 'core/core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeTickets();
+  // await initializeTickets();
   runApp(const MyApp());
 }
 

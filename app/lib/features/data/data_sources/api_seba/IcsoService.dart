@@ -12,6 +12,7 @@ class IcsoService extends BaseService {
   /// url
   /// {{baseUrl}}/v1/icso
   String get url => '/v1/icso';
+  String get attatchmentUrl => '/v1/attachments';
 
   /// Obtiene todos los tickets de una categoría
   ///
@@ -51,16 +52,15 @@ class IcsoService extends BaseService {
   /// {{baseUrl}}/v1/icso/:ticketToken/ticket
   ///
   Future<Map<String, dynamic>> getTicketByToken(
-      Map<String, dynamic> headers) async {
-    final ticketToken = headers['ticketToken'];
+      String headers) async {
     try {
-      final response = await get('$url/$ticketToken/ticket');
-      _logger.d(json.decode(utf8.decode(response.bodyBytes)));
+      final response = await get('$url/$headers/ticket');
+      // _logger.d(json.decode(utf8.decode(response.bodyBytes)));
       final Map<String, dynamic> types =
           json.decode(utf8.decode(response.bodyBytes));
       return types;
     } catch (error) {
-      _logger.e('Error al obtener los datos: $error');
+      // _logger.e('Error al obtener los datos: $error');
       throw Exception('Failed to fetch Tokens by category: $error');
     }
   }
@@ -134,7 +134,6 @@ class IcsoService extends BaseService {
     return responses;
   }
 
-/* Codigo implementando */
   Future<List<Ticket>> getAll() async {
     /// Definimos algunos datos a utilizar
     List<dynamic> categories = await _infoService.getCategory();
@@ -180,5 +179,19 @@ class IcsoService extends BaseService {
     _logger.d('Total tickets fetched: ${responses.length}');
     return responses;
   }
-  /**/
-}
+
+  /// ATATCHTMENT
+  Future<Map<String,dynamic>> fetchAttachedFile(String token, String attachedTokens) async {
+    try {
+      final response = await get('$attatchmentUrl/$token/$attachedTokens');
+      _logger.d(json.decode(utf8.decode(response.bodyBytes)));
+      final Map<String, dynamic> files = json.decode(utf8.decode(response.bodyBytes));
+      return files;
+    } catch (error) {
+      _logger.e('Error al obtener los objetos: $error');
+      throw Exception('Failed to get attatchment: $error');
+    }
+  }
+
+
+  }

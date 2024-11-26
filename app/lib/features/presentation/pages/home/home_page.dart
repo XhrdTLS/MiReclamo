@@ -3,7 +3,7 @@ import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/widgets.dart';
 import 'package:mi_reclamo/features/domain/entities/enum/TypesEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
-import 'package:mi_reclamo/features/presentation/controllers/test/icsoController.dart';
+import 'package:mi_reclamo/features/presentation/controllers/ticket/icsoController.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/assigned_claim.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/statics_card.dart';
 import 'package:mi_reclamo/features/presentation/pages/tickets/tickets_page.dart';
@@ -60,7 +60,8 @@ class _HomePageState extends State<HomePage>{
      if (globalTicket.isNotEmpty) {
        return globalTicket;
      } else {
-       return await _testViewModel.fetchAll();
+       await initializeTickets();
+       return globalTicket;
      }
    }
   
