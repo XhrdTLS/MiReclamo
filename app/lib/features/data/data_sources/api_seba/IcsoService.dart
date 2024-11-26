@@ -85,21 +85,16 @@ class IcsoService extends BaseService {
 
   /// Elimina un ticket
   /// {{baseUrl}}/v1/icso/:ticketToken/ticket
-  /// todo probar
-  Future<Map<String, dynamic>> deleteTicket(
-      Map<String, dynamic> headers) async {
-    final ticketToken = headers['ticketToken'];
-    try {
-      final response = await delete('$url/$ticketToken/ticket');
-      _logger.d(json.decode(utf8.decode(response.bodyBytes)));
-      final Map<String, dynamic> types =
-          json.decode(utf8.decode(response.bodyBytes));
-      return types;
-    } catch (error) {
-      _logger.e('Error al obtener los datos: $error');
-      throw Exception('Failed to fetch Tokens by category: $error');
-    }
+  Future<void> deleteTicket(
+    String ticketToken) async {
+  try {
+    final response = await delete('$url/$ticketToken/ticket');
+    _logger.d(json.decode(utf8.decode(response.bodyBytes)));
+  } catch (error) {
+    _logger.e('Error al obtener los datos: $error');
+    throw Exception('Failed to fetch Tokens by category: $error');
   }
+}
 
   /// Obtiene todos los tickets
   ///
@@ -192,6 +187,49 @@ class IcsoService extends BaseService {
       throw Exception('Failed to get attatchment: $error');
     }
   }
+
+  /*
+  import 'dart:convert';
+import 'dart:io';
+
+void saveFileFromJson(Map<String, dynamic> fileJson) async {
+  try {
+    // Extraer los datos del JSON
+    final String fileName = fileJson['name'];
+    final String mimeType = fileJson['mime']; // No se usa directamente aquí, pero puedes verificar el tipo.
+    final String base64Data = fileJson['data'];
+
+    // Decodificar los datos Base64
+    final List<int> fileBytes = base64Decode(base64Data);
+
+    // Obtener el directorio donde guardar el archivo
+    final String directory = Directory.systemTemp.path; // Puedes cambiar esto a otro directorio adecuado
+    final String filePath = '$directory/$fileName';
+
+    // Crear y guardar el archivo
+    final File file = File(filePath);
+    await file.writeAsBytes(fileBytes);
+
+    print('Archivo guardado en: $filePath');
+  } catch (e) {
+    print('Error al guardar el archivo: $e');
+  }
+}
+
+void main() {
+  // Ejemplo del JSON recibido
+  final Map<String, dynamic> fileJson = {
+    "name": "q5mTmO78CylE30LlX-vhmpZuuCoSMvP7mONP5gLIgKig3i5.jpg",
+    "mime": "image/jpeg",
+    "data":
+        "/9j/4aRoRXhpZgAASUkqAAgAAAAMAAABBAABAAAAwA8AAAEBBAABAAAA0AsAAA8BAgAIAAAAngAAABABAgAJAAAApgAAABIBAwABAAAABgAAABoBBQABAAAAsAAAABsBBQABAAAAuAAAACgBAwABAAAAAgAAADEBAgAOAAAAwAAAADIBAgAUAAAAzgAAABMCAwABAAAAAQAAAGmHBAABAAAA4gAAAMgCAABzYW1zdW5nAFNNLUc5OTZCAABIAAAAAQAAAEgAAAABAAAARzk5NkJYWFVDR1hINQAyMDI0OjEwOjI1IDIyOjIzOjE5AB0AmoIFAAEAAABEAgAAnYIFAnn60o7kqR0yM8c5PHoOKMde+AR/wACx3FF13Cz7P7hD1GMAkckZ3EDt+WaO3U9eCv9aUcc/KGHB"
+  };
+
+  // Llamar a la función para guardar el archivo
+  saveFileFromJson(fileJson);
+}
+
+   */
 
 
   }

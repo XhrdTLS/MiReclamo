@@ -24,4 +24,15 @@ class EditTicketActions {
       logger.e('Error fetching attached file: $e');
     }
   }
+
+
+  Future<void> deleteTicket(String token, Function() onSuccess) async {
+    try {
+      await _icsoController.fetchDeleteTicketByToken(token);
+      onSuccess();
+    } catch (e) {
+      logger.e('Error deleting ticket: $e');
+    }
+  }
+
 }

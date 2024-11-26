@@ -13,3 +13,7 @@ Future<void> initializeTickets() async {
   globalTicket = await icsoService.getAllTickets();
   logger.i(globalTicket);
 }
+
+Future<void> deleteTicketfromGlobal(String token) async {
+  globalTicket.removeWhere((element) => element.token == token);
+}
