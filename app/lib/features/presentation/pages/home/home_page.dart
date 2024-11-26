@@ -45,9 +45,9 @@ class _HomePageState extends State<HomePage>{
    void _loadCounts() async {
       final tickets = await _loadTickets();
        int total = tickets.length;
-       int unresolved = tickets.where((ticket) => ticket.status.name == Types.CLAIM.name).length;
-       int pending = tickets.where((ticket) => ticket.status.name == Types.SUGGESTION.name).length;
-       int resolved = tickets.where((ticket) => ticket.status.name == Types.INFORMATION.name).length;
+       int unresolved = tickets.where((ticket) => ticket.type.name == Types.CLAIM.name).length;
+       int pending = tickets.where((ticket) => ticket.type.name == Types.SUGGESTION.name).length;
+       int resolved = tickets.where((ticket) => ticket.type.name == Types.INFORMATION.name).length;
        setState(() {
          solicitudesTotales = total.toString();
          sinResolver = unresolved.toString();
