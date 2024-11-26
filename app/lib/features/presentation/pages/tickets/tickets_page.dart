@@ -49,7 +49,7 @@ class _TicketsPageState extends State<TicketsPage> {
                 return TicketCard(
                   ticket: ticket,
                   onDelete: () {
-                    // Implement delete functionality
+                    /// TODO: Implement delete functionality
                   },
                 );
               },

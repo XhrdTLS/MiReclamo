@@ -1,9 +1,8 @@
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
-class FilterWidget extends StatefulWidget{
+class FilterWidget extends StatefulWidget {
   final List<Ticket> allSolicitudes;
   final Function(List<Ticket>) onFilterApplied;
 
@@ -13,7 +12,7 @@ class FilterWidget extends StatefulWidget{
   _FilterWidgetState createState() => _FilterWidgetState();
 }
 
-class _FilterWidgetState extends State<FilterWidget>{
+class _FilterWidgetState extends State<FilterWidget> {
   String selectedFilter = 'Todas';
   List<Ticket> filteredSolicitudes = [];
   final ScrollController _scrollController = ScrollController();
@@ -34,6 +33,7 @@ class _FilterWidgetState extends State<FilterWidget>{
             .where((solicitud) => solicitud.category.name == filter)
             .toList();
       }
+      widget.onFilterApplied(filteredSolicitudes);
     });
   }
 
@@ -68,15 +68,18 @@ class _FilterWidgetState extends State<FilterWidget>{
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        // Add your filter buttons here
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      controller: _scrollController,
+      child: Row(
+        children: [
+          _buildFilterButton('Todas', Colors.grey),
+          _buildFilterButton('CLAIM', Colors.red),
+          _buildFilterButton('SUGGESTION', Colors.green),
+          _buildFilterButton('INFORMATION', Colors.blue),
+          // Add more filter buttons as needed
+        ],
+      ),
     );
   }
-
 }
-
-
-
-
