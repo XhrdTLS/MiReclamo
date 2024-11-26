@@ -2,6 +2,7 @@ name: mi_reclamo
 description: "App para realizar reclamos"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
+uses-material-design: true
 version: 1.0.0+1
 
 environment:
@@ -21,6 +22,7 @@ dependencies:
   material_symbols_icons: ^4.2785.1
   google_fonts: ^6.2.1
   file_picker: ^8.1.4
+  skeletonizer: ^1.4.2
 
 dev_dependencies:
   flutter_test:
