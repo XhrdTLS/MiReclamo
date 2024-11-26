@@ -27,12 +27,14 @@ class IcsoController {
   }
 
   /// Obtiene un ticket por token
-  Future<void> fetchTicketByToken(Map<String, dynamic> headers) async {
+  Future<Map<String, dynamic>> fetchTicketByToken(String headers) async {
     try {
       Map<String, dynamic> response = await _icsoService.getTicketByToken(headers);
-      _logger.i('TicketByToken Response: $response');
+      return response;
+      // _logger.i('TicketByToken Response: $response');
     } catch (error) {
       _logger.e('Error fetching ticket by token: $error');
+      rethrow;
     }
   }
 
@@ -47,10 +49,10 @@ class IcsoController {
   }
 
   /// Elimina un ticket por token
-  Future<void> fetchDeleteTicketByToken(Map<String, dynamic> headers) async {
+  Future<void> fetchDeleteTicketByToken(String token) async {
     try {
-      Map<String, dynamic> response = await _icsoService.deleteTicket(headers);
-      _logger.i('DeleteTicketByToken Response: $response');
+      await _icsoService.deleteTicket(token);
+      // _logger.i('DeleteTicketByToken Response: $response');
     } catch (error) {
       _logger.e('Error fetching delete ticket by token: $error');
     }
@@ -67,7 +69,17 @@ class IcsoController {
     }
   }
 
-
-
+  Future<Map<String,dynamic>> fetchAttachedFile(String token, String attatchmentToken) async {
+    try {
+      Map<String,dynamic> response = await _icsoService.fetchAttachedFile(token, attatchmentToken);
+      return response;
+    } catch (error) {
+      _logger.e('Error fetching attached file: $error');
+      rethrow;
+    }
+  }
 
 }
+
+
+

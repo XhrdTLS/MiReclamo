@@ -2,7 +2,7 @@ import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
 import 'package:mi_reclamo/features/presentation/controllers/test/InfoController.dart';
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/features/presentation/controllers/test/icsoController.dart';
+import 'package:mi_reclamo/features/presentation/controllers/ticket/icsoController.dart';
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
 
 class TestPage extends StatelessWidget {

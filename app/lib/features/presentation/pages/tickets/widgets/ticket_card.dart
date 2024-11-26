@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
+import '../screens/screens.dart';
 import 'widgets.dart';
 
 class TicketCard extends StatelessWidget {
@@ -45,6 +46,17 @@ class TicketCard extends StatelessWidget {
           context: context,
           builder: (context) => ViewTicketDialog(ticket: ticket),
         );
+      },
+      onDoubleTap: () async {
+        final manageTicket = await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => EditTicketScreen(ticket: ticket),
+            )
+        );
+        if (manageTicket != null) {
+          // Handle the updated ticket (e.g., save it to the repository)
+        }
+
       },
       child: Card(
         shape: RoundedRectangleBorder(
