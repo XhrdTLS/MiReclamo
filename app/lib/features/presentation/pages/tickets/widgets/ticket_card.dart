@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
+import '../../../../../core/core.dart';
 import '../screens/screens.dart';
 import 'widgets.dart';
 
@@ -15,8 +16,6 @@ class TicketCard extends StatelessWidget {
     super.key,
   });
 
-
-
   @override
   Widget build(BuildContext context) {
     String tipo = ticket.type.name;
@@ -25,26 +24,44 @@ class TicketCard extends StatelessWidget {
     String mensaje = ticket.message;
     String categoria = ticket.category.name;
 
+    final brightness = Theme.of(context).brightness;
     Color tipoColor;
+    Color textColor;
+    IconData typeIcon;
+    
     switch (tipo) {
       case 'CLAIM':
-        tipoColor = Colors.red;
+        tipoColor = brightness == Brightness.light
+            ? AppTheme.lightOrange
+            : AppTheme.darkOrange;
+        textColor = AppTheme.darkOrange;
+        typeIcon = Icons.warning_rounded;
         break;
       case 'SUGGESTION':
-        tipoColor = Colors.green;
+        tipoColor = brightness == Brightness.light
+            ? AppTheme.lightGreen
+            : AppTheme.darkGreen;
+        textColor = AppTheme.darkGreen;
+        typeIcon = Icons.lightbulb_rounded;
         break;
       case 'INFORMATION':
-        tipoColor = Colors.blue;
+        tipoColor = brightness == Brightness.light
+            ? AppTheme.lightBlue
+            : AppTheme.darkBlue;
+        textColor = AppTheme.darkBlue;
+        typeIcon = Icons.info_rounded;
         break;
       default:
-        tipoColor = Colors.grey;
+        tipoColor = AppTheme.lightGray;
+        textColor = AppTheme.lightGray;
+        typeIcon = Icons.help_rounded;
     }
 
     return GestureDetector(
       onTap: () {
         showDialog(
           context: context,
-          builder: (context) => ViewTicketDialog(ticket: ticket),
+          builder: (context) => ViewTicketScreen(ticket: ticket),
         );
       },
       onDoubleTap: () async {
@@ -73,65 +90,65 @@ class TicketCard extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      categoria,
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: tipoColor,
-                      ),
+                    Row(
+                      children: [
+                        Icon(
+                          typeIcon,
+                          color: textColor,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          categoria,
+                          style: StyleText.header.copyWith(
+                            color: textColor,
+                          ),)
+                      ],
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8.0, vertical: 4.0),
                       decoration: BoxDecoration(
-                        color: tipoColor,
+                        color: tipoColor.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         estado,
                         style: GoogleFonts.poppins(
                           fontSize: 10,
-                          color: Colors.white,
+                          color: textColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 8),
                 Text(
                   asunto,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                  ),
+                  style: StyleText.description
                 ),
                 if (mensaje.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: Text(
                       mensaje,
-                      style: GoogleFonts.poppins(
-                        fontSize: 10,
-                        color: Colors.grey,
+                      style: StyleText.body
                       ),
                     ),
-                  ),
               ],
             ),
           ),
         ),
       ),
     );
-
-
   }
 }
 

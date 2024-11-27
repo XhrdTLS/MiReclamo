@@ -3,13 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_reclamo/core/core.dart';
 
 class AppTheme {
-  static Color get lightGrey => const Color(0xFFBBBBBB);
+  static Color get lightStone => const Color(0xFFEEEEEE);
+
+  static Color get lightGray => const Color(0xFFBBBBBB);
+  static Color get darkGray => const Color(0xFF333333);
 
   static Color get lightOrange => const Color(0xFFFFD6A5);
   static Color get darkOrange => const Color(0xFFA05B07);
 
   static Color get lightGreen => const Color(0xFFC7E9B0);
-  static Color get darkGreen => const Color(0xFFB3E6CC);
+  static Color get darkGreen => const Color(0xFF214607);
 
   static Color get lightBlue => const Color(0xFFB6E0F7);
   static Color get darkBlue => const Color.fromARGB(255, 12, 61, 82);
@@ -26,7 +29,7 @@ class AppTheme {
         /// Esquema de colores
         colorScheme: colorScheme,
         canvasColor: colorScheme.secondaryContainer, 
-        dividerColor: lightGrey,
+        dividerColor: lightGray,
 
         /// Fondo de la aplicación
         scaffoldBackgroundColor: const Color(0xFFFAFAFA),
@@ -52,7 +55,7 @@ class AppTheme {
         /// Esquema de colores
         colorScheme: colorScheme,
         canvasColor: colorScheme.secondaryContainer, 
-        dividerColor: lightGrey,
+        dividerColor: lightGray,
 
         /// Fondo de la aplicación
         scaffoldBackgroundColor: const Color(0xFF171918),

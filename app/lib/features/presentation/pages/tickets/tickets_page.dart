@@ -1,62 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/core/core.dart';
+import 'package:mi_reclamo/core/globals.dart';
+import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
-import 'package:mi_reclamo/features/presentation/pages/tickets/widgets/widgets.dart';
+import 'package:mi_reclamo/features/presentation/controllers/ticket/icsoController.dart';
+import 'package:mi_reclamo/features/presentation/pages/tickets/widgets/tickets_list.dart';
 
-class TicketsPage extends StatefulWidget {
-  final List<Ticket> tickets;
+class TicketsPage extends StatelessWidget {
+  final IcsoController _testViewModel = IcsoController();
 
-  const TicketsPage({super.key, required this.tickets});
-
-  @override
-  _TicketsPageState createState() => _TicketsPageState();
-}
-
-
-
-class _TicketsPageState extends State<TicketsPage> {
-  List<Ticket> _filteredTickets = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _filteredTickets = widget.tickets;
-  }
-
-  void _filter(List<Ticket> filteredList){
-    setState(() {
-      _filteredTickets = filteredList;
-    });
-  }
+  TicketsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopNavigation(title: "Tickets", isMainScreen: false),
-      body: Column(
-        children: [
-          FilterWidget(
-            allSolicitudes: widget.tickets,
-            onFilterApplied: _filter,
-          ),
-          Expanded(
-            child: _filteredTickets.isEmpty
-                ? const Center(child: Text('No hay tickets para mostrar'))
-                : ListView.builder(
-              itemCount: _filteredTickets.length,
-              itemBuilder: (context, index) {
-                final ticket = _filteredTickets[index];
-                return TicketCard(
-                  ticket: ticket,
-                  onDelete: () {
-                    /// TODO: Implement delete functionality
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+      appBar: const TopNavigation(title: "Solicitudes", isMainScreen: true),
+      body: FutureBuilder(
+        future: _loadTickets(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
+            return Container(); // Return an empty container if no tickets
+          } else {
+            final tickets = snapshot.data as List<Ticket>;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: TicketsList(tickets: tickets),
+            );
+          }
+        },
       ),
     );
+  }
+
+  Future<List<Ticket>> _loadTickets() async {
+    if (globalTicket.isNotEmpty) {
+      return globalTicket;
+    } else {
+      return await _testViewModel.fetchAll();
+    }
   }
 }

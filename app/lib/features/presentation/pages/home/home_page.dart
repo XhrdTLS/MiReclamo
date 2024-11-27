@@ -5,17 +5,17 @@ import 'package:mi_reclamo/features/domain/entities/enum/TypesEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/assigned_claim.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/statics_card.dart';
-import 'package:mi_reclamo/features/presentation/pages/tickets/tickets_page.dart';
+import 'package:mi_reclamo/features/presentation/pages/tickets/widgets/tickets_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class HomePageState extends State<HomePage>{
    String _userName = '';
    String solicitudesTotales = '0';
    String sinResolver = '0';
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage>{
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TicketsPage(tickets: globalTicket),
+                          builder: (context) => TicketsList(tickets: globalTicket),
                         ),
                       );
                     },
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage>{
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.CLAIM.name).toList()),
+                          builder: (context) => TicketsList(tickets: globalTicket.where((ticket) => ticket.type.name == Types.CLAIM.name).toList()),
                         ),
                       );
                     },
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage>{
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.SUGGESTION.name).toList()),
+                          builder: (context) => TicketsList(tickets: globalTicket.where((ticket) => ticket.type.name == Types.SUGGESTION.name).toList()),
                         ),
                       );
                     },
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage>{
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.INFORMATION.name).toList()),
+                          builder: (context) => TicketsList(tickets: globalTicket.where((ticket) => ticket.type.name == Types.INFORMATION.name).toList()),
                         ),
                       );
                     },
