@@ -17,20 +17,25 @@ class TicketsPage extends StatefulWidget {
 
 class _TicketsPageState extends State<TicketsPage> {
   List<Ticket> ticketsList = [];
+  String? currentCategory;
 
   @override
   void initState() {
     super.initState();
+    currentCategory = widget.category;
     _loadTickets();
     // ticketsList = globalTicket;
   }
 
   Future<void> _loadTickets() async {
     try {
-      await initializeTickets();
+      if (globalTicket.isEmpty){
+        await initializeTickets();
+      }
+      // await initializeTickets();
       setState(() {
-        if (widget.category != null && widget.category!.isNotEmpty) {
-          ticketsList = globalTicket.where((ticket) => ticket.type.name == widget.category).toList();
+        if (currentCategory != null && currentCategory!.isNotEmpty) {
+          ticketsList = globalTicket.where((ticket) => ticket.type.name == currentCategory).toList();
         } else {
           ticketsList = globalTicket;
         }
@@ -40,11 +45,24 @@ class _TicketsPageState extends State<TicketsPage> {
     }
   }
 
-  /// TODO ESTO DEBO CAMBIARLO PARA QUE CAMBIE EL CATEGORY Y VUELVA A LLAMAR EL _LOADTICKETs
-  void _filter(List<Ticket> filteredList){
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _updateCategory(String? category) {
     setState(() {
-      ticketsList = filteredList;
+      currentCategory = category;
+      _loadTickets();
     });
+  }
+
+  Future<void> _reloadTickets() async {
+    await initializeTickets();
+    setState(() {
+      ticketsList.clear();
+    });
+    await _loadTickets();
   }
 
   @override
@@ -54,24 +72,27 @@ class _TicketsPageState extends State<TicketsPage> {
       body: Column(
         children: [
           FilterWidget(
-            allSolicitudes: ticketsList,
-            onFilterApplied: _filter,
+            onCategoryChanged: _updateCategory,
           ),
           Expanded(
-            child: ticketsList.isEmpty
-                ? const Center(child: Text('No hay tickets para mostrar'))
-                : ListView.builder(
-              itemCount: ticketsList.length,
-              itemBuilder: (context, index) {
-                final ticket = ticketsList[index];
-                return TicketCard(
-                  ticket: ticket,
-                  onDelete: () {
-                    /// TODO: Implement delete functionality
-                  },
-                );
-              },
-            ),
+            child: RefreshIndicator(
+                onRefresh: _reloadTickets,
+              child: ticketsList.isEmpty
+                  ? const Center(child: Text('No hay tickets para mostrar'))
+                  : ListView.builder(
+                itemCount: ticketsList.length,
+                itemBuilder: (context, index) {
+                  final ticket = ticketsList[index];
+                  return TicketCard(
+                    ticket: ticket,
+                    onDelete: () {
+                      /// TODO: Implement delete functionality
+                    },
+                  );
+                },
+              ),
+            )
+
           ),
         ],
       ),
