@@ -31,7 +31,7 @@ class ReclamosPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TicketsPage(tickets: tickets),
+                      builder: (context) => const TicketsPage(),
                     ),
                   );
                 },
