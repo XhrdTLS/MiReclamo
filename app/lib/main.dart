@@ -3,12 +3,8 @@ import 'package:mi_reclamo/core/widgets/styles/theme.dart';
 import 'package:mi_reclamo/features/presentation/pages/login/login_page.dart';
 import 'core/core.dart';
 
-
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await initializeTickets();
   runApp(const MyApp());
 }
 

@@ -7,6 +7,7 @@ import 'package:mi_reclamo/features/presentation/pages/home/widgets/assigned_cla
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/statics_card.dart';
 import 'package:mi_reclamo/features/presentation/pages/tickets/widgets/tickets_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
@@ -16,6 +17,7 @@ class HomePage extends StatefulWidget{
 }
 
 class HomePageState extends State<HomePage>{
+   bool isLoading = true;
    String _userName = '';
    String solicitudesTotales = '0';
    String sinResolver = '0';
@@ -51,6 +53,7 @@ class HomePageState extends State<HomePage>{
          sinResolver = unresolved.toString();
          pendientes = pending.toString();
          resueltos = resolved.toString();
+         isLoading = false;
        });
    }
 
@@ -62,19 +65,29 @@ class HomePageState extends State<HomePage>{
        return globalTicket;
      }
    }
-
+ void _showSkeletonizer() {
+    setState(() {
+      isLoading = true;
+    });
+  }
    Future<void> reload() async {
       await initializeTickets();
       _loadCounts();
+      _showSkeletonizer();
    }
-
-
   
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: reload,
-      child: Padding(
+    return Scaffold(
+      appBar: const TopNavigation(title: 'Inicio', isMainScreen: true,),
+      body: RefreshIndicator(
+      onRefresh: () async {
+        _showSkeletonizer();
+        _loadCounts();
+      },
+      child: Skeletonizer(
+        enabled: isLoading,
+        child: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -172,77 +185,3 @@ class HomePageState extends State<HomePage>{
     );
   }
 }
-
-/*class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        clipBehavior: Clip.none,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const TopNavigation(titulo: "Administrador"),
-            Text("Hola! ", style: StyleText.headline),
-            const SizedBox(height: 20),
-            // Tablero de Estadísticas
-            GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 1.2,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-              StatCard(
-                icon: AppIcons.ticket,
-                value: "25",
-                label: "Solicitudes Totales",
-                color: AppTheme.lightBlue, 
-              ),
-              StatCard(
-                icon: AppIcons.claim,
-                value: "10",
-                label: "Sin Resolver",
-                color: AppTheme.lightRed,
-              ),
-              StatCard(
-                icon: AppIcons.pending,
-                value: "12",
-                label: "Pendientes",
-                color: AppTheme.lightOrange,
-              ),
-              StatCard(
-                icon: AppIcons.done,
-                value: "3",
-                label: "Resueltos",
-                color: AppTheme.lightGreen,
-              ),
-              ],
-            ),
-
-            const SizedBox(height: 24),
-            // Asignados
-            Text("Solicitudes Asignadas", style: StyleText.label),
-            const SizedBox(height: 12),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 3,
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) => const AssignedClaim(),
-            ),
-
-            const SizedBox(height: 24),
-          ],
-        ),
-      ),
-    );
-  }
-}*/
-
-
