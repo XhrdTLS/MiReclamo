@@ -57,4 +57,9 @@ class StyleText {
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
+///Textos pequeños y poco relevantes
+  static TextStyle caption = GoogleFonts.roboto(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+  );
 }

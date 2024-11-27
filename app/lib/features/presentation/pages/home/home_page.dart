@@ -5,7 +5,7 @@ import 'package:mi_reclamo/features/domain/entities/enum/TypesEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/assigned_claim.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/statics_card.dart';
-import 'package:mi_reclamo/features/presentation/pages/tickets/tickets_page.dart';
+import 'package:mi_reclamo/features/presentation/pages/tickets/widgets/tickets_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget{
 }
 
 class HomePageState extends State<HomePage>{
-  bool isLoading = true;
+   bool isLoading = true;
    String _userName = '';
    String solicitudesTotales = '0';
    String sinResolver = '0';
@@ -93,96 +93,94 @@ class HomePageState extends State<HomePage>{
           physics: const AlwaysScrollableScrollPhysics(),
           clipBehavior: Clip.none,
           child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("¡Hola $_userName!", style: StyleText.headline),
-            const SizedBox(height: 20),
-            // Tablero de Estadísticas
-            Text("Resumen de las Solicitudes", style: StyleText.label),
-            const SizedBox(height: 12),
-            GridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 1.2,
-            physics: const NeverScrollableScrollPhysics(),
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StatCard(
-              icon: AppIcons.ticket,
-              value: solicitudesTotales,
-              label: "Solicitudes Totales",
-              color: AppTheme.lightBlue,
-              onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TicketsPage(tickets: globalTicket),
-                ),
-                );
-              },
+              Text("¡Hola $_userName!", style: StyleText.headline),
+              const SizedBox(height: 20),
+              // Tablero de Estadísticas
+              Text("Resumen de las Solicitudes", style: StyleText.label),
+              const SizedBox(height: 12),
+              GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 1.2,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  StatCard(
+                    icon: AppIcons.ticket,
+                    value: solicitudesTotales,
+                    label: "Solicitudes Totales",
+                    color: AppTheme.lightBlue,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TicketsList(tickets: globalTicket),
+                        ),
+                      );
+                    },
+                  ),
+                  StatCard(
+                    icon: AppIcons.claim,
+                    value: sinResolver,
+                    label: "Sin Resolver",
+                    color: AppTheme.lightRed,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TicketsList(tickets: globalTicket.where((ticket) => ticket.type.name == Types.CLAIM.name).toList()),
+                        ),
+                      );
+                    },
+                  ),
+                  StatCard(
+                    icon: AppIcons.pending,
+                    value: pendientes,
+                    label: "Pendientes",
+                    color: AppTheme.lightOrange,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TicketsList(tickets: globalTicket.where((ticket) => ticket.type.name == Types.SUGGESTION.name).toList()),
+                        ),
+                      );
+                    },
+                  ),
+                  StatCard(
+                    icon: AppIcons.done,
+                    value: resueltos,
+                    label: "Resueltos",
+                    color: AppTheme.lightGreen,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TicketsList(tickets: globalTicket.where((ticket) => ticket.type.name == Types.INFORMATION.name).toList()),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-              StatCard(
-              icon: AppIcons.claim,
-              value: sinResolver,
-              label: "Sin Resolver",
-              color: AppTheme.lightRed,
-              onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.CLAIM.name).toList()),
-                ),
-                );
-              },
+              const SizedBox(height: 24),
+              // Asignados
+              Text("Solicitudes Asignadas", style: StyleText.label),
+              const SizedBox(height: 12),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 3,
+                separatorBuilder: (context, index) => const Divider(),
+                itemBuilder: (context, index) => const AssignedClaim(),
               ),
-              StatCard(
-              icon: AppIcons.pending,
-              value: pendientes,
-              label: "Pendientes",
-              color: AppTheme.lightOrange,
-              onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.SUGGESTION.name).toList()),
-                ),
-                );
-              },
-              ),
-              StatCard(
-              icon: AppIcons.done,
-              value: resueltos,
-              label: "Resueltos",
-              color: AppTheme.lightGreen,
-              onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TicketsPage(tickets: globalTicket.where((ticket) => ticket.type.name == Types.INFORMATION.name).toList()),
-                ),
-                );
-              },
-              ),
+              const SizedBox(height: 24),
             ],
-            ),
-            const SizedBox(height: 24),
-            // Asignados
-            Text("Solicitudes Asignadas", style: StyleText.label),
-            const SizedBox(height: 12),
-            ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 3,
-            separatorBuilder: (context, index) => const Divider(),
-            itemBuilder: (context, index) => const AssignedClaim(),
-            ),
-            const SizedBox(height: 24),
-          ],
           ),
         ),
-        ),
-      ),
       ),
     );
   }

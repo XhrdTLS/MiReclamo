@@ -16,11 +16,10 @@ class TestPage extends StatelessWidget {
     await initializeTickets();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopNavigation(title: "Todas las Solicitudes", isMainScreen: true),
+      appBar: const TopNavigation(title: "Todas las Solicitudes", isMainScreen: false),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +51,7 @@ class TestPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ReclamosPage()),
+                MaterialPageRoute(builder: (context) => TicketsPage()),
               ),
               child: const Text('Ir a Reclamos Page'),
             ),

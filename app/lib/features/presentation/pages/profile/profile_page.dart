@@ -5,6 +5,7 @@ import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/features/data/data_sources/google/google_service.dart';
 import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart';
 import 'package:mi_reclamo/features/presentation/pages/login/login_page.dart';
+import 'package:mi_reclamo/features/presentation/pages/test/test_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -89,6 +90,14 @@ class ProfilePageState extends State<ProfilePage> {
           ],
           ),
         ),
+        ),
+        ListTile(
+        leading: const Icon(AppIcons.info),
+        title: const Text('Cargar Modelos de Prueba'),
+        onTap: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context) => TestPage()));
+        },
         ),
         ListTile(
         leading: const Icon(AppIcons.close),
