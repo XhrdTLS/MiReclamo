@@ -87,13 +87,9 @@ class IcsoService extends BaseService {
   /// UPDATE TICKET ADMIN
   Future<Map<String, dynamic>> responseTicket(Ticket update) async {
     final ticketToken = update.token;
-    // final requestBody = jsonEncode({
-    //   "status": update.status.name,
-    //   "response": update.response,
-    // });
     Map<String, dynamic> requestBody = {
       "status": update.status.name,
-      "response": update.response,
+      // "response": update.response,
     };
     try {
       final response = await put('$responseUrl/$ticketToken/ticket', requestBody);

@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:mi_reclamo/core/exception/exception_handler.dart';
 import 'package:mi_reclamo/core/widgets/styles/icons.dart';
 
 class AssignedClaim extends StatelessWidget {
@@ -11,7 +14,9 @@ class AssignedClaim extends StatelessWidget {
       title: const Text("Reclamo"),
       subtitle: const Text("Descripción del reclamo"),
       trailing: const Icon(AppIcons.dropdown),
-      onTap: () {},
+      onTap: () {
+        ExceptionHandler.handleException('Error de prueba');
+      },
     );
   }
 }
