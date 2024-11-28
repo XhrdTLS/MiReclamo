@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StyleText {
-///Titulos y Textos grandes y cortos
+  ///Titulos y Textos grandes y cortos
   static TextStyle headline = GoogleFonts.inter(
     fontSize: 30,
     fontWeight: FontWeight.w900,
@@ -16,7 +16,7 @@ class StyleText {
     fontWeight: FontWeight.w700,
     height: 1.5,
   );
-  
+
 //Titulos y encabezados de secciones
   static TextStyle header = GoogleFonts.inter(
     fontSize: 18,
@@ -24,37 +24,46 @@ class StyleText {
     height: 1.5,
   );
 
-///Titulos de Secciones y tarjetas
+  ///Titulos de Secciones y tarjetas
   static TextStyle label = GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.w700,
     height: 1.2,
   );
-
-///Textos importantes o Relevantes cortos
+    static TextStyle labelSmall = GoogleFonts.inter(
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    height: 1.2,
+    );
+  ///Textos importantes o Relevantes cortos
   static TextStyle descriptionBold = GoogleFonts.roboto(
     fontSize: 16,
     fontWeight: FontWeight.w700,
     height: 1.2,
   );
 
-///Textos de las descripciones
+  ///Textos de las descripciones
   static TextStyle description = GoogleFonts.roboto(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     height: 1.2,
   );
 
-///Parrafos y textos largos
+  ///Parrafos y textos largos
   static TextStyle bodyBold = GoogleFonts.roboto(
-    
     fontSize: 14,
     fontWeight: FontWeight.w700,
   );
 
-///Parrafos y textos largos
-  static TextStyle body = GoogleFonts.roboto( 
+  ///Parrafos y textos largos
+  static TextStyle body = GoogleFonts.roboto(
     fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
+
+  ///Textos pequeños y poco relevantes
+  static TextStyle caption = GoogleFonts.roboto(
+    fontSize: 12,
     fontWeight: FontWeight.w400,
   );
 }

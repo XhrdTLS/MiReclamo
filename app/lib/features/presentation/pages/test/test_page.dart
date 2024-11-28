@@ -20,7 +20,7 @@ class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopNavigation(title: "Todas las Solicitudes", isMainScreen: true),
+      appBar: const TopNavigation(title: "Prueba de Solicitudes", isMainScreen: false),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -87,14 +87,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 
 class FilterWidget extends StatelessWidget {
   final Function(String?) onCategoryChanged;
+  final Logger _logger = Logger();
 
-  const FilterWidget({super.key, required this.onCategoryChanged});
+  FilterWidget({super.key, required this.onCategoryChanged});
 
   void _changeFilter(String filter) {
     onCategoryChanged(filter == 'Todas' ? null : filter);
+    _logger.i('Filter changed to $filter');
   }
 
   Widget _buildFilterButton(String label, Color color) {

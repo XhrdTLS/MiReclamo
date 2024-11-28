@@ -69,7 +69,7 @@ class _TicketsPageState extends State<TicketsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopNavigation(title: "Tickets", isMainScreen: false),
+      appBar: const TopNavigation(title: "Solicitudes", isMainScreen: false),
       body: Column(
         children: [
           FilterWidget(
