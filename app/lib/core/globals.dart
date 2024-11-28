@@ -11,7 +11,7 @@ List<Ticket> globalTicket = [];
 Future<void> initializeTickets() async {
   IcsoService icsoService = IcsoService();
   globalTicket = await icsoService.getAllTickets();
-  logger.i(globalTicket);
+  // logger.i(globalTicket);
 }
 
 Future<void> deleteTicketfromGlobal(String token) async {

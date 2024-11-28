@@ -3,16 +3,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
 import '../../../../../core/core.dart';
-import '../screens/screens.dart';
 import 'widgets.dart';
 
 class TicketCard extends StatelessWidget {
   final Ticket ticket;
   final VoidCallback onDelete;
+  final VoidCallback onReloadTickets;
+  final Function(Ticket) onNavigateToEditTicket;
 
   const TicketCard({
     required this.ticket,
     required this.onDelete,
+    required this.onReloadTickets,
+    required this.onNavigateToEditTicket,
     super.key,
   });
 
@@ -58,22 +61,14 @@ class TicketCard extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: () {
+      onDoubleTap: () {
         showDialog(
           context: context,
           builder: (context) => ViewTicketScreen(ticket: ticket),
         );
       },
-      onDoubleTap: () async {
-        final manageTicket = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => EditTicketScreen(ticket: ticket),
-            )
-        );
-        if (manageTicket != null) {
-          // Handle the updated ticket (e.g., save it to the repository)
-        }
-
+      onTap: () {
+        onNavigateToEditTicket(ticket);
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -105,11 +100,15 @@ class TicketCard extends StatelessWidget {
                           size: 20,
                         ),
                         const SizedBox(width: 8),
-                        Text(
-                          categoria,
-                          style: StyleText.header.copyWith(
-                            color: textColor,
-                          ),)
+                        Expanded(
+                      child: Text(
+                            categoria,
+                            style: StyleText.header.copyWith(
+                                color: textColor,
+                            ),softWrap: true,
+                        overflow: TextOverflow.fade,)
+                        ),
+                        
                       ],
                     ),
                     Container(
@@ -133,7 +132,9 @@ class TicketCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   asunto,
-                  style: StyleText.description
+                  style: StyleText.description,
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
                 ),
                 if (mensaje.isNotEmpty)
                   Padding(
@@ -151,4 +152,3 @@ class TicketCard extends StatelessWidget {
     );
   }
 }
-

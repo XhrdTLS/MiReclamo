@@ -1,4 +1,5 @@
 import 'package:mi_reclamo/core/globals.dart';
+import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:mi_reclamo/features/presentation/controllers/ticket/icsoController.dart';
 
 class EditTicketActions {
@@ -28,11 +29,21 @@ class EditTicketActions {
 
   Future<void> deleteTicket(String token, Function() onSuccess) async {
     try {
-      await _icsoController.fetchDeleteTicketByToken(token);
+      await _icsoController.deleteTicketByToken(token);
       onSuccess();
     } catch (e) {
       logger.e('Error deleting ticket: $e');
     }
   }
+
+  Future<void> updateTicket(Ticket updatedTicket, Function() onSuccess) async {
+    try {
+      await _icsoController.updateTicketByToken(updatedTicket);
+      onSuccess();
+    } catch (e) {
+      logger.e('Error updating ticket: $e');
+    }
+  }
+
 
 }

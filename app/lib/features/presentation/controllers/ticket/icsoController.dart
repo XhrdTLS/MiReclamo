@@ -1,18 +1,19 @@
-import 'package:logger/logger.dart';
+import 'package:mi_reclamo/core/core.dart';
+import 'package:mi_reclamo/core/exception/exception_handler.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/IcsoService.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
 class IcsoController {
-  final Logger _logger = Logger();
   final IcsoService _icsoService = IcsoService();
 
   /// Obtiene todos los tickets de una categoría
   Future<void> fetchAllTokenByCategory(Map<String, dynamic> headers) async {
     try {
       List<dynamic> response = await _icsoService.getAllTokenByCategory(headers);
-      _logger.i('AllTokenByCategory Response: $response');
+      Map<String, dynamic> responseMap = {for (var item in response) item['key']: item['value']};
+      verifyResponse(responseMap);
     } catch (error) {
-      _logger.e('Error fetching all token by category: $error');
+      ExceptionHandler.handleException(error);
     }
   }
 
@@ -20,9 +21,10 @@ class IcsoController {
   Future<void> fetchCreateTicket(Map<String, dynamic> headers, Map<String, dynamic> requestBody) async {
     try {
       Map<String, dynamic> response = await _icsoService.createTicket(headers, requestBody);
-      _logger.i('CreateTicket Response: $response');
+      verifyResponse(response);
+      // _logger.i('CreateTicket Response: $response');
     } catch (error) {
-      _logger.e('Error fetching create ticket: $error');
+      ExceptionHandler.handleException(error);
     }
   }
 
@@ -30,41 +32,43 @@ class IcsoController {
   Future<Map<String, dynamic>> fetchTicketByToken(String headers) async {
     try {
       Map<String, dynamic> response = await _icsoService.getTicketByToken(headers);
+      verifyResponse(response);
       return response;
       // _logger.i('TicketByToken Response: $response');
     } catch (error) {
-      _logger.e('Error fetching ticket by token: $error');
+      ExceptionHandler.handleException(error);
       rethrow;
     }
   }
 
   /// Actualiza un ticket por token
-  Future<void> fetchUpdateTicketByToken(Map<String, dynamic> headers, Map<String, dynamic> requestBody) async {
+  Future<void> updateTicketByToken(Ticket update) async {
     try {
-      Map<String, dynamic> response = await _icsoService.updateTicket(headers, requestBody);
-      _logger.i('UpdateTicketByToken Response: $response');
+      Map<String, dynamic> response = await _icsoService.responseTicket(update);
+      verifyResponse(response);
+      // _logger.i('UpdateTicketByToken Response: $response');
     } catch (error) {
-      _logger.e('Error fetching update ticket by token: $error');
+      ExceptionHandler.handleException(error);
     }
   }
 
   /// Elimina un ticket por token
-  Future<void> fetchDeleteTicketByToken(String token) async {
+  Future<void> deleteTicketByToken(String token) async {
     try {
-      await _icsoService.deleteTicket(token);
+      _icsoService.deleteTicket(token);
       // _logger.i('DeleteTicketByToken Response: $response');
     } catch (error) {
-      _logger.e('Error fetching delete ticket by token: $error');
+      ExceptionHandler.handleException(error);
     }
   }
 
   Future<List<Ticket>> fetchAll() async {
     try {
       List<Ticket> response = await _icsoService.getAllTickets();
-      _logger.i('Reclamos Response: $response');
+      // logger.i('Reclamos Response: $response');
       return response;
     } catch (error) {
-      _logger.e('Error fetching reclamos: $error');
+      ExceptionHandler.handleException(error);
       return [];
     }
   }
@@ -72,13 +76,30 @@ class IcsoController {
   Future<Map<String,dynamic>> fetchAttachedFile(String token, String attatchmentToken) async {
     try {
       Map<String,dynamic> response = await _icsoService.fetchAttachedFile(token, attatchmentToken);
+      verifyResponse(response);
       return response;
     } catch (error) {
-      _logger.e('Error fetching attached file: $error');
+      logger.e('Error fetching attached file: $error');
+      ExceptionHandler.handleException(error);
       rethrow;
     }
   }
 
+  bool isProblemDetail(Map<String, dynamic> response) {
+    return response.containsKey('type') &&
+        response.containsKey('title') &&
+        response.containsKey('status') &&
+        response.containsKey('detail') &&
+        response.containsKey('instance');
+  }
+
+  void verifyResponse(Map<String, dynamic> response) {
+    if (isProblemDetail(response)) {
+      logger.i('PROBLEMDETAIL');
+      logger.e('Error: ${response['detail']}');
+      ExceptionHandler.handleException(response);
+    }
+  }
 }
 
 

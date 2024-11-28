@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:mi_reclamo/core/exception/exception_handler.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/InfoService.dart';
 
 
@@ -11,7 +12,7 @@ class infoController {
       List<dynamic> response = await _infoController.getTypes();
       _logger.i('Types Response: $response');
     } catch (error) {
-      _logger.e('Error fetching types: $error');
+      ExceptionHandler.handleException(error);
     }
   }
 
@@ -20,7 +21,7 @@ class infoController {
       List<dynamic> response = await _infoController.getStatus();
       _logger.i('Status Response: $response');
     } catch (error) {
-      _logger.e('Error fetching status: $error');
+      ExceptionHandler.handleException(error);
     }
   }
 
@@ -29,7 +30,7 @@ class infoController {
       List<dynamic> response = await _infoController.getCategory();
       _logger.i('Categories Response: $response');
     } catch (error) {
-      _logger.e('Error fetching categories: $error');
+      ExceptionHandler.handleException(error);
     }
   }
 
@@ -38,7 +39,7 @@ class infoController {
       List<dynamic> response = await _infoController.getAccess();
       _logger.i('Access Response: $response');
     } catch (error) {
-      _logger.e('Error fetching access: $error');
+      ExceptionHandler.handleException(error);
     }
   }
 
@@ -48,7 +49,7 @@ class infoController {
       _logger.i('Reclamos Response: $response');
       return response;
     } catch (error) {
-      _logger.e('Error fetching reclamos: $error');
+      ExceptionHandler.handleException(error);
       return [];
     }
   }

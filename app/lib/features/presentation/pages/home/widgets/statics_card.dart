@@ -31,11 +31,15 @@ class StatCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 32.0, weight: 800),
-            const SizedBox(height: 8.0),
-            Text(value, style: StyleText.headline),
+            Icon(icon, size: 30.0, weight: 800),
             const SizedBox(height: 5.0),
-            Text(label,style: StyleText.descriptionBold),
+            Text(value, style: StyleText.headline),
+            const SizedBox(height: 2.0),
+            Flexible(
+              child:
+              Text(
+                label,style: StyleText.descriptionBold, softWrap: true, overflow: TextOverflow.visible, textAlign: TextAlign.center,),
+            )
           ],
         ),
       ),

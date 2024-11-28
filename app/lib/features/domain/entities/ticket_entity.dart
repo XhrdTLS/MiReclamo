@@ -42,6 +42,7 @@ class Ticket {
   final Status status;
   final DateTime created;
   final DateTime updated;
+  final String? response;
 
   Ticket({
     required this.type,
@@ -52,6 +53,7 @@ class Ticket {
     required this.status,
     required this.created,
     required this.updated,
+    required this.response,
   });
 
   Ticket copyWith({
@@ -63,6 +65,7 @@ class Ticket {
     Status? status,
     DateTime? created,
     DateTime? updated,
+    String? response,
   }) {
     return Ticket(
       type: type ?? this.type,
@@ -73,6 +76,7 @@ class Ticket {
       status: status ?? this.status,
       created: created ?? this.created,
       updated: updated ?? this.updated,
+      response: response ?? this.response,
     );
   }
 
@@ -86,6 +90,7 @@ class Ticket {
       status: StatusExtension.fromString(json['status']),
       created: DateTime.parse(json['created']),
       updated: DateTime.parse(json['updated']),
+      response: json['response'],
     );
   }
 
@@ -99,12 +104,13 @@ class Ticket {
       'status': status.name,
       'created': created.toIso8601String(),
       'updated': updated.toIso8601String(),
+      'response': response,
     };
   }
 
   @override
   String toString() {
-    return 'Ticket{type: ${type.name}, subject: $subject, message: $message, category: ${category.toString()}, token: $token, status: ${status.name}, created: $created, updated: $updated}';
+    return 'Ticket{type: ${type.name}, subject: $subject, message: $message, category: ${category.toString()}, token: $token, status: ${status.name}, created: $created, updated: $updated, response: $response}';
   }
 
 }

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/core/exception/exception_handler.dart';
 import 'package:mi_reclamo/features/data/data_sources/local/storage_service.dart';
 import 'package:http/http.dart' as http;
@@ -55,7 +58,7 @@ class BaseService {
     Uri url = Uri.parse('$_baseUrl$endpoint');
     Map<String, String> headers = await _getHeaders();
     try {
-      final response = await http.put(url, headers: headers, body: requestBody);
+      final response = await http.put(url, headers: headers, body: jsonEncode(requestBody));
       // _logger.d(jsonDecode(response.body));
       return response;
     } catch (error) {
@@ -75,7 +78,7 @@ class BaseService {
       // _logger.d(jsonDecode(response.body));
       return response;
     } catch (error) {
-      // _logger.e('Error al obtener los datos: $error');
+      logger.e('Error al obtener los datos: $error');
       ExceptionHandler.handleException(error);
       rethrow;
     }

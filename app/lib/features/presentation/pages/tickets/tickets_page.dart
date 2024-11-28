@@ -1,45 +1,117 @@
 import 'package:flutter/material.dart';
-import 'package:mi_reclamo/core/globals.dart';
-import 'package:mi_reclamo/core/widgets/navigation/top_navigation.dart';
+import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
-import 'package:mi_reclamo/features/presentation/controllers/ticket/icsoController.dart';
-import 'package:mi_reclamo/features/presentation/pages/tickets/widgets/tickets_list.dart';
 
-class TicketsPage extends StatelessWidget {
-  final IcsoController _testViewModel = IcsoController();
+import 'screens/screens.dart';
+import 'widgets/widgets.dart';
 
-  TicketsPage({super.key});
+class TicketsPage extends StatefulWidget {
+  final String? category;
+
+  const TicketsPage({super.key, this.category});
+
+  @override
+  _TicketsPageState createState() => _TicketsPageState();
+}
+
+
+
+class _TicketsPageState extends State<TicketsPage> {
+  List<Ticket> ticketsList = [];
+  String? currentCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    currentCategory = widget.category;
+    _loadTickets();
+    // ticketsList = globalTicket;
+  }
+
+  Future<void> _loadTickets() async {
+    try {
+      if (globalTicket.isEmpty){
+        await initializeTickets();
+      }
+      // await initializeTickets();
+      setState(() {
+        if (currentCategory != null && currentCategory!.isNotEmpty) {
+          ticketsList = globalTicket.where((ticket) => ticket.type.name == currentCategory).toList();
+        } else {
+          ticketsList = globalTicket;
+        }
+      });
+    } catch (e) {
+      logger.e('Error: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _updateCategory(String? category) {
+    setState(() {
+      currentCategory = category;
+      _loadTickets();
+    });
+  }
+
+  Future<void> _reloadTickets() async {
+    await initializeTickets();
+    setState(() {
+      ticketsList.clear();
+    });
+    await _loadTickets();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopNavigation(title: "Solicitudes", isMainScreen: true),
-      body: FutureBuilder(
-        future: _loadTickets(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || (snapshot.data as List).isEmpty) {
-            return Container(); // Return an empty container if no tickets
-          } else {
-            final tickets = snapshot.data as List<Ticket>;
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: TicketsList(tickets: tickets),
-            );
-          }
-        },
+      appBar: const TopNavigation(title: "Tickets", isMainScreen: false),
+      body: Column(
+        children: [
+          FilterWidget(
+            onCategoryChanged: _updateCategory,
+          ),
+          Expanded(
+            child: RefreshIndicator(
+                onRefresh: _reloadTickets,
+              child: ticketsList.isEmpty
+                  ? const Center(child: Text('No hay tickets para mostrar'))
+                  : ListView.builder(
+                itemCount: ticketsList.length,
+                itemBuilder: (context, index) {
+                  final ticket = ticketsList[index];
+                  return TicketCard(
+                    ticket: ticket,
+                    onDelete: () {
+                      /// TODO: Implement delete functionality
+                    },
+                    onNavigateToEditTicket: _navigateToEditTicket,
+                    onReloadTickets: _reloadTickets,
+                  );
+                },
+              ),
+            )
+
+          ),
+        ],
       ),
     );
   }
 
-  Future<List<Ticket>> _loadTickets() async {
-    if (globalTicket.isNotEmpty) {
-      return globalTicket;
-    } else {
-      return await _testViewModel.fetchAll();
+  void _navigateToEditTicket(Ticket ticket) async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EditTicketScreen(ticket: ticket),
+      ),
+    );
+
+    if (result == true) {
+      _reloadTickets(); // Reload tickets if a ticket was deleted
     }
   }
 }
+

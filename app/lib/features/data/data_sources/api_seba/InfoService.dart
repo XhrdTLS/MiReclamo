@@ -41,7 +41,7 @@ class InfoService extends BaseService {
   Future<List<dynamic>> getCategory() async {
     try {
       final response = await get('$v1/categories');
-      _logger.d(json.decode(utf8.decode(response.bodyBytes)));
+      // _logger.d(json.decode(utf8.decode(response.bodyBytes)));
       final List<dynamic> types = json.decode(utf8.decode(response.bodyBytes));
       return types;
     } catch (error) {
