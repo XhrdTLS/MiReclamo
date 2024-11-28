@@ -89,7 +89,7 @@ class IcsoService extends BaseService {
     final ticketToken = update.token;
     Map<String, dynamic> requestBody = {
       "status": update.status.name,
-      // "response": update.response,
+      "response": update.response,
     };
     try {
       final response = await put('$responseUrl/$ticketToken/ticket', requestBody);
