@@ -52,12 +52,12 @@ class _EditTicketScreenState extends State<EditTicketScreen> {
 
   void _saveForm() {
     if (_formKey.currentState!.validate()) {
-      // Save the updated ticket
+      if (_selectedStatus == widget.ticket.status) _selectedStatus = Status.IN_PROGRESS;
       final updatedTicket = widget.ticket.copyWith(
         subject: _subjectController.text,
         message: _messageController.text,
         response: _responseController.text.isEmpty ? null : _responseController.text,
-        status: _selectedStatus!,
+        status: _selectedStatus,
       );
       _actions.updateTicket(updatedTicket, () {
         logger.i('Ticket updated');
@@ -65,29 +65,6 @@ class _EditTicketScreenState extends State<EditTicketScreen> {
       });
       Navigator.of(context).pop(updatedTicket);
     }
-  }
-
-  void _confirmDeleteTicket() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Confirm Delete'),
-        content: const Text('Are you sure you want to delete this ticket?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _deleteTicket();
-            },
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
-    );
   }
 
   void _deleteTicket() {
@@ -198,4 +175,28 @@ class _EditTicketScreenState extends State<EditTicketScreen> {
       ),
     );
   }
+
+  void _confirmDeleteTicket() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Delete'),
+        content: const Text('Are you sure you want to delete this ticket?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _deleteTicket();
+            },
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
