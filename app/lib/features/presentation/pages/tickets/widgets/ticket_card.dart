@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
-import '../screens/screens.dart';
 import 'widgets.dart';
 
 class TicketCard extends StatelessWidget {
@@ -18,10 +17,6 @@ class TicketCard extends StatelessWidget {
     required this.onNavigateToEditTicket,
     super.key,
   });
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,17 +74,17 @@ class TicketCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                            child: Text(
-                              categoria,
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: tipoColor,
-                              ),
-                              softWrap: true,
-                              overflow: TextOverflow.fade,
-                            ),
-                          ),
+                      child: Text(
+                        categoria,
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: tipoColor,
+                        ),
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
+                      ),
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8.0, vertical: 4.0),
@@ -109,7 +104,6 @@ class TicketCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 4),
-            // label,style: StyleText.descriptionBold, softWrap: true, overflow: TextOverflow.visible, textAlign: TextAlign.center,),
                 Text(
                   asunto,
                   style: GoogleFonts.poppins(
@@ -135,10 +129,5 @@ class TicketCard extends StatelessWidget {
         ),
       ),
     );
-
-
   }
 }
-
-
-
