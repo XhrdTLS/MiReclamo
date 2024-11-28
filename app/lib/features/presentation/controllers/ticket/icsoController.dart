@@ -49,9 +49,9 @@ class IcsoController {
   }
 
   /// Elimina un ticket por token
-  Future<void> fetchDeleteTicketByToken(String token) async {
+  Future<void> deleteTicketByToken(String token) async {
     try {
-      await _icsoService.deleteTicket(token);
+      _icsoService.deleteTicket(token);
       // _logger.i('DeleteTicketByToken Response: $response');
     } catch (error) {
       _logger.e('Error fetching delete ticket by token: $error');

@@ -8,12 +8,18 @@ import 'widgets.dart';
 class TicketCard extends StatelessWidget {
   final Ticket ticket;
   final VoidCallback onDelete;
+  final VoidCallback onReloadTickets;
+  final Function(Ticket) onNavigateToEditTicket;
 
   const TicketCard({
     required this.ticket,
     required this.onDelete,
+    required this.onReloadTickets,
+    required this.onNavigateToEditTicket,
     super.key,
   });
+
+
 
 
 
@@ -41,22 +47,22 @@ class TicketCard extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: () {
+      onDoubleTap: () {
         showDialog(
           context: context,
           builder: (context) => ViewTicketDialog(ticket: ticket),
         );
       },
-      onDoubleTap: () async {
-        final manageTicket = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => EditTicketScreen(ticket: ticket),
-            )
-        );
-        if (manageTicket != null) {
-          // Handle the updated ticket (e.g., save it to the repository)
-        }
-
+      onTap: () {
+        onNavigateToEditTicket(ticket);
+        // final manageTicket = await Navigator.of(context).push(
+        //     MaterialPageRoute(
+        //       builder: (context) => EditTicketScreen(ticket: ticket),
+        //     )
+        // );
+        // if (manageTicket != null) {
+        //   onReloadTickets();
+        // }
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -134,4 +140,6 @@ class TicketCard extends StatelessWidget {
 
   }
 }
+
+
 

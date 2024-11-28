@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 
+import 'screens/screens.dart';
 import 'widgets/widgets.dart';
 
 class TicketsPage extends StatefulWidget {
@@ -88,6 +89,8 @@ class _TicketsPageState extends State<TicketsPage> {
                     onDelete: () {
                       /// TODO: Implement delete functionality
                     },
+                    onNavigateToEditTicket: _navigateToEditTicket,
+                    onReloadTickets: _reloadTickets,
                   );
                 },
               ),
@@ -98,4 +101,17 @@ class _TicketsPageState extends State<TicketsPage> {
       ),
     );
   }
+
+  void _navigateToEditTicket(Ticket ticket) async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EditTicketScreen(ticket: ticket),
+      ),
+    );
+
+    if (result == true) {
+      _reloadTickets(); // Reload tickets if a ticket was deleted
+    }
+  }
 }
+

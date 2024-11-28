@@ -28,7 +28,7 @@ class EditTicketActions {
 
   Future<void> deleteTicket(String token, Function() onSuccess) async {
     try {
-      await _icsoController.fetchDeleteTicketByToken(token);
+      await _icsoController.deleteTicketByToken(token);
       onSuccess();
     } catch (e) {
       logger.e('Error deleting ticket: $e');
