@@ -55,14 +55,6 @@ class TicketCard extends StatelessWidget {
       },
       onTap: () {
         onNavigateToEditTicket(ticket);
-        // final manageTicket = await Navigator.of(context).push(
-        //     MaterialPageRoute(
-        //       builder: (context) => EditTicketScreen(ticket: ticket),
-        //     )
-        // );
-        // if (manageTicket != null) {
-        //   onReloadTickets();
-        // }
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -86,14 +78,18 @@ class TicketCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      categoria,
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: tipoColor,
-                      ),
-                    ),
+                    Expanded(
+                            child: Text(
+                              categoria,
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: tipoColor,
+                              ),
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8.0, vertical: 4.0),
@@ -113,11 +109,14 @@ class TicketCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 4),
+            // label,style: StyleText.descriptionBold, softWrap: true, overflow: TextOverflow.visible, textAlign: TextAlign.center,),
                 Text(
                   asunto,
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                   ),
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
                 ),
                 if (mensaje.isNotEmpty)
                   Padding(
