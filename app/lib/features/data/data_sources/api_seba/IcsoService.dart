@@ -13,6 +13,7 @@ class IcsoService extends BaseService {
   /// {{baseUrl}}/v1/icso
   String get url => '/v1/icso';
   String get attatchmentUrl => '/v1/attachments';
+  String get responseUrl => '/v1/response';
 
   /// Obtiene todos los tickets de una categoría
   ///
@@ -79,6 +80,28 @@ class IcsoService extends BaseService {
       return types;
     } catch (error) {
       _logger.e('Error al obtener los datos: $error');
+      throw Exception('Failed to fetch Tokens by category: $error');
+    }
+  }
+
+  /// UPDATE TICKET ADMIN
+  Future<Map<String, dynamic>> responseTicket(Ticket update) async {
+    final ticketToken = update.token;
+    // final requestBody = jsonEncode({
+    //   "status": update.status.name,
+    //   "response": update.response,
+    // });
+    Map<String, dynamic> requestBody = {
+      "status": update.status.name,
+      "response": update.response,
+    };
+    try {
+      final response = await put('$responseUrl/$ticketToken/ticket', requestBody);
+      // _logger.d(json.decode(utf8.decode(response.bodyBytes)));
+      final Map<String, dynamic> types = json.decode(utf8.decode(response.bodyBytes));
+      return types;
+    } catch (error) {
+      // _logger.e('Error al obtener los datos: $error');
       throw Exception('Failed to fetch Tokens by category: $error');
     }
   }

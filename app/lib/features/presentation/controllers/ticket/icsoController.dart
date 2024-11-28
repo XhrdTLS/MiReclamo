@@ -39,12 +39,12 @@ class IcsoController {
   }
 
   /// Actualiza un ticket por token
-  Future<void> fetchUpdateTicketByToken(Map<String, dynamic> headers, Map<String, dynamic> requestBody) async {
+  Future<void> updateTicketByToken(Ticket update) async {
     try {
-      Map<String, dynamic> response = await _icsoService.updateTicket(headers, requestBody);
+      Map<String, dynamic> response = await _icsoService.responseTicket(update);
       _logger.i('UpdateTicketByToken Response: $response');
     } catch (error) {
-      _logger.e('Error fetching update ticket by token: $error');
+      // _logger.e('Error fetching update ticket by token: $error');
     }
   }
 

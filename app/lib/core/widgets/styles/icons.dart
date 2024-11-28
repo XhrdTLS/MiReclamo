@@ -51,4 +51,6 @@ class AppIcons {
   static const refresh = Symbols.refresh_rounded;
 
   static const back = Symbols.arrow_back_rounded;
+
+  static const dropdownMenu = Symbols.more_vert_rounded;
 }
