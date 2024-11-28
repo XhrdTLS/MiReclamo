@@ -88,8 +88,7 @@ class IcsoService extends BaseService {
   Future<void> deleteTicket(
     String ticketToken) async {
   try {
-    final response = await delete('$url/$ticketToken/ticket');
-    _logger.d(json.decode(utf8.decode(response.bodyBytes)));
+    delete('$url/$ticketToken/ticket');
   } catch (error) {
     _logger.e('Error al obtener los datos: $error');
     throw Exception('Failed to fetch Tokens by category: $error');
@@ -98,16 +97,50 @@ class IcsoService extends BaseService {
 
   /// Obtiene todos los tickets
   ///
+  // Future<List<Ticket>> getAllTickets() async {
+  //   /// Definimos algunos datos a utilizar
+  //   List<dynamic> categories = await _infoService.getCategory();
+  //   Set<String> ticket = {};
+  //   List<Ticket> responses = [];
+  //     for (var category in categories) {
+  //       ticket.add(category['token']);
+  //     }
+  //   /// Hacemos llamadas al endpoint por cada token
+  //   for(var token in ticket){
+  //     try {
+  //       final response = await get('$url/$token/tickets?type=&status=');
+  //       if (response.statusCode == 200) {
+  //         final decodedResponse = json.decode(utf8.decode(response.bodyBytes));
+  //         if (decodedResponse is List) {
+  //           for (var item in decodedResponse) {
+  //             responses.add(Ticket.fromJson(item));
+  //           }
+  //         } else if (decodedResponse is Map) {
+  //           responses
+  //               .add(Ticket.fromJson(decodedResponse as Map<String, dynamic>));
+  //         }
+  //       }
+  //     } catch (error) {
+  //       _logger.e('Error al obtener los datos: $error');
+  //       throw Exception('Failed to fetch all tokens: $error');
+  //     }
+  //   }
+  //   return responses;
+  // }
+
+
   Future<List<Ticket>> getAllTickets() async {
     /// Definimos algunos datos a utilizar
     List<dynamic> categories = await _infoService.getCategory();
-    Set<String> ticket = {};
+    Set<String> tokens = {};
     List<Ticket> responses = [];
-      for (var category in categories) {
-        ticket.add(category['token']);
-      }
-    /// Hacemos llamadas al endpoint por cada token
-    for(var token in ticket){
+
+    for (var category in categories) {
+      tokens.add(category['token']);
+    }
+
+    /// Hacemos llamadas al endpoint por cada token usando ForkJoin
+    List<Future> futures = tokens.map((token) async {
       try {
         final response = await get('$url/$token/tickets?type=&status=');
         if (response.statusCode == 200) {
@@ -117,15 +150,16 @@ class IcsoService extends BaseService {
               responses.add(Ticket.fromJson(item));
             }
           } else if (decodedResponse is Map) {
-            responses
-                .add(Ticket.fromJson(decodedResponse as Map<String, dynamic>));
+            responses.add(Ticket.fromJson(decodedResponse as Map<String, dynamic>));
           }
         }
       } catch (error) {
         _logger.e('Error al obtener los datos: $error');
         throw Exception('Failed to fetch all tokens: $error');
       }
-    }
+    }).toList();
+
+    await Future.wait(futures);
     return responses;
   }
 

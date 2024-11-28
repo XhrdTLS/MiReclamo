@@ -80,12 +80,11 @@ class _EditTicketScreenState extends State<EditTicketScreen> {
 
   void _deleteTicket() {
     // Implement the delete ticket logic here
-    logger.i('Deleting ticket ${widget.ticket.token}');
-    _actions.deleteTicket(widget.ticket.token, ()=>{
-      logger.i('Ticket deleted'),
-      deleteTicketfromGlobal(widget.ticket.token),
-    });
-    Navigator.of(context).pop(); // Close the screen after deleting the ticket
+    _actions.deleteTicket(widget.ticket.token, () {
+      logger.i('Ticket deleted');
+      deleteTicketfromGlobal(widget.ticket.token);
+      Navigator.of(context).pop(true);
+      });
   }
 
   @override

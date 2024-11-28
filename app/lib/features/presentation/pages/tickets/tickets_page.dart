@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
-import 'package:mi_reclamo/features/presentation/pages/tickets/widgets/widgets.dart';
+
+import 'screens/screens.dart';
+import 'widgets/widgets.dart';
 
 class TicketsPage extends StatefulWidget {
-  final List<Ticket> tickets;
+  final String? category;
 
-  const TicketsPage({super.key, required this.tickets});
+  const TicketsPage({super.key, this.category});
 
   @override
   _TicketsPageState createState() => _TicketsPageState();
@@ -15,18 +17,53 @@ class TicketsPage extends StatefulWidget {
 
 
 class _TicketsPageState extends State<TicketsPage> {
-  List<Ticket> _filteredTickets = [];
+  List<Ticket> ticketsList = [];
+  String? currentCategory;
 
   @override
   void initState() {
     super.initState();
-    _filteredTickets = widget.tickets;
+    currentCategory = widget.category;
+    _loadTickets();
+    // ticketsList = globalTicket;
   }
 
-  void _filter(List<Ticket> filteredList){
+  Future<void> _loadTickets() async {
+    try {
+      if (globalTicket.isEmpty){
+        await initializeTickets();
+      }
+      // await initializeTickets();
+      setState(() {
+        if (currentCategory != null && currentCategory!.isNotEmpty) {
+          ticketsList = globalTicket.where((ticket) => ticket.type.name == currentCategory).toList();
+        } else {
+          ticketsList = globalTicket;
+        }
+      });
+    } catch (e) {
+      logger.e('Error: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _updateCategory(String? category) {
     setState(() {
-      _filteredTickets = filteredList;
+      currentCategory = category;
+      _loadTickets();
     });
+  }
+
+  Future<void> _reloadTickets() async {
+    await initializeTickets();
+    setState(() {
+      ticketsList.clear();
+    });
+    await _loadTickets();
   }
 
   @override
@@ -36,27 +73,45 @@ class _TicketsPageState extends State<TicketsPage> {
       body: Column(
         children: [
           FilterWidget(
-            allSolicitudes: widget.tickets,
-            onFilterApplied: _filter,
+            onCategoryChanged: _updateCategory,
           ),
           Expanded(
-            child: _filteredTickets.isEmpty
-                ? const Center(child: Text('No hay tickets para mostrar'))
-                : ListView.builder(
-              itemCount: _filteredTickets.length,
-              itemBuilder: (context, index) {
-                final ticket = _filteredTickets[index];
-                return TicketCard(
-                  ticket: ticket,
-                  onDelete: () {
-                    /// TODO: Implement delete functionality
-                  },
-                );
-              },
-            ),
+            child: RefreshIndicator(
+                onRefresh: _reloadTickets,
+              child: ticketsList.isEmpty
+                  ? const Center(child: Text('No hay tickets para mostrar'))
+                  : ListView.builder(
+                itemCount: ticketsList.length,
+                itemBuilder: (context, index) {
+                  final ticket = ticketsList[index];
+                  return TicketCard(
+                    ticket: ticket,
+                    onDelete: () {
+                      /// TODO: Implement delete functionality
+                    },
+                    onNavigateToEditTicket: _navigateToEditTicket,
+                    onReloadTickets: _reloadTickets,
+                  );
+                },
+              ),
+            )
+
           ),
         ],
       ),
     );
   }
+
+  void _navigateToEditTicket(Ticket ticket) async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EditTicketScreen(ticket: ticket),
+      ),
+    );
+
+    if (result == true) {
+      _reloadTickets(); // Reload tickets if a ticket was deleted
+    }
+  }
 }
+
