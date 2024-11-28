@@ -1,4 +1,3 @@
-import 'package:logger/logger.dart';
 import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/core/exception/exception_handler.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/v0_infoService.dart';
