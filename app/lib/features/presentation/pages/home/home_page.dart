@@ -31,6 +31,11 @@ class HomePageState extends State<HomePage> {
     _loadCounts();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Future<void> _loadUserName() async {
     _showSkeletonizer();
     final prefs = await SharedPreferences.getInstance();
@@ -88,11 +93,12 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const TopNavigation(
-          title: 'Inicio',
-          isMainScreen: true,
-        ),
-        body: RefreshIndicator(
+      appBar: const TopNavigation(
+        title: 'Inicio',
+        isMainScreen: true,
+      ),
+      body: SafeArea(
+        child: RefreshIndicator(
           onRefresh: reload,
           child: Skeletonizer(
             enabled: isLoading,
@@ -185,7 +191,7 @@ class HomePageState extends State<HomePage> {
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 3,
+                      itemCount: 6,
                       separatorBuilder: (context, index) => const Divider(),
                       itemBuilder: (context, index) => const AssignedClaim(),
                     ),
@@ -195,6 +201,8 @@ class HomePageState extends State<HomePage> {
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

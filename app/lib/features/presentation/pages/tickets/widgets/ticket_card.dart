@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
+import 'package:mi_reclamo/features/presentation/pages/tickets/actions/estado_colors.dart';
 import '../../../../../core/core.dart';
 import 'widgets.dart';
 
@@ -37,26 +37,26 @@ class TicketCard extends StatelessWidget {
             ? AppTheme.lightOrange
             : AppTheme.darkOrange;
         textColor = AppTheme.darkOrange;
-        typeIcon = Icons.warning_rounded;
+        typeIcon = AppIcons.claim;
         break;
       case 'SUGGESTION':
         tipoColor = brightness == Brightness.light
             ? AppTheme.lightGreen
             : AppTheme.darkGreen;
         textColor = AppTheme.darkGreen;
-        typeIcon = Icons.lightbulb_rounded;
+        typeIcon = AppIcons.sugestion;
         break;
       case 'INFORMATION':
         tipoColor = brightness == Brightness.light
             ? AppTheme.lightBlue
             : AppTheme.darkBlue;
         textColor = AppTheme.darkBlue;
-        typeIcon = Icons.info_rounded;
+        typeIcon = AppIcons.info;
         break;
       default:
         tipoColor = AppTheme.lightGray;
         textColor = AppTheme.lightGray;
-        typeIcon = Icons.help_rounded;
+        typeIcon = AppIcons.ticket;
     }
 
     return GestureDetector(
@@ -71,74 +71,90 @@ class TicketCard extends StatelessWidget {
       },
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: AppTheme.lightGray,
+            width: 1,
+          ),
         ),
         elevation: 0,
-        margin: const EdgeInsets.symmetric(vertical: 6.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(16),
             border: Border(
-              left: BorderSide(color: tipoColor, width: 4),
+              left: BorderSide(color: tipoColor, width: 8),
             ),
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          typeIcon,
-                          color: textColor,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          categoria,
-                          style: StyleText.header.copyWith(
-                            color: textColor,
-                          ),)
-                      ],),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 4.0),
-                      decoration: BoxDecoration(
-                        color: tipoColor.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        estado,
-                        style: StyleText.labelSmall.copyWith(
-                          color: textColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                Icon(
+                  typeIcon,
+                  weight: 700,
+                  color: textColor,
+                  size: 25,
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  asunto,
-                  style: StyleText.body.copyWith(                  ),
-                  softWrap: true,
-                  overflow: TextOverflow.fade,
-                ),
-                if (mensaje.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Text(
-                      mensaje,
-                      style: GoogleFonts.poppins(
-                        fontSize: 10,
-                        color: Colors.grey,
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              categoria,
+                              style: StyleText.header.copyWith(
+                                color: textColor,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 4.0),
+                            decoration: BoxDecoration(
+                              color: getEstadoColor(estado),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              estado,
+                              style: StyleText.labelSmall.copyWith(
+                                color: getEstadoTextColor(estado),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                      const SizedBox(height: 4),
+                      Text(
+                        asunto,
+                        style: StyleText.description.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
+                      ),
+                      if (mensaje.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            mensaje,
+                            style: StyleText.body.copyWith(
+                              color: AppTheme.darkGray,
+                            ),
+                            maxLines: 3, 
+                            overflow: TextOverflow.ellipsis, 
+                          ),
+                        ),
+                    ],
                   ),
+                ),
               ],
             ),
           ),

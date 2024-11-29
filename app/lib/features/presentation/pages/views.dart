@@ -6,4 +6,3 @@ export './notes/notas_page.dart';
 export './profile/profile_page.dart';
 export './test/test_page.dart';
 export 'tickets/tickets_page.dart';
-export './reclamos/reclamos_page.dart';

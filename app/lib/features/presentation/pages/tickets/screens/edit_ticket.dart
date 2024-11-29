@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/core/core.dart';
-import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/features/domain/entities/enum/StatusEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:mi_reclamo/features/presentation/pages/tickets/actions/actions.dart';
@@ -12,10 +11,10 @@ class EditTicketScreen extends StatefulWidget {
   const EditTicketScreen({required this.ticket, super.key});
 
   @override
-  _EditTicketScreenState createState() => _EditTicketScreenState();
+  EditTicketScreenState createState() => EditTicketScreenState();
 }
 
-class _EditTicketScreenState extends State<EditTicketScreen> {
+class EditTicketScreenState extends State<EditTicketScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _subjectController;
   late TextEditingController _messageController;
