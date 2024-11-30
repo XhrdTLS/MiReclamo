@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "148606730609",
+    "project_id": "mi-reclamo-cf6e6",
+    "storage_bucket": "mi-reclamo-cf6e6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148606730609:android:1ca9f5fda623837e8676d0",
+        "android_client_info": {
+          "package_name": "cl.utem.mireclamo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148606730609-6sbfclksprvnpehi5l033a1riruod0to.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cl.utem.mireclamo",
+            "certificate_hash": "0726d5d820d954d4a9c4e705fb287403d8f1b0f2"
+          }
+        },
+        {
+          "client_id": "148606730609-gtdf1uf12hv79anp513mhq4c985l252r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cl.utem.mireclamo",
+            "certificate_hash": "6661c8d59133db820ed3a7b888e711cde9855cf4"
+          }
+        },
+        {
+          "client_id": "148606730609-170p668v1tpagafqn3rs693hocn1c7of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdF7IteG5F-CxOt7x9Fw9PAwLByYIb50k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148606730609-170p668v1tpagafqn3rs693hocn1c7of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
