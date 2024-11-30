@@ -211,9 +211,6 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                     Status.IN_PROGRESS,
                     Status.PENDING_INFORMATION,
                     Status.RESOLVED,
-                    Status.CLOSED,
-                    Status.REJECTED,
-                    Status.CANCELLED,
                   ].map((Status status) {
                     return DropdownMenuItem<Status>(
                       value: status,
