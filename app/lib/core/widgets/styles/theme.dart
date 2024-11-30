@@ -20,6 +20,9 @@ class AppTheme {
   static Color get lightRed => const Color(0xFFFFBDBD);
   static Color get darkRed => const Color(0xFF490C0C);
 
+  static Color lightYellow = const Color(0xFFFFF9E5);
+  static Color darkYellow = const Color(0xFFA08C0A);
+
   static ColorScheme get colorScheme => ColorScheme.fromSeed(
         seedColor: const Color(0xFF1D8E5C),
         primary: const Color(0xFF1D8E5C),

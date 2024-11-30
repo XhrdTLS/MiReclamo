@@ -60,9 +60,9 @@ class TicketCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  getTipoIcon(tipo), // Updated to use IconData
+                  getTipoIcon(tipo), 
                   weight: 700,
-                  color: getTipoTextColor(tipo), // Updated to use getTipoTextColor
+                  color: getTipoTextColor(tipo), 
                   size: 25,
                 ),
                 const SizedBox(width: 8),
@@ -77,7 +77,7 @@ class TicketCard extends StatelessWidget {
                             child: Text(
                               categoria,
                               style: StyleText.header.copyWith(
-                                color: getTipoTextColor(tipo), // Updated to use getTipoTextColor
+                                color: getTipoTextColor(tipo), 
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),

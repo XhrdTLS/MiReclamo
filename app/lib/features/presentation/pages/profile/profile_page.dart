@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
 import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/features/data/data_sources/google/google_service.dart';
@@ -16,6 +19,14 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   static final Logger _logger = Logger();
+
+  String capitalize(String input) {
+    if (input.isEmpty) return input;
+    return input
+        .split(' ')
+        .map((str) => str[0].toUpperCase() + str.substring(1).toLowerCase())
+        .join(' ');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +45,14 @@ class ProfilePageState extends State<ProfilePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SvgPicture.asset(
+                        'assets/large-logo-app.svg',
+                        height: 70,
+                      ),
+                      const SizedBox(height: 12),
+                      const SizedBox(width: 12),
                       FutureBuilder<String>(
                         future: StorageService.getValue('image'),
                         builder: (context, snapshot) {
@@ -42,33 +60,54 @@ class ProfilePageState extends State<ProfilePage> {
                               ConnectionState.done) {
                             final String photoUrl = snapshot.data ?? '';
                             if (photoUrl.isNotEmpty) {
-                              return CircleAvatar(
-                                radius: 40,
-                                backgroundImage:
-                                    CachedNetworkImageProvider(photoUrl),
+                              return Column(
+                                children: [
+                                  const SizedBox(width: 12),
+                                  CircleAvatar(
+                                    radius: 60,
+                                    backgroundImage:
+                                        CachedNetworkImageProvider(photoUrl),
+                                  ),
+                                ],
                               );
                             } else {
-                              return const CircleAvatar(
-                                  radius: 40, child: Icon(Icons.person_2));
+                              return const Column(
+                                children: [
+                                  SizedBox(width: 12),
+                                  CircleAvatar(
+                                      radius: 60, child: Icon(Icons.person_2)),
+                                ],
+                              );
                             }
                           } else if (snapshot.hasError) {
-                            return const CircleAvatar(
-                                radius: 40, child: Icon(Icons.person));
+                            return const Column(
+                              children: [
+                                SizedBox(width: 12),
+                                CircleAvatar(
+                                    radius: 60, child: Icon(Icons.person)),
+                              ],
+                            );
                           } else {
-                            return const CircleAvatar(
-                                radius: 40, child: CircularProgressIndicator());
+                            return const Column(
+                              children: [
+                                SizedBox(width: 12),
+                                CircleAvatar(
+                                    radius: 60,
+                                    child: CircularProgressIndicator()),
+                              ],
+                            );
                           }
                         },
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
                   FutureBuilder<String>(
                     future: StorageService.getValue('name'),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         final String name = snapshot.data ?? '';
-                        return Text(name,
+                        return Text(capitalize(name),
                             style: StyleText.headlineSmall,
                             textAlign: TextAlign.center);
                       } else {
@@ -104,11 +143,37 @@ class ProfilePageState extends State<ProfilePage> {
             leading: const Icon(AppIcons.close),
             title: const Text('Cerrar Sesión'),
             onTap: () {
-              _logger.d('Voy a cerrar sesión');
+              _logger.d('Cerrando Sesión');
               GoogleService.disconnect();
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const LoginPage()));
             },
+          ),
+          const SizedBox(height: 20),
+           Text(
+            "Mi Reclamo",
+            style: StyleText.label,
+            textAlign: TextAlign.start,
+          ),
+          const SizedBox(height: 8),
+           Text(
+            "Proyecto creado para la asignatura Computación Móvil de la Universidad Tecnológica Metropolitana.\n\n"
+            "Docente: Sebastian Salazar Molina.\n"
+            "Seccion: 301 - EFE68500.\n",
+            textAlign: TextAlign.start,
+            style: StyleText.description,
+          ),
+           Text(
+            "Integrantes",
+            style: StyleText.label,
+            textAlign: TextAlign.start,
+          ),
+          const SizedBox(height: 8),
+           Text(
+            "- Gabriel González Núñez\n"
+            "- Tomas Lillo Silva\n",
+            textAlign: TextAlign.start,
+            style: StyleText.descriptionBold,
           ),
         ],
       ),

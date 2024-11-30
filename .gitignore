@@ -27,4 +27,3 @@ doc/api/
 .flutter-plugins-dependencies
 /.idea/
 /swagger.txt
-app/android/app/google-services.json

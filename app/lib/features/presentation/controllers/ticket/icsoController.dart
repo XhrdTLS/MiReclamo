@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mi_reclamo/core/core.dart';
 import 'package:mi_reclamo/core/exception/exception_handler.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/IcsoService.dart';
@@ -77,6 +79,7 @@ class IcsoController {
     try {
       Map<String,dynamic> response = await _icsoService.fetchAttachedFile(token, attatchmentToken);
       verifyResponse(response);
+      File file = await _icsoService.saveFileFromJson(response);
       return response;
     } catch (error) {
       logger.e('Error fetching attached file: $error');

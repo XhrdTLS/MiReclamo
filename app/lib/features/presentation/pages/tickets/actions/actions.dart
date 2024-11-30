@@ -1,3 +1,3 @@
 
 export 'edit_ticket_action.dart';
-export 'filter.dart';
+export 'filter_tipo.dart';

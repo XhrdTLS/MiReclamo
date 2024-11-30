@@ -4,6 +4,7 @@ import 'package:mi_reclamo/features/domain/entities/enum/StatusEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:mi_reclamo/features/presentation/pages/tickets/actions/actions.dart';
 import '../widgets/widgets.dart';
+import 'package:intl/intl.dart';
 
 class EditTicketScreen extends StatefulWidget {
   final Ticket ticket;
@@ -58,16 +59,16 @@ class EditTicketScreenState extends State<EditTicketScreen> {
             _responseController.text.isEmpty ? null : _responseController.text,
         status: _selectedStatus,
       );
-      _actions.updateTicket(updatedTicket, () {
+      _actions.updateTicket(updatedTicket, ()  {
         logger.i('Ticket updated');
-        initializeTickets();
+        updateTicketInGlobal(updatedTicket);
+        // await initializeTickets();
       });
       Navigator.of(context).pop(updatedTicket);
     }
   }
 
   void _deleteTicket() {
-    // Implement the delete ticket logic here
     _actions.deleteTicket(widget.ticket.token, () {
       logger.i('Ticket deleted');
       deleteTicketfromGlobal(widget.ticket.token);
@@ -75,16 +76,23 @@ class EditTicketScreenState extends State<EditTicketScreen> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
+    String idTicket = widget.ticket.token.toString();
     String tipo = widget.ticket.type.name;
     String asunto = widget.ticket.subject;
     String estado = widget.ticket.status.name;
     String categoria = widget.ticket.category.name;
+    DateTime fechaCreado = widget.ticket.created;
+    DateTime fechaActualizado = widget.ticket.updated;
+
+    final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm');
+
     return Scaffold(
       appBar: const TopNavigation(title: "Ticket", isMainScreen: false),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Form(
           key: _formKey,
           child: Align(
@@ -93,12 +101,28 @@ class EditTicketScreenState extends State<EditTicketScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('#${widget.ticket.token}', style: StyleText.body),
+                // IDENTIFICADOR DEL TICKET
+                Text(idTicket, style: StyleText.labelSmall),
+                const SizedBox(height: 8),
+                // ASUNTO DEL TICKET
                 Text(
                   asunto,
                   style: StyleText.headline,
                 ),
+                // CATEGORÍA DEL TICKET
                 const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Text('Categoría: ', style: StyleText.label),
+                    Text(
+                        categoria,
+                        style: StyleText.label.copyWith(
+                          color: getTipoTextColor(tipo),
+                        ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
                 Row(
                   children: [
                     // TIPO DE TICKET
@@ -144,28 +168,27 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                     ),
                   ],
                 ),
-                // CATEGORIA DEL TICKET
-                const SizedBox(height: 16),
-                Text('Categoría', style: StyleText.body),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 4.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    categoria,
-                    style: StyleText.label.copyWith(
-                      color: getTipoTextColor(tipo),
-                    ),
-                  ),
+                const SizedBox(height: 20),
+                Text('Fecha de Creación', style: StyleText.label),
+                const SizedBox(height: 8),
+                Text(
+                  formatter.format(fechaCreado),
+                  style: StyleText.body,
+                ),
+                const SizedBox(height: 8),
+                Text('Fecha de Actualización', style: StyleText.label),
+                const SizedBox(height: 8),
+                Text(
+                  formatter.format(fechaActualizado),
+                  style: StyleText.body,
                 ),
                 // CAMBIAR ESTADO DEL TICKET
-                const SizedBox(height: 16),
-                Text('Cambiar Estado', style: StyleText.body),
+                const SizedBox(height: 20),
+                Text('Cambiar Estado', style: StyleText.label),
+                const SizedBox(height: 8),
                 DropdownButtonFormField<Status>(
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0), // Add padding
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -182,7 +205,16 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                     ),
                   ),
                   value: _selectedStatus,
-                  items: Status.values.map((Status status) {
+                  items: [
+                    Status.RECEIVED,
+                    Status.UNDER_REVIEW,
+                    Status.IN_PROGRESS,
+                    Status.PENDING_INFORMATION,
+                    Status.RESOLVED,
+                    Status.CLOSED,
+                    Status.REJECTED,
+                    Status.CANCELLED,
+                  ].map((Status status) {
                     return DropdownMenuItem<Status>(
                       value: status,
                       child: Text(status.name),
@@ -195,51 +227,60 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                   },
                   icon: const Icon(AppIcons.dropdown, weight: 400),
                 ),
+                const SizedBox(height: 12),
                 // DESCRIPCIÓN DEL TICKET
+                Text('Descripción', style: StyleText.label),
                 const SizedBox(height: 8),
-                Text('Descripción', style: StyleText.body),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    _messageController.text,
+                    style: StyleText.body,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                // RESPUESTA DEL TICKET
+                Text('Responder', style: StyleText.label),
+                const SizedBox(height: 8),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
-                  child: Text(
-                    _messageController.text,
-                    style: StyleText.label,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text('Responder', style: StyleText.body),
-                TextFormField(
-                  controller: _responseController,
-                  decoration: InputDecoration(
-                    hintText: 'Escribe la Respuesta',
-                    hintStyle: StyleText.body.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.outline,
+                  child: TextFormField(
+                    controller: _responseController,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      hintText: 'Escribe la Respuesta',
+                      hintStyle: StyleText.body.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
                       ),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.outline,
-                      ),
-                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Debes Ingresar una Respuesta';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Debes Ingresar una Respuesta';
-                    }
-                    return null;
-                  },
                 ),
+                const SizedBox(height: 12),
                 Wrap(
                   children: attachedTokens.map((token) {
                     return IconButton(
@@ -269,45 +310,38 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                     );
                   }).toList(),
                 ),
-                // BOTONES DE ACCIÓN: ELIMINAR TICKET
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton.icon(
-                    onPressed: _confirmDeleteTicket,
-                    label: Text('Eliminar Ticket',
-                        style:
-                            StyleText.label.copyWith(color: Theme.of(context).colorScheme.onSurface)),
-                    icon: Icon(AppIcons.delete, weight: 700, color: AppTheme.darkRed),
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppTheme.lightGray,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      child: TextButton(
+                        onPressed: _confirmDeleteTicket,
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppTheme.lightStone,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                        ),
+                        child: Text('Eliminar Ticket', style: StyleText.label.copyWith(color: Theme.of(context).colorScheme.onSurface)),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 24.0),
                     ),
-                  ),
-                ),
-                // BOTONES DE ACCIÓN: RESPONDER TICKET
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton.icon(
-                    onPressed: _saveForm,
-                    label: Text('Responder Ticket',
-                        style: StyleText.label
-                            .copyWith(color: Theme.of(context).colorScheme.onSurface)),
-                    icon: const Icon(AppIcons.done, weight: 700),
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppTheme.lightGreen,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      child: TextButton(
+                        onPressed: _saveForm,
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppTheme.lightGreen,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                        ),
+                        child: Text('Responder Ticket', style: StyleText.label.copyWith(color: Theme.of(context).colorScheme.onSurface)),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 24.0),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

@@ -13,8 +13,14 @@ class AppIcons {
   static const IconData notes = Symbols.note_stack_rounded;
   /// Icono de Solicitud
   static const IconData ticket = Symbols.confirmation_number_rounded;
+  /// Icono de Recibido
+  static const IconData received = Symbols.inbox_rounded;
+  /// Icono de Revision
+  static const IconData review = Symbols.assignment_rounded;
   /// Icono de Resuelto
   static const IconData done = Symbols.check_circle_rounded;
+  // Icono de Cerado - Rechazado
+  static const IconData rejected = Symbols.cancel_rounded;
   /// Icono de Pendiente
   static const IconData pending = Symbols.schedule_rounded;
 
@@ -39,18 +45,20 @@ class AppIcons {
   static const settings = Symbols.settings_rounded;
   /// Icono para Menus Desplegables
   static const dropdown = Symbols.keyboard_arrow_down_rounded;
-  /// Icono de Añadir (+)
-  static const add = Symbols.add_rounded;
-  /// Icono de Cerrar (x)
-  static const close = Symbols.close_rounded;
-  /// Icono de Menú (3 puntos) 
-  static const more = Symbols.more_vert_rounded;
   /// Icono para Editar
   static const edit = Symbols.edit_rounded;
   /// Icono para Recargar
   static const refresh = Symbols.refresh_rounded;
+  /// Icono para Cerrar
+  static const close = Symbols.close_rounded;
+  /// Icono para Agregar
+  static const add = Symbols.add_rounded;
+  /// Icono de Log In
+  static const login = Symbols.login_rounded;
 
   static const back = Symbols.arrow_back_rounded;
 
   static const dropdownMenu = Symbols.more_vert_rounded;
+
+  
 }
