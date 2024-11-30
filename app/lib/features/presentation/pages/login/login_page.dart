@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/core.dart';
 import '../../../data/data_sources/google/google_service.dart';
 
@@ -17,7 +17,28 @@ class LoginPage extends StatelessWidget {
         future: GoogleService.logIn(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 100, 
+                    child: SvgPicture.asset(
+                      'assets/logo-app.svg',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Text(
+                    'Validando inicio de sesión...',
+                    style: StyleText.headlineSmall,
+                  ),
+                  const SizedBox(height: 32),
+                  const CircularProgressIndicator(),
+                ],
+              ),
+            );
           } else if (snapshot.hasData && snapshot.data == true) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.of(context).push(

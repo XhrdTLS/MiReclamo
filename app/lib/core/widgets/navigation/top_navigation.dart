@@ -15,7 +15,7 @@ class TopNavigation extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar( 
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       title: Text(
         title,
         style: TextStyle(

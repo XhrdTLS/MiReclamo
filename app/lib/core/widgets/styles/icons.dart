@@ -24,11 +24,11 @@ class AppIcons {
   /// Tipo de Solicitud: Sugerencia
   static const IconData sugestion = Symbols.move_to_inbox_rounded;
   /// Tipo de Solicitud: Informacion
-  static const IconData information = Symbols.chat_info_rounded;
+  static const info = Symbols.info_rounded;
+  /// Tipo de Solicitud: Pregunta
+  static const question = Symbols.question_answer_rounded;
 
   //* Iconos para acciones
-  /// Icono de Informacion del sistema
-  static const info = Symbols.info_rounded;
   /// Icono de Archivos
   static const file = Symbols.attach_file_rounded;
   /// Icono de Arroba

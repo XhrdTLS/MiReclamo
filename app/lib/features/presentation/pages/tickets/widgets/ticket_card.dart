@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
-
+import '../../../../../core/core.dart';
+import '../screens/screens.dart';
 import 'widgets.dart';
 
 class TicketCard extends StatelessWidget {
@@ -26,21 +26,6 @@ class TicketCard extends StatelessWidget {
     String mensaje = ticket.message;
     String categoria = ticket.category.name;
 
-    Color tipoColor;
-    switch (tipo) {
-      case 'CLAIM':
-        tipoColor = Colors.red;
-        break;
-      case 'SUGGESTION':
-        tipoColor = Colors.green;
-        break;
-      case 'INFORMATION':
-        tipoColor = Colors.blue;
-        break;
-      default:
-        tipoColor = Colors.grey;
-    }
-
     return GestureDetector(
       onDoubleTap: () {
         showDialog(
@@ -53,76 +38,90 @@ class TicketCard extends StatelessWidget {
       },
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: AppTheme.lightGray,
+            width: 1,
+          ),
         ),
-        elevation: 2,
-        margin: const EdgeInsets.symmetric(vertical: 6.0),
+        elevation: 0,
+        margin: const EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(16),
             border: Border(
-              left: BorderSide(color: tipoColor, width: 4),
+              left: BorderSide(color: getTipoColor(context, tipo), width: 8),
             ),
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        categoria,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: tipoColor,
+                Icon(
+                  getTipoIcon(tipo), // Updated to use IconData
+                  weight: 700,
+                  color: getTipoTextColor(tipo), // Updated to use getTipoTextColor
+                  size: 25,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              categoria,
+                              style: StyleText.header.copyWith(
+                                color: getTipoTextColor(tipo), // Updated to use getTipoTextColor
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 4.0),
+                            decoration: BoxDecoration(
+                              color: getEstadoColor(estado),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              estado,
+                              style: StyleText.labelSmall.copyWith(
+                                color: getEstadoTextColor(estado),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        asunto,
+                        style: StyleText.description.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                         softWrap: true,
                         overflow: TextOverflow.fade,
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 4.0),
-                      decoration: BoxDecoration(
-                        color: tipoColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        estado,
-                        style: GoogleFonts.poppins(
-                          fontSize: 10,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      if (mensaje.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            mensaje,
+                            style: StyleText.body.copyWith(
+                              color: AppTheme.darkGray,
+                            ),
+                            maxLines: 3, 
+                            overflow: TextOverflow.ellipsis, 
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  asunto,
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
+                    ],
                   ),
-                  softWrap: true,
-                  overflow: TextOverflow.fade,
                 ),
-                if (mensaje.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Text(
-                      mensaje,
-                      style: GoogleFonts.poppins(
-                        fontSize: 10,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
               ],
             ),
           ),
