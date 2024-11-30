@@ -59,16 +59,16 @@ class EditTicketScreenState extends State<EditTicketScreen> {
             _responseController.text.isEmpty ? null : _responseController.text,
         status: _selectedStatus,
       );
-      _actions.updateTicket(updatedTicket, () {
+      _actions.updateTicket(updatedTicket, ()  {
         logger.i('Ticket updated');
-        initializeTickets();
+        updateTicketInGlobal(updatedTicket);
+        // await initializeTickets();
       });
       Navigator.of(context).pop(updatedTicket);
     }
   }
 
   void _deleteTicket() {
-    // Implement the delete ticket logic here
     _actions.deleteTicket(widget.ticket.token, () {
       logger.i('Ticket deleted');
       deleteTicketfromGlobal(widget.ticket.token);

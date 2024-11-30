@@ -18,3 +18,8 @@ Future<void> initializeTickets() async {
 Future<void> deleteTicketfromGlobal(String token) async {
   globalTicket.removeWhere((element) => element.token == token);
 }
+
+Future<void> updateTicketInGlobal(Ticket updatedTicket) async {
+  globalTicket.removeWhere((element) => element.token == updatedTicket.token);
+  globalTicket.add(updatedTicket);
+}

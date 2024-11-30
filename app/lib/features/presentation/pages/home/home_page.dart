@@ -224,7 +224,7 @@ class HomePageState extends State<HomePage> {
                           color: AppTheme.lightGray,
                           icon: AppIcons.received,
                           onTap: () {
-                            globalStatusFilter = Status.RECEIVED.name;
+                            globalCategoryFilter = Status.RECEIVED.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -239,7 +239,7 @@ class HomePageState extends State<HomePage> {
                           color: AppTheme.lightGray,
                           icon: AppIcons.review,
                           onTap: () {
-                            globalStatusFilter = Status.UNDER_REVIEW.name;
+                            globalCategoryFilter = Status.UNDER_REVIEW.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -254,7 +254,7 @@ class HomePageState extends State<HomePage> {
                           color: AppTheme.lightGray,
                           icon: AppIcons.pending,
                           onTap: () {
-                            globalStatusFilter = Status.IN_PROGRESS.name;
+                            globalCategoryFilter = Status.IN_PROGRESS.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -269,7 +269,7 @@ class HomePageState extends State<HomePage> {
                           color: AppTheme.lightGray,
                           icon: AppIcons.pending,
                           onTap: () {
-                            globalStatusFilter = Status.PENDING_INFORMATION.name;
+                            globalCategoryFilter = Status.PENDING_INFORMATION.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -284,7 +284,7 @@ class HomePageState extends State<HomePage> {
                           color: AppTheme.lightGray,
                           icon: AppIcons.done,
                           onTap: () {
-                            globalStatusFilter = Status.RESOLVED.name;
+                            globalCategoryFilter = Status.RESOLVED.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -299,7 +299,7 @@ class HomePageState extends State<HomePage> {
                           color: AppTheme.lightGray,
                           icon: AppIcons.done,
                           onTap: () {
-                            globalStatusFilter = Status.CLOSED.name;
+                            globalCategoryFilter = Status.CLOSED.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -314,7 +314,7 @@ class HomePageState extends State<HomePage> {
                           color: AppTheme.lightGray,
                           icon: AppIcons.rejected,
                           onTap: () {
-                            globalStatusFilter = Status.REJECTED.name;
+                            globalCategoryFilter = Status.REJECTED.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -329,7 +329,7 @@ class HomePageState extends State<HomePage> {
                           color: AppTheme.lightGray,
                           icon: AppIcons.rejected,
                           onTap: () {
-                            globalStatusFilter = Status.CANCELLED.name;
+                            globalCategoryFilter = Status.CANCELLED.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(

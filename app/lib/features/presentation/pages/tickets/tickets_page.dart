@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/core/core.dart';
+import 'package:mi_reclamo/features/domain/entities/enum/StatusEnum.dart';
+import 'package:mi_reclamo/features/domain/entities/enum/TypesEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'actions/actions.dart';
@@ -18,7 +20,8 @@ class TicketsPage extends StatefulWidget {
 class TicketsPageState extends State<TicketsPage> {
   List<Ticket> ticketsList = [];
   bool isLoading = true;
-  String? globalStatusFilter;
+  String? globalFilter;
+
 
   @override
   void initState() {
@@ -32,16 +35,21 @@ class TicketsPageState extends State<TicketsPage> {
       if (globalTicket.isEmpty){
         await initializeTickets();
       }
+      globalFilter = globalCategoryFilter;
       setState(() {
-        if (globalCategoryFilter != null && globalCategoryFilter!.isNotEmpty) {
-          ticketsList = globalTicket.where((ticket) => ticket.type.name == globalCategoryFilter).toList();
-        } else if (globalStatusFilter != null && globalStatusFilter!.isNotEmpty) {
-          ticketsList = globalTicket.where((ticket) => ticket.status.name == globalStatusFilter).toList();
-        } else {
-          ticketsList = globalTicket;
+        if (globalFilter != null && globalFilter!.isNotEmpty) {
+          if (Types.values.any((type) => type.name == globalFilter)) {
+            ticketsList = globalTicket.where((ticket) => ticket.type.name == globalFilter).toList();
+          } else if (Status.values.any((status) => status.name == globalFilter)) {
+            ticketsList = globalTicket.where((ticket) => ticket.status.name == globalFilter).toList();
+          }
         }
-        isLoading = false;
-      });
+          else {
+            ticketsList = globalTicket;
+          }
+          isLoading = false;
+        });
+
     } catch (e) {
       logger.e('Error: $e');
       setState(() {
@@ -79,7 +87,7 @@ class TicketsPageState extends State<TicketsPage> {
 
   void _updateStatus(String? status) {
     setState(() {
-      globalStatusFilter = status;
+      globalFilter = status;
       _loadTickets();
     });
   }
