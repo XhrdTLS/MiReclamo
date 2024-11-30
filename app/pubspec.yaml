@@ -36,3 +36,4 @@ flutter:
   assets:
     - assets/logo-app-small.png
     - assets/logo-app.svg
+    - assets/large-logo-app.svg

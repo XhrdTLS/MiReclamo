@@ -53,8 +53,12 @@ class AppIcons {
   static const close = Symbols.close_rounded;
   /// Icono para Agregar
   static const add = Symbols.add_rounded;
+  /// Icono de Log In
+  static const login = Symbols.login_rounded;
 
   static const back = Symbols.arrow_back_rounded;
 
   static const dropdownMenu = Symbols.more_vert_rounded;
+
+  
 }

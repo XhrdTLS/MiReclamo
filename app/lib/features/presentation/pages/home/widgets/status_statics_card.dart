@@ -46,7 +46,7 @@ class StatusStatCard extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color: color,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                   size: 25,
                 ),
                 const SizedBox(width: 8),
@@ -57,7 +57,7 @@ class StatusStatCard extends StatelessWidget {
                       Text(
                         status,
                         style: StyleText.header.copyWith(
-                          color: color,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),

@@ -188,6 +188,7 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                 const SizedBox(height: 8),
                 DropdownButtonFormField<Status>(
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0), // Add padding
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -204,7 +205,16 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                     ),
                   ),
                   value: _selectedStatus,
-                  items: Status.values.map((Status status) {
+                  items: [
+                    Status.RECEIVED,
+                    Status.UNDER_REVIEW,
+                    Status.IN_PROGRESS,
+                    Status.PENDING_INFORMATION,
+                    Status.RESOLVED,
+                    Status.CLOSED,
+                    Status.REJECTED,
+                    Status.CANCELLED,
+                  ].map((Status status) {
                     return DropdownMenuItem<Status>(
                       value: status,
                       child: Text(status.name),
