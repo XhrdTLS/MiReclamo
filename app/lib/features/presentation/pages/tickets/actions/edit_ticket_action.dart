@@ -1,9 +1,11 @@
 import 'package:mi_reclamo/core/globals.dart';
+import 'package:mi_reclamo/features/data/data_sources/api_seba/IcsoService.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:mi_reclamo/features/presentation/controllers/ticket/icsoController.dart';
 
 class EditTicketActions {
   final IcsoController _icsoController = IcsoController();
+  final IcsoService _icsoService = IcsoService();
 
   Future<void> chargeTicket(String token, Function(List<dynamic>) onSuccess) async {
     logger.i('Charging ticket $token');
@@ -44,6 +46,7 @@ class EditTicketActions {
       logger.e('Error updating ticket: $e');
     }
   }
+
 
 
 }
