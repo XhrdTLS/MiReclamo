@@ -10,7 +10,8 @@ class FilterWidget extends StatelessWidget {
   FilterWidget({super.key, required this.onCategoryChanged});
 
   void _changeFilter(String filter) {
-    onCategoryChanged(filter == 'TODAS' ? null : filter);
+    globalCategoryFilter = filter == 'TODAS' ? null : filter;
+    onCategoryChanged(globalCategoryFilter);
     _logger.i('Filter changed to $filter');
   }
 

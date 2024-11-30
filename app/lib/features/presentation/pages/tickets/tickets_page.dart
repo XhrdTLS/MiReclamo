@@ -7,9 +7,9 @@ import 'screens/screens.dart';
 import 'widgets/widgets.dart';
 
 class TicketsPage extends StatefulWidget {
-  final String? category;
+  final bool isMainScreen;
 
-  const TicketsPage({super.key, this.category});
+  const TicketsPage({super.key, this.isMainScreen = true});
 
   @override
   TicketsPageState createState() => TicketsPageState();
@@ -17,13 +17,11 @@ class TicketsPage extends StatefulWidget {
 
 class TicketsPageState extends State<TicketsPage> {
   List<Ticket> ticketsList = [];
-  String? currentCategory;
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    currentCategory = widget.category;
     _loadTickets();
   }
 
@@ -34,8 +32,8 @@ class TicketsPageState extends State<TicketsPage> {
         await initializeTickets();
       }
       setState(() {
-        if (currentCategory != null && currentCategory!.isNotEmpty) {
-          ticketsList = globalTicket.where((ticket) => ticket.type.name == currentCategory).toList();
+        if (globalCategoryFilter != null && globalCategoryFilter!.isNotEmpty) {
+          ticketsList = globalTicket.where((ticket) => ticket.type.name == globalCategoryFilter).toList();
         } else {
           ticketsList = globalTicket;
         }
@@ -71,7 +69,7 @@ class TicketsPageState extends State<TicketsPage> {
 
   void _updateCategory(String? category) {
     setState(() {
-      currentCategory = category;
+      globalCategoryFilter = category;
       _loadTickets();
     });
   }
@@ -79,7 +77,7 @@ class TicketsPageState extends State<TicketsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopNavigation(title: "Solicitudes", isMainScreen: true),
+      appBar: TopNavigation(title: "Solicitudes", isMainScreen: widget.isMainScreen),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: _reloadTickets,

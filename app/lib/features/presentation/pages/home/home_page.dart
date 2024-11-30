@@ -3,11 +3,12 @@ import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/widgets.dart';
 import 'package:mi_reclamo/features/domain/entities/enum/TypesEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
-import 'package:mi_reclamo/features/presentation/pages/home/widgets/assigned_claim.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/statics_card.dart';
 import 'package:mi_reclamo/features/presentation/pages/tickets/tickets_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mi_reclamo/features/presentation/pages/views.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'widgets/status_stat_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -129,10 +130,11 @@ class HomePageState extends State<HomePage> {
                           label: "Solicitudes Totales",
                           color: AppTheme.lightBlue,
                           onTap: () {
+                            globalCategoryFilter = null;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const TicketsPage(),
+                                builder: (context) => const TicketsPage(isMainScreen: false),
                               ),
                             );
                           },
@@ -143,11 +145,11 @@ class HomePageState extends State<HomePage> {
                           label: "Sin Resolver",
                           color: AppTheme.lightRed,
                           onTap: () {
+                            globalCategoryFilter = Types.CLAIM.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    TicketsPage(category: Types.CLAIM.name),
+                                builder: (context) => const TicketsPage(isMainScreen: false),
                               ),
                             );
                           },
@@ -158,11 +160,11 @@ class HomePageState extends State<HomePage> {
                           label: "Pendientes",
                           color: AppTheme.lightOrange,
                           onTap: () {
+                            globalCategoryFilter = Types.SUGGESTION.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TicketsPage(
-                                    category: Types.SUGGESTION.name),
+                                builder: (context) => const TicketsPage(isMainScreen: false),
                               ),
                             );
                           },
@@ -173,29 +175,66 @@ class HomePageState extends State<HomePage> {
                           label: "Resueltos",
                           color: AppTheme.lightGreen,
                           onTap: () {
+                            globalCategoryFilter = Types.INFORMATION.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TicketsPage(
-                                    category: Types.INFORMATION.name),
+                                builder: (context) => const TicketsPage(isMainScreen: false),
                               ),
                             );
                           },
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
-                    // Asignados
-                    Text("Solicitudes Asignadas", style: StyleText.label),
+                    const SizedBox(height: 20),
+                    Text("Resumen de los Estados", style: StyleText.label),
                     const SizedBox(height: 12),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 6,
-                      separatorBuilder: (context, index) => const Divider(),
-                      itemBuilder: (context, index) => const AssignedClaim(),
+                    Column(
+                      children: [
+                        StatusStatCard(
+                          status: "Sin Resolver",
+                          count: sinResolver,
+                          color: AppTheme.lightRed,
+                          onTap: () {
+                            globalCategoryFilter = Types.CLAIM.name;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TicketsPage(isMainScreen: false),
+                              ),
+                            );
+                          },
+                        ),
+                        StatusStatCard(
+                          status: "Pendientes",
+                          count: pendientes,
+                          color: AppTheme.lightOrange,
+                          onTap: () {
+                            globalCategoryFilter = Types.SUGGESTION.name;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TicketsPage(isMainScreen: false),
+                              ),
+                            );
+                          },
+                        ),
+                        StatusStatCard(
+                          status: "Resueltos",
+                          count: resueltos,
+                          color: AppTheme.lightGreen,
+                          onTap: () {
+                            globalCategoryFilter = Types.INFORMATION.name;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TicketsPage(isMainScreen: false),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 24),
                   ],
                 ),
               ),

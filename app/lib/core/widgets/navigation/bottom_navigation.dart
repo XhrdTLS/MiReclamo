@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/styles/icons.dart';
 import 'package:mi_reclamo/core/widgets/navigation/navigation.dart';
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
-
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
 
@@ -13,7 +13,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> with SingleTickerProviderStateMixin {
 
   int idx = 0;
-late AnimationController _controller;
+  late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
 
   final List<NavigationItem> screens = [
@@ -45,10 +45,20 @@ late AnimationController _controller;
     super.dispose();
   }
 
+  void _onDestinationSelected(int index) {
+    setState(() {
+      idx = index;
+      if (screens[index].destination is TicketsPage) {
+        globalCategoryFilter = null;
+        screens[index] = NavigationItem(destination: const TicketsPage(isMainScreen: true), label: "Solicitudes", icon: AppIcons.ticket);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     bottomNavigationBar: NavigationBar(
-      onDestinationSelected: (idx) => setState(() => this.idx = idx),
+      onDestinationSelected: _onDestinationSelected,
       selectedIndex: idx,
       destinations: screens.map((e) => NavigationDestination(
         selectedIcon: Icon(e.icon, fill: 1),
