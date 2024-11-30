@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/core/core.dart';
 
@@ -6,6 +5,7 @@ class StatusStatCard extends StatelessWidget {
   final String status;
   final String count;
   final Color color;
+  final IconData icon;
   final VoidCallback onTap;
 
   const StatusStatCard({
@@ -13,6 +13,7 @@ class StatusStatCard extends StatelessWidget {
     required this.status,
     required this.count,
     required this.color,
+    required this.icon,
     required this.onTap,
   });
 
@@ -44,7 +45,7 @@ class StatusStatCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.circle, // Placeholder for status icon
+                  icon,
                   color: color,
                   size: 25,
                 ),

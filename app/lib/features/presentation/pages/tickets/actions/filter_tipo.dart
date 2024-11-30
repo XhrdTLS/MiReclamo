@@ -3,11 +3,11 @@ import 'package:logger/logger.dart';
 
 import '../../../../../core/core.dart';
 
-class FilterWidget extends StatelessWidget {
+class FilterTipo extends StatelessWidget {
   final Function(String?) onCategoryChanged;
   final Logger _logger = Logger();
 
-  FilterWidget({super.key, required this.onCategoryChanged});
+  FilterTipo({super.key, required this.onCategoryChanged});
 
   void _changeFilter(String filter) {
     globalCategoryFilter = filter == 'TODAS' ? null : filter;
@@ -52,7 +52,7 @@ class FilterWidget extends StatelessWidget {
           const SizedBox(height: 5),
           Row(
             children: [
-              _buildFilterButton('TODAS', AppTheme.lightGray),
+              _buildFilterButton('TODAS', AppTheme.lightStone),
               _buildFilterButton('CLAIM', AppTheme.lightOrange),
               _buildFilterButton('SUGGESTION', AppTheme.lightGreen),
               _buildFilterButton('INFORMATION', AppTheme.lightBlue),

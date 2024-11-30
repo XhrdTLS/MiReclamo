@@ -18,6 +18,7 @@ class TicketsPage extends StatefulWidget {
 class TicketsPageState extends State<TicketsPage> {
   List<Ticket> ticketsList = [];
   bool isLoading = true;
+  String? globalStatusFilter;
 
   @override
   void initState() {
@@ -34,6 +35,8 @@ class TicketsPageState extends State<TicketsPage> {
       setState(() {
         if (globalCategoryFilter != null && globalCategoryFilter!.isNotEmpty) {
           ticketsList = globalTicket.where((ticket) => ticket.type.name == globalCategoryFilter).toList();
+        } else if (globalStatusFilter != null && globalStatusFilter!.isNotEmpty) {
+          ticketsList = globalTicket.where((ticket) => ticket.status.name == globalStatusFilter).toList();
         } else {
           ticketsList = globalTicket;
         }
@@ -74,6 +77,13 @@ class TicketsPageState extends State<TicketsPage> {
     });
   }
 
+  void _updateStatus(String? status) {
+    setState(() {
+      globalStatusFilter = status;
+      _loadTickets();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +95,7 @@ class TicketsPageState extends State<TicketsPage> {
             enabled: isLoading,
             child: Column(
               children: [
-                FilterWidget(
+                FilterTipo(
                   onCategoryChanged: _updateCategory,
                 ),
                 Expanded(

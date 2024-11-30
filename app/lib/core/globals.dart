@@ -5,6 +5,7 @@ import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 final logger = Logger(printer: PrettyPrinter());
 
 String? globalCategoryFilter;
+String? globalStatusFilter;
 
 List<Ticket> globalTicket = [];
 

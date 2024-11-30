@@ -52,7 +52,7 @@ class TestPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const TicketsPage()),
+                MaterialPageRoute(builder: (context) => const TicketsPage(isMainScreen: false)),
               ),
               child: const Text('Ir a Reclamos Page'),
             ),

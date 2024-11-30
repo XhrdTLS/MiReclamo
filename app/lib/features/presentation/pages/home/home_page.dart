@@ -9,7 +9,8 @@ import 'package:mi_reclamo/features/presentation/pages/tickets/tickets_page.dart
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'widgets/status_stat_card.dart';
+import 'widgets/status_statics_card.dart';
+import 'package:mi_reclamo/features/presentation/pages/tickets/actions/filter_status.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,20 +23,19 @@ class HomePageState extends State<HomePage> {
   bool isLoading = true;
   String _userName = '';
   String solicitudesTotales = '0';
-  String reclamo_number = '0';
-  String sugerencia_number = '0';
-  String informations_number = '0';
+  String reclamoNumber = '0';
+  String sugerenciaNumber = '0';
+  String informationsNumber = '0';
 
-  /// TODO - Agregar los nuevos estados
   /* Estos son los nuevos a agregar en los cards, ya se cargan automaticamente */
-  String error_number = '0';
-  String under_review_number = '0';
-  String in_progress_number = '0';
-  String pending_information_number = '0';
-  String resolved_number = '0';
-  String closed_number = '0';
-  String cancelled_number = '0';
-  /// TODO - Agregar los nuevos estados
+  String receivedNumber = '0';
+  String underReviewNumber = '0';
+  String inProgressNumber = '0';
+  String pendingInformationNumber = '0';
+  String resolvedNumber = '0';
+  String closedNumber = '0';
+  String rejectedNumber = '0';
+  String cancelledNumber = '0';
 
   @override
   void initState() {
@@ -67,25 +67,29 @@ class HomePageState extends State<HomePage> {
     int reclamo = tickets.where((ticket) => ticket.type.name == Types.CLAIM.name).length;
     int sugerencia = tickets.where((ticket) => ticket.type.name == Types.SUGGESTION.name).length;
     int information = tickets.where((ticket) => ticket.type.name == Types.INFORMATION.name).length;
-    int error = tickets.where((ticket) => ticket.status.name == Status.ERROR.name).length;
-    int under_review = tickets.where((ticket) => ticket.status.name == Status.UNDER_REVIEW.name).length;
-    int in_progress = tickets.where((ticket) => ticket.status.name == Status.IN_PROGRESS.name).length;
-    int pending_information = tickets.where((ticket) => ticket.status.name == Status.PENDING_INFORMATION.name).length;
+    int received = tickets.where((ticket) => ticket.status.name == Status.RECEIVED.name).length;
+    int underReview = tickets.where((ticket) => ticket.status.name == Status.UNDER_REVIEW.name).length;
+    int inProgress = tickets.where((ticket) => ticket.status.name == Status.IN_PROGRESS.name).length;
+    int pendingInformation = tickets.where((ticket) => ticket.status.name == Status.PENDING_INFORMATION.name).length;
     int resolved = tickets.where((ticket) => ticket.status.name == Status.RESOLVED.name).length;
     int closed = tickets.where((ticket) => ticket.status.name == Status.CLOSED.name).length;
+    int rejected = tickets.where((ticket) => ticket.status.name == Status.REJECTED.name).length;
     int cancelled = tickets.where((ticket) => ticket.status.name == Status.CANCELLED.name).length;
     setState(() {
       solicitudesTotales = total.toString();
-      reclamo_number = reclamo.toString();
-      sugerencia_number = sugerencia.toString();
-      informations_number = information.toString();
-      error_number = error.toString();
-      under_review_number = under_review.toString();
-      in_progress_number = in_progress.toString();
-      pending_information_number = pending_information.toString();
-      resolved_number = resolved.toString();
-      closed_number = closed.toString();
-      cancelled_number = cancelled.toString();
+      reclamoNumber = reclamo.toString();
+      sugerenciaNumber = sugerencia.toString();
+      informationsNumber = information.toString();
+      
+      receivedNumber = received.toString();
+      underReviewNumber = underReview.toString();
+      inProgressNumber = inProgress.toString();
+      pendingInformationNumber = pendingInformation.toString();
+      resolvedNumber = resolved.toString();
+      closedNumber = closed.toString();
+      rejectedNumber = rejected.toString();
+      cancelledNumber = cancelled.toString();
+      
       isLoading = false;
     });
   }
@@ -116,10 +120,11 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopNavigation(
-        title: 'Inicio',
+        title: 'Administrador',
         isMainScreen: true,
       ),
       body: SafeArea(
+        top: true,
         child: RefreshIndicator(
           onRefresh: reload,
           child: Skeletonizer(
@@ -133,10 +138,10 @@ class HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("¡Hola $_userName!", style: StyleText.headline),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 12),
                     // Tablero de Estadísticas
                     Text("Resumen de las Solicitudes", style: StyleText.label),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     GridView.count(
                       shrinkWrap: true,
                       crossAxisCount: 2,
@@ -149,7 +154,7 @@ class HomePageState extends State<HomePage> {
                           icon: AppIcons.ticket,
                           value: solicitudesTotales,
                           label: "Solicitudes Totales",
-                          color: AppTheme.lightBlue,
+                          color: AppTheme.lightStone,
                           onTap: () {
                             globalCategoryFilter = null;
                             Navigator.push(
@@ -162,7 +167,7 @@ class HomePageState extends State<HomePage> {
                         ),
                         StatCard(
                           icon: AppIcons.claim,
-                          value: reclamo_number,
+                          value: reclamoNumber,
                           label: "Reclamos",
                           color: AppTheme.lightOrange,
                           onTap: () {
@@ -177,7 +182,7 @@ class HomePageState extends State<HomePage> {
                         ),
                         StatCard(
                           icon: AppIcons.pending,
-                          value: sugerencia_number,
+                          value: sugerenciaNumber,
                           label: "Sugerencia",
                           color: AppTheme.lightGreen,
                           onTap: () {
@@ -192,7 +197,7 @@ class HomePageState extends State<HomePage> {
                         ),
                         StatCard(
                           icon: AppIcons.done,
-                          value: informations_number,
+                          value: informationsNumber,
                           label: "Informacion",
                           color: AppTheme.lightBlue,
                           onTap: () {
@@ -207,17 +212,19 @@ class HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    Text("Resumen de los Estados", style: StyleText.label),
                     const SizedBox(height: 12),
+                    // Tablero de Estadísticas de Estados
+                    Text("Resumen de los Estados", style: StyleText.label),
+                    const SizedBox(height: 8),
                     Column(
                       children: [
                         StatusStatCard(
-                          status: "Sin Resolver",
-                          count: reclamo_number,
-                          color: AppTheme.lightRed,
+                          status: "Recibido",
+                          count: receivedNumber,
+                          color: AppTheme.lightGray,
+                          icon: AppIcons.received,
                           onTap: () {
-                            globalCategoryFilter = Types.CLAIM.name;
+                            globalStatusFilter = Status.RECEIVED.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -227,11 +234,12 @@ class HomePageState extends State<HomePage> {
                           },
                         ),
                         StatusStatCard(
-                          status: "Pendientes",
-                          count: sugerencia_number,
-                          color: AppTheme.lightOrange,
+                          status: "En Revisión",
+                          count: underReviewNumber,
+                          color: AppTheme.lightGray,
+                          icon: AppIcons.review,
                           onTap: () {
-                            globalCategoryFilter = Types.SUGGESTION.name;
+                            globalStatusFilter = Status.UNDER_REVIEW.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -241,11 +249,87 @@ class HomePageState extends State<HomePage> {
                           },
                         ),
                         StatusStatCard(
-                          status: "Resueltos",
-                          count: informations_number,
-                          color: AppTheme.lightGreen,
+                          status: "En Progreso",
+                          count: inProgressNumber,
+                          color: AppTheme.lightGray,
+                          icon: AppIcons.pending,
                           onTap: () {
-                            globalCategoryFilter = Types.INFORMATION.name;
+                            globalStatusFilter = Status.IN_PROGRESS.name;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TicketsPage(isMainScreen: false),
+                              ),
+                            );
+                          },
+                        ),
+                        StatusStatCard(
+                          status: "Solicitud de Información",
+                          count: pendingInformationNumber,
+                          color: AppTheme.lightGray,
+                          icon: AppIcons.pending,
+                          onTap: () {
+                            globalStatusFilter = Status.PENDING_INFORMATION.name;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TicketsPage(isMainScreen: false),
+                              ),
+                            );
+                          },
+                        ),
+                        StatusStatCard(
+                          status: "Resuelto",
+                          count: resolvedNumber,
+                          color: AppTheme.lightGray,
+                          icon: AppIcons.done,
+                          onTap: () {
+                            globalStatusFilter = Status.RESOLVED.name;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TicketsPage(isMainScreen: false),
+                              ),
+                            );
+                          },
+                        ),
+                        StatusStatCard(
+                          status: "Cerrado (Aprobado)",
+                          count: closedNumber,
+                          color: AppTheme.lightGray,
+                          icon: AppIcons.done,
+                          onTap: () {
+                            globalStatusFilter = Status.CLOSED.name;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TicketsPage(isMainScreen: false),
+                              ),
+                            );
+                          },
+                        ),
+                        StatusStatCard(
+                          status: "Cerrado (Rechazado)",
+                          count: rejectedNumber,
+                          color: AppTheme.lightGray,
+                          icon: AppIcons.rejected,
+                          onTap: () {
+                            globalStatusFilter = Status.REJECTED.name;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TicketsPage(isMainScreen: false),
+                              ),
+                            );
+                          },
+                        ),
+                        StatusStatCard(
+                          status: "Cancelado",
+                          count: cancelledNumber,
+                          color: AppTheme.lightGray,
+                          icon: AppIcons.rejected,
+                          onTap: () {
+                            globalStatusFilter = Status.CANCELLED.name;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
