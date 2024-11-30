@@ -311,7 +311,7 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    Flexible(
                       child: TextButton(
                         onPressed: _confirmDeleteTicket,
                         style: TextButton.styleFrom(
@@ -319,13 +319,17 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                         ),
-                        child: Text('Eliminar Ticket', style: StyleText.label.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+                        child: Text(
+                          'Eliminar Ticket',
+                          textAlign: TextAlign.center,
+                          style: StyleText.label.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 8),
-                    SizedBox(
+                    Flexible(
                       child: TextButton(
                         onPressed: _saveForm,
                         style: TextButton.styleFrom(
@@ -333,13 +337,17 @@ class EditTicketScreenState extends State<EditTicketScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                         ),
-                        child: Text('Responder Ticket', style: StyleText.label.copyWith(color: Theme.of(context).colorScheme.onSurface)),
+                        child: Text(
+                          'Responder Ticket',
+                          textAlign: TextAlign.center,
+                          style: StyleText.label.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                        ),
                       ),
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),
