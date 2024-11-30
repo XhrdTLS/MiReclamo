@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mi_reclamo/features/presentation/pages/views.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'widgets/status_statics_card.dart';
-import 'package:mi_reclamo/features/presentation/pages/tickets/actions/filter_status.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -149,196 +149,223 @@ class HomePageState extends State<HomePage> {
                       crossAxisSpacing: 10,
                       childAspectRatio: 1.2,
                       physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        StatCard(
-                          icon: AppIcons.ticket,
-                          value: solicitudesTotales,
-                          label: "Solicitudes Totales",
-                          color: AppTheme.lightStone,
-                          onTap: () {
-                            globalCategoryFilter = null;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
+                      children: List<Widget>.generate(
+                        4, // Number of StatCards
+                        (index) => AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 375),
+                          child: SlideAnimation(
+                            verticalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child: [
+                                StatCard(
+                                  icon: AppIcons.ticket,
+                                  value: solicitudesTotales,
+                                  label: "Solicitudes Totales",
+                                  color: AppTheme.lightStone,
+                                  onTap: () {
+                                    globalCategoryFilter = null;
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const TicketsPage(isMainScreen: false),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                StatCard(
+                                  icon: AppIcons.claim,
+                                  value: reclamoNumber,
+                                  label: "Reclamos",
+                                  color: AppTheme.lightOrange,
+                                  onTap: () {
+                                    globalCategoryFilter = Types.CLAIM.name;
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const TicketsPage(isMainScreen: false),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                StatCard(
+                                  icon: AppIcons.pending,
+                                  value: sugerenciaNumber,
+                                  label: "Sugerencia",
+                                  color: AppTheme.lightGreen,
+                                  onTap: () {
+                                    globalCategoryFilter = Types.SUGGESTION.name;
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const TicketsPage(isMainScreen: false),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                StatCard(
+                                  icon: AppIcons.done,
+                                  value: informationsNumber,
+                                  label: "Informacion",
+                                  color: AppTheme.lightBlue,
+                                  onTap: () {
+                                    globalCategoryFilter = Types.INFORMATION.name;
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const TicketsPage(isMainScreen: false),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ][index],
+                            ),
+                          ),
                         ),
-                        StatCard(
-                          icon: AppIcons.claim,
-                          value: reclamoNumber,
-                          label: "Reclamos",
-                          color: AppTheme.lightOrange,
-                          onTap: () {
-                            globalCategoryFilter = Types.CLAIM.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                        StatCard(
-                          icon: AppIcons.pending,
-                          value: sugerenciaNumber,
-                          label: "Sugerencia",
-                          color: AppTheme.lightGreen,
-                          onTap: () {
-                            globalCategoryFilter = Types.SUGGESTION.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                        StatCard(
-                          icon: AppIcons.done,
-                          value: informationsNumber,
-                          label: "Informacion",
-                          color: AppTheme.lightBlue,
-                          onTap: () {
-                            globalCategoryFilter = Types.INFORMATION.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                      ),
                     ),
                     const SizedBox(height: 12),
                     // Tablero de Estadísticas de Estados
                     Text("Resumen de los Estados", style: StyleText.label),
                     const SizedBox(height: 8),
-                    Column(
-                      children: [
-                        StatusStatCard(
-                          status: "Recibido",
-                          count: receivedNumber,
-                          color: AppTheme.lightGray,
-                          icon: AppIcons.received,
-                          onTap: () {
-                            globalCategoryFilter = Status.RECEIVED.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
+                    AnimationLimiter(
+                      child: Column(
+                        children: [
+                          StatusStatCard(
+                            status: "Recibido",
+                            count: receivedNumber,
+                            color: AppTheme.lightGray,
+                            icon: AppIcons.received,
+                            onTap: () {
+                              globalCategoryFilter = Status.RECEIVED.name;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketsPage(isMainScreen: false),
+                                ),
+                              );
+                            },
+                          ),
+                          StatusStatCard(
+                            status: "En Revisión",
+                            count: underReviewNumber,
+                            color: AppTheme.lightGray,
+                            icon: AppIcons.review,
+                            onTap: () {
+                              globalCategoryFilter = Status.UNDER_REVIEW.name;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketsPage(isMainScreen: false),
+                                ),
+                              );
+                            },
+                          ),
+                          StatusStatCard(
+                            status: "En Progreso",
+                            count: inProgressNumber,
+                            color: AppTheme.lightGray,
+                            icon: AppIcons.pending,
+                            onTap: () {
+                              globalCategoryFilter = Status.IN_PROGRESS.name;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketsPage(isMainScreen: false),
+                                ),
+                              );
+                            },
+                          ),
+                          StatusStatCard(
+                            status: "Solicitud de Información",
+                            count: pendingInformationNumber,
+                            color: AppTheme.lightGray,
+                            icon: AppIcons.pending,
+                            onTap: () {
+                              globalCategoryFilter = Status.PENDING_INFORMATION.name;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketsPage(isMainScreen: false),
+                                ),
+                              );
+                            },
+                          ),
+                          StatusStatCard(
+                            status: "Resuelto",
+                            count: resolvedNumber,
+                            color: AppTheme.lightGray,
+                            icon: AppIcons.done,
+                            onTap: () {
+                              globalCategoryFilter = Status.RESOLVED.name;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketsPage(isMainScreen: false),
+                                ),
+                              );
+                            },
+                          ),
+                          StatusStatCard(
+                            status: "Cerrado (Aprobado)",
+                            count: closedNumber,
+                            color: AppTheme.lightGray,
+                            icon: AppIcons.done,
+                            onTap: () {
+                              globalCategoryFilter = Status.CLOSED.name;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketsPage(isMainScreen: false),
+                                ),
+                              );
+                            },
+                          ),
+                          StatusStatCard(
+                            status: "Cerrado (Rechazado)",
+                            count: rejectedNumber,
+                            color: AppTheme.lightGray,
+                            icon: AppIcons.rejected,
+                            onTap: () {
+                              globalCategoryFilter = Status.REJECTED.name;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketsPage(isMainScreen: false),
+                                ),
+                              );
+                            },
+                          ),
+                          StatusStatCard(
+                            status: "Cancelado",
+                            count: cancelledNumber,
+                            color: AppTheme.lightGray,
+                            icon: AppIcons.rejected,
+                            onTap: () {
+                              globalCategoryFilter = Status.CANCELLED.name;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TicketsPage(isMainScreen: false),
+                                ),
+                              );
+                            },
+                          ),
+                        ].asMap().entries.map((entry) {
+                          int index = entry.key;
+                          Widget card = entry.value;
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: card,
                               ),
-                            );
-                          },
-                        ),
-                        StatusStatCard(
-                          status: "En Revisión",
-                          count: underReviewNumber,
-                          color: AppTheme.lightGray,
-                          icon: AppIcons.review,
-                          onTap: () {
-                            globalCategoryFilter = Status.UNDER_REVIEW.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                        StatusStatCard(
-                          status: "En Progreso",
-                          count: inProgressNumber,
-                          color: AppTheme.lightGray,
-                          icon: AppIcons.pending,
-                          onTap: () {
-                            globalCategoryFilter = Status.IN_PROGRESS.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                        StatusStatCard(
-                          status: "Solicitud de Información",
-                          count: pendingInformationNumber,
-                          color: AppTheme.lightGray,
-                          icon: AppIcons.pending,
-                          onTap: () {
-                            globalCategoryFilter = Status.PENDING_INFORMATION.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                        StatusStatCard(
-                          status: "Resuelto",
-                          count: resolvedNumber,
-                          color: AppTheme.lightGray,
-                          icon: AppIcons.done,
-                          onTap: () {
-                            globalCategoryFilter = Status.RESOLVED.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                        StatusStatCard(
-                          status: "Cerrado (Aprobado)",
-                          count: closedNumber,
-                          color: AppTheme.lightGray,
-                          icon: AppIcons.done,
-                          onTap: () {
-                            globalCategoryFilter = Status.CLOSED.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                        StatusStatCard(
-                          status: "Cerrado (Rechazado)",
-                          count: rejectedNumber,
-                          color: AppTheme.lightGray,
-                          icon: AppIcons.rejected,
-                          onTap: () {
-                            globalCategoryFilter = Status.REJECTED.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                        StatusStatCard(
-                          status: "Cancelado",
-                          count: cancelledNumber,
-                          color: AppTheme.lightGray,
-                          icon: AppIcons.rejected,
-                          onTap: () {
-                            globalCategoryFilter = Status.CANCELLED.name;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const TicketsPage(isMainScreen: false),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ],
                 ),

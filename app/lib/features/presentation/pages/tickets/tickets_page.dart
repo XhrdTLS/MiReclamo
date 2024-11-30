@@ -4,6 +4,12 @@ import 'package:mi_reclamo/features/domain/entities/enum/StatusEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/enum/TypesEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart'
+    show
+        AnimationLimiter,
+        AnimationConfiguration,
+        SlideAnimation,
+        FadeInAnimation;
 import 'actions/actions.dart';
 import 'screens/screens.dart';
 import 'widgets/widgets.dart';
@@ -22,7 +28,6 @@ class TicketsPageState extends State<TicketsPage> {
   bool isLoading = true;
   String? globalFilter;
 
-
   @override
   void initState() {
     super.initState();
@@ -32,24 +37,27 @@ class TicketsPageState extends State<TicketsPage> {
   Future<void> _loadTickets() async {
     _showSkeletonizer();
     try {
-      if (globalTicket.isEmpty){
+      if (globalTicket.isEmpty) {
         await initializeTickets();
       }
       globalFilter = globalCategoryFilter;
       setState(() {
         if (globalFilter != null && globalFilter!.isNotEmpty) {
           if (Types.values.any((type) => type.name == globalFilter)) {
-            ticketsList = globalTicket.where((ticket) => ticket.type.name == globalFilter).toList();
-          } else if (Status.values.any((status) => status.name == globalFilter)) {
-            ticketsList = globalTicket.where((ticket) => ticket.status.name == globalFilter).toList();
+            ticketsList = globalTicket
+                .where((ticket) => ticket.type.name == globalFilter)
+                .toList();
+          } else if (Status.values
+              .any((status) => status.name == globalFilter)) {
+            ticketsList = globalTicket
+                .where((ticket) => ticket.status.name == globalFilter)
+                .toList();
           }
+        } else {
+          ticketsList = globalTicket;
         }
-          else {
-            ticketsList = globalTicket;
-          }
-          isLoading = false;
-        });
-
+        isLoading = false;
+      });
     } catch (e) {
       logger.e('Error: $e');
       setState(() {
@@ -95,39 +103,79 @@ class TicketsPageState extends State<TicketsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopNavigation(title: "Solicitudes", isMainScreen: widget.isMainScreen),
+      appBar: TopNavigation(
+          title: "Solicitudes", isMainScreen: widget.isMainScreen),
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: _reloadTickets,
-          child: Skeletonizer(
-            enabled: isLoading,
-            child: Column(
-              children: [
-                FilterTipo(
-                  onCategoryChanged: _updateCategory,
-                ),
-                Expanded(
-                  child: ticketsList.isEmpty && !isLoading
-                      ? const Center(child: Text('No hay tickets para mostrar'))
-                      : ListView.builder(
-                          itemCount: ticketsList.length,
-                          itemBuilder: (context, index) {
-                            final ticket = ticketsList[index];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              child: TicketCard(
-                                ticket: ticket,
-                                onDelete: () {
-                                  /// TODO: Implement delete functionality
-                                },
-                                onNavigateToEditTicket: _navigateToEditTicket,
-                                onReloadTickets: _reloadTickets,
-                              ),
-                            );
-                          },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: RefreshIndicator(
+            onRefresh: _reloadTickets,
+            child: Skeletonizer(
+              enabled: isLoading,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Filtrar por:',
+                        style: StyleText.label.copyWith(
+                          color: AppTheme.darkGray,
                         ),
-                ),
-              ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  FilterTipo(
+                    onCategoryChanged: _updateCategory,
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Solicitudes',
+                        style: StyleText.label.copyWith(
+                          color: AppTheme.darkGray,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: ticketsList.isEmpty && !isLoading
+                        ? const Center(
+                            child: Text('No hay tickets para mostrar'))
+                        : AnimationLimiter(
+                            child: ListView.builder(
+                              itemCount: ticketsList.length,
+                              itemBuilder: (context, index) {
+                                final ticket = ticketsList[index];
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: SlideAnimation(
+                                    verticalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: TicketCard(
+                                        ticket: ticket,
+                                        onDelete: () {
+                                          /// TODO: Implement delete functionality
+                                        },
+                                        onNavigateToEditTicket:
+                                            _navigateToEditTicket,
+                                        onReloadTickets: _reloadTickets,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -147,4 +195,3 @@ class TicketsPageState extends State<TicketsPage> {
     }
   }
 }
-

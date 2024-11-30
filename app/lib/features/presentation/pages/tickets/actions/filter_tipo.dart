@@ -39,29 +39,14 @@ class FilterTipo extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Padding (
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          const SizedBox(height: 5),
-          Text(
-            'Filtrar por:',
-            style: StyleText.body,
-          ),
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              _buildFilterButton('TODAS', AppTheme.lightStone),
-              _buildFilterButton('CLAIM', AppTheme.lightOrange),
-              _buildFilterButton('SUGGESTION', AppTheme.lightGreen),
-              _buildFilterButton('INFORMATION', AppTheme.lightBlue),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Text('Solicitudes', style: StyleText.body),
+          _buildFilterButton('TODAS', AppTheme.lightStone),
+          _buildFilterButton('CLAIM', AppTheme.lightOrange),
+          _buildFilterButton('SUGGESTION', AppTheme.lightGreen),
+          _buildFilterButton('INFORMATION', AppTheme.lightBlue),
         ],
-      ),),
+      ),
     );
   }
 }

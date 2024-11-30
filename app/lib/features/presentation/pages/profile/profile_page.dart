@@ -149,6 +149,32 @@ class ProfilePageState extends State<ProfilePage> {
                   MaterialPageRoute(builder: (context) => const LoginPage()));
             },
           ),
+          const SizedBox(height: 20),
+           Text(
+            "Mi Reclamo",
+            style: StyleText.label,
+            textAlign: TextAlign.start,
+          ),
+          const SizedBox(height: 8),
+           Text(
+            "Proyecto creado para la asignatura Computación Móvil de la Universidad Tecnológica Metropolitana.\n\n"
+            "Docente: Sebastian Salazar Molina.\n"
+            "Seccion: 301 - EFE68500.\n",
+            textAlign: TextAlign.start,
+            style: StyleText.description,
+          ),
+           Text(
+            "Integrantes",
+            style: StyleText.label,
+            textAlign: TextAlign.start,
+          ),
+          const SizedBox(height: 8),
+           Text(
+            "- Gabriel González Núñez\n"
+            "- Tomas Lillo Silva\n",
+            textAlign: TextAlign.start,
+            style: StyleText.descriptionBold,
+          ),
         ],
       ),
     );
