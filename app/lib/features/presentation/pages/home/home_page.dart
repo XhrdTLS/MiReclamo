@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/core/globals.dart';
 import 'package:mi_reclamo/core/widgets/widgets.dart';
+import 'package:mi_reclamo/features/domain/entities/enum/StatusEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/enum/TypesEnum.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
 import 'package:mi_reclamo/features/presentation/pages/home/widgets/statics_card.dart';
@@ -21,9 +22,20 @@ class HomePageState extends State<HomePage> {
   bool isLoading = true;
   String _userName = '';
   String solicitudesTotales = '0';
-  String sinResolver = '0';
-  String pendientes = '0';
-  String resueltos = '0';
+  String reclamo_number = '0';
+  String sugerencia_number = '0';
+  String informations_number = '0';
+
+  /// TODO - Agregar los nuevos estados
+  /* Estos son los nuevos a agregar en los cards, ya se cargan automaticamente */
+  String error_number = '0';
+  String under_review_number = '0';
+  String in_progress_number = '0';
+  String pending_information_number = '0';
+  String resolved_number = '0';
+  String closed_number = '0';
+  String cancelled_number = '0';
+  /// TODO - Agregar los nuevos estados
 
   @override
   void initState() {
@@ -52,19 +64,28 @@ class HomePageState extends State<HomePage> {
     _showSkeletonizer();
     final tickets = await _loadTickets();
     int total = tickets.length;
-    int unresolved =
-        tickets.where((ticket) => ticket.type.name == Types.CLAIM.name).length;
-    int pending = tickets
-        .where((ticket) => ticket.type.name == Types.SUGGESTION.name)
-        .length;
-    int resolved = tickets
-        .where((ticket) => ticket.type.name == Types.INFORMATION.name)
-        .length;
+    int reclamo = tickets.where((ticket) => ticket.type.name == Types.CLAIM.name).length;
+    int sugerencia = tickets.where((ticket) => ticket.type.name == Types.SUGGESTION.name).length;
+    int information = tickets.where((ticket) => ticket.type.name == Types.INFORMATION.name).length;
+    int error = tickets.where((ticket) => ticket.status.name == Status.ERROR.name).length;
+    int under_review = tickets.where((ticket) => ticket.status.name == Status.UNDER_REVIEW.name).length;
+    int in_progress = tickets.where((ticket) => ticket.status.name == Status.IN_PROGRESS.name).length;
+    int pending_information = tickets.where((ticket) => ticket.status.name == Status.PENDING_INFORMATION.name).length;
+    int resolved = tickets.where((ticket) => ticket.status.name == Status.RESOLVED.name).length;
+    int closed = tickets.where((ticket) => ticket.status.name == Status.CLOSED.name).length;
+    int cancelled = tickets.where((ticket) => ticket.status.name == Status.CANCELLED.name).length;
     setState(() {
       solicitudesTotales = total.toString();
-      sinResolver = unresolved.toString();
-      pendientes = pending.toString();
-      resueltos = resolved.toString();
+      reclamo_number = reclamo.toString();
+      sugerencia_number = sugerencia.toString();
+      informations_number = information.toString();
+      error_number = error.toString();
+      under_review_number = under_review.toString();
+      in_progress_number = in_progress.toString();
+      pending_information_number = pending_information.toString();
+      resolved_number = resolved.toString();
+      closed_number = closed.toString();
+      cancelled_number = cancelled.toString();
       isLoading = false;
     });
   }
@@ -141,9 +162,9 @@ class HomePageState extends State<HomePage> {
                         ),
                         StatCard(
                           icon: AppIcons.claim,
-                          value: sinResolver,
-                          label: "Sin Resolver",
-                          color: AppTheme.lightRed,
+                          value: reclamo_number,
+                          label: "Reclamos",
+                          color: AppTheme.lightOrange,
                           onTap: () {
                             globalCategoryFilter = Types.CLAIM.name;
                             Navigator.push(
@@ -156,9 +177,9 @@ class HomePageState extends State<HomePage> {
                         ),
                         StatCard(
                           icon: AppIcons.pending,
-                          value: pendientes,
-                          label: "Pendientes",
-                          color: AppTheme.lightOrange,
+                          value: sugerencia_number,
+                          label: "Sugerencia",
+                          color: AppTheme.lightGreen,
                           onTap: () {
                             globalCategoryFilter = Types.SUGGESTION.name;
                             Navigator.push(
@@ -171,9 +192,9 @@ class HomePageState extends State<HomePage> {
                         ),
                         StatCard(
                           icon: AppIcons.done,
-                          value: resueltos,
-                          label: "Resueltos",
-                          color: AppTheme.lightGreen,
+                          value: informations_number,
+                          label: "Informacion",
+                          color: AppTheme.lightBlue,
                           onTap: () {
                             globalCategoryFilter = Types.INFORMATION.name;
                             Navigator.push(
@@ -193,7 +214,7 @@ class HomePageState extends State<HomePage> {
                       children: [
                         StatusStatCard(
                           status: "Sin Resolver",
-                          count: sinResolver,
+                          count: reclamo_number,
                           color: AppTheme.lightRed,
                           onTap: () {
                             globalCategoryFilter = Types.CLAIM.name;
@@ -207,7 +228,7 @@ class HomePageState extends State<HomePage> {
                         ),
                         StatusStatCard(
                           status: "Pendientes",
-                          count: pendientes,
+                          count: sugerencia_number,
                           color: AppTheme.lightOrange,
                           onTap: () {
                             globalCategoryFilter = Types.SUGGESTION.name;
@@ -221,7 +242,7 @@ class HomePageState extends State<HomePage> {
                         ),
                         StatusStatCard(
                           status: "Resueltos",
-                          count: resueltos,
+                          count: informations_number,
                           color: AppTheme.lightGreen,
                           onTap: () {
                             globalCategoryFilter = Types.INFORMATION.name;
