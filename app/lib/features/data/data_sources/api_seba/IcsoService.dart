@@ -268,4 +268,25 @@ class IcsoService extends BaseService {
       print('Error al guardar el archivo: $e');
     }
   }
+
+  // Future<File?> saveFileFromJson(Map<String, dynamic> fileJson) async {
+  //   try {
+  //     final String fileName = fileJson['name'];
+  //     final String base64Data = fileJson['data'];
+  //
+  //     final List<int> fileBytes = await compute(base64Decode, base64Data);
+  //
+  //     final String directory = Directory.systemTemp.path;
+  //     final String filePath = '$directory/$fileName';
+  //
+  //     final File file = File(filePath);
+  //     await file.writeAsBytes(fileBytes);
+  //
+  //     _logger.i('File saved at: $filePath');
+  //     return file;
+  //   } catch (e) {
+  //     _logger.e('Error saving file: $e');
+  //     return null;
+  //   }
+  // }
 }
