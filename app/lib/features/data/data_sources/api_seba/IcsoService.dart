@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mi_reclamo/core/exception/exception_handler.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/InfoService.dart';
 import 'package:mi_reclamo/features/data/data_sources/api_seba/baseService.dart';
 import 'package:logger/logger.dart';
@@ -173,14 +174,15 @@ class IcsoService extends BaseService {
           }
         }
       } catch (error) {
-        _logger.e('Error al obtener los datos: $error');
-        throw Exception('Failed to fetch all tokens: $error');
+        ExceptionHandler.handleException(error);
       }
     }).toList();
 
     await Future.wait(futures);
     return responses;
   }
+
+
 
   Future<List<Ticket>> getAll() async {
     /// Definimos algunos datos a utilizar
