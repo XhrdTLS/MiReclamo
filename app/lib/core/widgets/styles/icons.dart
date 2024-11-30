@@ -25,7 +25,9 @@ class AppIcons {
   static const IconData sugestion = Symbols.move_to_inbox_rounded;
   /// Tipo de Solicitud: Informacion
   static const info = Symbols.info_rounded;
-  
+  /// Tipo de Solicitud: Pregunta
+  static const question = Symbols.question_answer_rounded;
+
   //* Iconos para acciones
   /// Icono de Archivos
   static const file = Symbols.attach_file_rounded;

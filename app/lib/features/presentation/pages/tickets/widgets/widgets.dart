@@ -1,4 +1,4 @@
 
 export 'ticket_card.dart';
-export 'view_ticket_dialog.dart';
-export 'filter.dart';
+export 'tipo_colors.dart';
+export 'estado_colors.dart';

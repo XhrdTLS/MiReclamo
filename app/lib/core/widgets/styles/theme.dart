@@ -89,4 +89,6 @@ class AppTheme {
               displayColor: const Color(0xFFFAFAFA),
             ),
       );
+
+  static of(BuildContext context) {}
 }

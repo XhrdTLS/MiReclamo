@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_reclamo/features/domain/entities/ticket_entity.dart';
-import 'package:mi_reclamo/features/presentation/pages/tickets/actions/estado_colors.dart';
 import '../../../../../core/core.dart';
+import '../screens/screens.dart';
 import 'widgets.dart';
 
 class TicketCard extends StatelessWidget {
@@ -25,39 +25,6 @@ class TicketCard extends StatelessWidget {
     String estado = ticket.status.name;
     String mensaje = ticket.message;
     String categoria = ticket.category.name;
-
-    final brightness = Theme.of(context).brightness;
-    Color tipoColor;
-    Color textColor;
-    IconData typeIcon;
-
-    switch (tipo) {
-      case 'CLAIM':
-        tipoColor = brightness == Brightness.light
-            ? AppTheme.lightOrange
-            : AppTheme.darkOrange;
-        textColor = AppTheme.darkOrange;
-        typeIcon = AppIcons.claim;
-        break;
-      case 'SUGGESTION':
-        tipoColor = brightness == Brightness.light
-            ? AppTheme.lightGreen
-            : AppTheme.darkGreen;
-        textColor = AppTheme.darkGreen;
-        typeIcon = AppIcons.sugestion;
-        break;
-      case 'INFORMATION':
-        tipoColor = brightness == Brightness.light
-            ? AppTheme.lightBlue
-            : AppTheme.darkBlue;
-        textColor = AppTheme.darkBlue;
-        typeIcon = AppIcons.info;
-        break;
-      default:
-        tipoColor = AppTheme.lightGray;
-        textColor = AppTheme.lightGray;
-        typeIcon = AppIcons.ticket;
-    }
 
     return GestureDetector(
       onDoubleTap: () {
@@ -84,7 +51,7 @@ class TicketCard extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             border: Border(
-              left: BorderSide(color: tipoColor, width: 8),
+              left: BorderSide(color: getTipoColor(context, tipo), width: 8),
             ),
           ),
           child: Padding(
@@ -93,9 +60,9 @@ class TicketCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  typeIcon,
+                  getTipoIcon(tipo), // Updated to use IconData
                   weight: 700,
-                  color: textColor,
+                  color: getTipoTextColor(tipo), // Updated to use getTipoTextColor
                   size: 25,
                 ),
                 const SizedBox(width: 8),
@@ -110,7 +77,7 @@ class TicketCard extends StatelessWidget {
                             child: Text(
                               categoria,
                               style: StyleText.header.copyWith(
-                                color: textColor,
+                                color: getTipoTextColor(tipo), // Updated to use getTipoTextColor
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
